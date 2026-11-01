@@ -19,12 +19,15 @@ js/engine.js          rules: time, mail, lab, summons, rollover, radio
 js/ui.js              screens: office, map, case file, dialogs, phone, cards
 js/actions.js         travel, dialogs, court, clicks, startup
 js/save.js            autosave, Continue, transfer code
+js/keys.js            keyboard on PC: 1–9, Enter, Esc
 img/  audio/          pictures and music
-tests/play.py         autotest: plays both cases to the verdict
+tests/play.py         autotest: plays both cases to the verdict, on a phone and on a PC screen
 docs/RULES.md         all game mechanics in one place
 ```
 
-Load order matters: core → cases → engine → ui → actions → save.
+Load order matters: core → cases → engine → ui → actions → save → keys.
+
+Layout: phone below 1000 px wide; PC and tablet from 1000 px (menu on the left, evidence board on the case tab); side panel from 1280 px.
 
 ## Adding a case
 

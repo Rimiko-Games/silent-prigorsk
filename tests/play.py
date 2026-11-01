@@ -176,7 +176,7 @@ def case1(g):
     g.pros("arst", "melnik")
     assert g.js("S.jail.includes('melnik')"), "arrest refused"
     g.tab("calls")
-    assert "арестован" in g.pg.locator("[data-a=room][data-id=melnik]").inner_text()
+    assert "арестован" in g.pg.locator("#app [data-a=room][data-id=melnik]").inner_text()
     g.tab("case")
     g.click("[data-a=accuse]")
     g.click("[data-a=pick][data-id=melnik]")
@@ -188,7 +188,7 @@ def case1(g):
 
 def case2(g):
     pg = g.pg
-    g.js("localStorage.clear();UI.title=true;S=null;render()")
+    g.js("clearTimeout(saveTimer);localStorage.clear();UI.title=true;S=null;render()")
     pg.click('[data-a=start][data-id="2"]')
     g.click("[data-a=accept]")
     g.js("UI.hintOff=true")
@@ -238,7 +238,7 @@ def case2(g):
 def save_test(pg):
     """Start case 1, play a bit, reload page, Continue must restore the same state."""
     g = Game(pg)
-    pg.evaluate("localStorage.clear()")
+    pg.evaluate("clearTimeout(saveTimer);localStorage.clear()")
     pg.reload(); pg.wait_for_timeout(400)
     pg.click('[data-a=start][data-id="1"]')
     g.click("[data-a=accept]")
@@ -250,13 +250,37 @@ def save_test(pg):
     pg.click("[data-a=continue]"); pg.wait_for_timeout(200)
     assert g.js("S.t") == t1 and g.js("S.loc") == loc1, "state not restored"
     code = pg.evaluate("toCode(readSave())")
-    pg.evaluate("localStorage.clear()"); pg.reload(); pg.wait_for_timeout(400)
+    pg.evaluate("clearTimeout(saveTimer);localStorage.clear()"); pg.reload(); pg.wait_for_timeout(400)
     assert not pg.locator("[data-a=continue]").count()
     pg.click("[data-a=transfer]")
     pg.fill("#pastecode", code); pg.click("[data-a=loadcode]"); pg.wait_for_timeout(200)
     assert g.js("S && S.loc") == loc1, "transfer code failed"
-    pg.evaluate("localStorage.clear()"); pg.reload(); pg.wait_for_timeout(400)
+    pg.evaluate("clearTimeout(saveTimer);localStorage.clear()"); pg.reload(); pg.wait_for_timeout(400)
     return "ok"
+
+
+def desktop_test(pg):
+    """PC layout: side menu, side panel, board, keyboard. Then the full case 1 on a wide screen."""
+    g = Game(pg)
+    pg.evaluate("clearTimeout(saveTimer);localStorage.clear()"); pg.reload(); pg.wait_for_timeout(400)
+    pg.click('[data-a=start][data-id="1"]')
+    g.click("[data-a=accept]")
+    g.js("UI.hintOff=true")
+    g.clear()
+    assert pg.locator("#side .sbox").count(), "no side panel on PC"
+    pg.keyboard.press("2"); pg.wait_for_timeout(100); g.clear()
+    assert g.js("UI.tab") == "map", "key 2 did not open the map"
+    pg.keyboard.press("1"); pg.wait_for_timeout(100); g.clear()
+    assert pg.locator(".board .pol").count(), "no evidence board"
+    g.go("scene"); g.click("[data-a=inside]"); g.click("[data-a=lact][data-i='0']")
+    g.go("tk"); g.click("[data-a=knock]")
+    assert pg.locator("#modal .sheet.tsheet .tbig").is_visible(), "no big portrait in talk"
+    pg.keyboard.press("1"); pg.wait_for_timeout(100); g.clear()
+    assert g.js("Object.keys(S.asked.tkachuk||{}).length") == 1, "key 1 did not ask"
+    pg.keyboard.press("Escape"); pg.wait_for_timeout(100)
+    assert g.js("UI.modal") is None, "Esc did not close the talk"
+    g.js("clearTimeout(saveTimer);localStorage.clear();UI.title=true;S=null;render()")
+    return case1(g)
 
 
 def main():
@@ -280,6 +304,15 @@ def main():
             except Exception as e:  # noqa
                 pg.screenshot(path=str(ROOT / f"tests/fail_{name}.png"))
                 results[name] = f"FAIL {e}"
+        pc = b.new_page(viewport={"width": 1440, "height": 900})
+        pc.route("**/fonts.g*/**", lambda r: r.abort())
+        pc.on("pageerror", lambda e: errors.append(str(e)))
+        pc.goto(URL); pc.wait_for_timeout(400)
+        try:
+            results["desktop"] = "PASS " + desktop_test(pc)
+        except Exception as e:  # noqa
+            pc.screenshot(path=str(ROOT / "tests/fail_desktop.png"))
+            results["desktop"] = f"FAIL {e}"
         b.close()
     for k, v in results.items():
         print(k, v)

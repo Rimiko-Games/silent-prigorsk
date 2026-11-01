@@ -18,6 +18,7 @@
 <body>
 <div class="wrap" id="app"></div>
 <nav class="nav" id="nav"></nav>
+<aside class="side" id="side"></aside>
 <div class="toasts" id="toasts"></div>
 <div class="radios" id="radios"></div>
 <div id="notes"></div>
@@ -25,7 +26,7 @@
 <div id="modal"></div>
 <div id="reveal"></div>
 <audio id="bgm" src="audio/theme.mp3" loop preload="auto"></audio>
-<section id="title" class="title"><img src="img/cover.webp" alt=""><div class="tshade"></div><div class="tin"><span class="tk">ДЕЛА СЛЕДОВАТЕЛЯ КУРЕЙКО</span><h1>Тихий<br>Пригорск</h1><p>Глухая провинция. Убийства, пропажи и люди, которые врут в лицо.</p><button class="primary" data-a="start" data-id="1">Новая игра</button><button class="ghost" data-a="start" data-id="2">Дело № 2 · Пропавший</button></div></section>
+<section id="title" class="title"><picture><source media="(min-aspect-ratio: 1/1)" srcset="img/cover_wide.webp"><img src="img/cover.webp" alt=""></picture><div class="tshade"></div><div class="tin"><span class="tk">ДЕЛА СЛЕДОВАТЕЛЯ КУРЕЙКО</span><h1>Тихий<br>Пригорск</h1><p>Глухая провинция. Убийства, пропажи и люди, которые врут в лицо.</p><button class="primary" data-a="start" data-id="1">Новая игра</button><button class="ghost" data-a="start" data-id="2">Дело № 2 · Пропавший</button></div></section>
 <script src="js/core.js"></script>
 <script src="cases/case1.js"></script>
 <script src="cases/case2.js"></script>
@@ -33,5 +34,6 @@
 <script src="js/ui.js"></script>
 <script src="js/actions.js"></script>
 <script src="js/save.js"></script>
+<script src="js/keys.js"></script>
 </body>
 </html>
