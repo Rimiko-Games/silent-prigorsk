@@ -402,7 +402,9 @@ figure.scene{position:relative}
 .act .t small.dqo{display:block;margin:6px 0 6px;font-style:italic;color:#c9c2b0}
 
 /* ================= PC / wide screens ================= */
-.side,.board,.tbig{display:none}
+.side,.board,.tbig,.navx{display:none}
+.locside,.lochead{display:grid;gap:16px;min-width:0}
+.lochead{gap:8px}
 @media (min-width:1000px){
  :root{--navw:200px;--sidew:0px}
  .nav{top:0;right:auto;width:var(--navw);bottom:0;border-top:none;border-right:1px solid #2b2d2a;padding:20px 12px;box-shadow:6px 0 16px rgba(0,0,0,.45);overflow:auto}
@@ -482,7 +484,7 @@ figure.scene{position:relative}
  .bst.det{color:#2a5a8a;border-color:#2a5a8a}
  .threads{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;fill:none;stroke:#b3241a;stroke-width:1.6;opacity:.85;filter:drop-shadow(0 2px 1px rgba(0,0,0,.4))}
 }
-@media (min-width:1280px){
+@media (min-width:1280px) and (min-height:700px){
  :root{--sidew:300px}
  .side{display:block;position:fixed;top:0;right:0;bottom:0;width:var(--sidew);overflow:auto;padding:18px 16px 24px;background:#121311 url(../img/t_leather.webp) repeat;background-size:360px;border-left:1px solid #2b2d2a;box-shadow:-6px 0 16px rgba(0,0,0,.45);z-index:6}
  .sbox{display:grid;gap:6px;margin-bottom:22px}
@@ -495,3 +497,37 @@ figure.scene{position:relative}
  .keys{font-size:12px;color:#77756a;line-height:1.6;border-top:1px solid #2b2d2a;padding-top:12px}
  .keys b{font-family:var(--mono);font-weight:400;color:#a9a593}
 }
+
+/* PC: everything fits the window height, no page scroll on office, map and places */
+@media (min-width:1000px){
+ .navx{display:grid;gap:6px;margin-top:18px;padding-top:16px;border-top:1px solid #2b2d2a;grid-template-columns:1fr}
+ .navx button{display:grid;grid-template-columns:44px 1fr auto;align-items:center;gap:12px;padding:10px;border-radius:8px;background:rgba(255,255,255,.03);border:1px solid #2f312c;color:var(--text);font-size:15px;text-align:left;counter-increment:none}
+ .navx button::after{content:none!important}
+ .navx button:hover{border-color:#6a6450;background:rgba(219,165,68,.08)}
+ .navx .nxi{width:44px;text-align:center;font-size:22px;color:var(--amber)}
+ .navx small{font-family:var(--mono);font-size:11px;color:var(--amber)}
+ .voffice .hidev{display:none!important}
+ .voffice .office.deskh{width:min(100%,calc((100vh - 150px) * 1600 / 893));margin-inline:auto}
+ .vmap .map{width:min(100%,calc((100vh - 200px) * 4 / 3))}
+ .vmap>.pinlist{max-height:calc(100vh - 300px)!important}
+ .vmap>p{margin:0!important}
+ .vmap>p{grid-column:2;grid-row:3;font-size:13px;align-self:start}
+ .vmap>.map{grid-row:2/span 2}
+ .vmap{grid-template-rows:auto auto 1fr}
+ .vmap>.pinlist{grid-row:2;max-height:calc(100vh - 260px)}
+ .wrap>.view.vloc,.wrap>.view.voffice,.wrap>.view.vmap{max-width:1500px}
+ .voffice .office.deskh{width:min(100%,calc((100vh - 150px) * 1600 / 893))}
+ .vloc>.scene,.vloc>.office{width:min(100%,calc((100vh - 400px) * 2576 / 1438));aspect-ratio:2576/1438;margin-inline:auto;min-width:min(100%,560px)}
+ .vloc>.locside{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-auto-flow:row dense;column-gap:28px;row-gap:0;align-content:start;width:min(100%,max(560px,calc((100vh - 400px) * 2576 / 1438)));margin-inline:auto}
+ .vloc .locside>.lochead{grid-column:1;grid-row:1/span 30;align-self:start}
+ .vloc .locside>:not(.lochead){grid-column:2;margin-bottom:10px}
+ .vloc .locside h2{font-size:26px}
+}
+@media (min-width:1000px) and (min-aspect-ratio:2/1){
+ .vloc{grid-template-columns:minmax(0,1fr) 360px;align-items:start;column-gap:28px}
+ .vloc>.scene,.vloc>.office{grid-column:1;width:min(100%,calc((100vh - 120px) * 2576 / 1438));margin:0 auto}
+ .vloc>.locside{grid-column:2;display:grid;grid-template-columns:1fr;width:auto;max-height:calc(100vh - 120px);overflow:auto}
+ .vloc .locside>*{grid-column:1!important;grid-row:auto!important;margin:0!important}
+ .vloc>.locside{row-gap:12px}
+}
+
