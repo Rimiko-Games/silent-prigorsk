@@ -16,13 +16,13 @@ CASES[2]={id:2,no:'№ 2',callAbout:()=>has('ident')?'по делу об уби�
   barmina:{fio:'Бармина Лилия',born:'03.03.1985',addr:'Пригорск, ул. Промышленная, 3',job:'бухгалтер',crim:'нет',car:'Kia Sportage, белая',prints:'нет в картотеке',note:'жена Бармина Т.'},
   kolesnikovv:{fio:'Колесников Виктор',born:'01.05.1950',addr:'Пригорск, пр. Мира, 23',job:'пенсионер',crim:'нет',car:'нет',prints:'нет в картотеке',status:'УМЕР 2019',note:'отец Колесникова А.'}},
  locs:{
-  otdel:{name:'Районный отдел полиции',short:'Отдел',x:332,y:42},
-  home:{name:'Квартира Колесниковых',addr:'пр. Мира, 23, кв. 14',short:'Мира, 23',x:106,y:112,img:'c2_home',who:['irina'],knock:'Позвонить в квартиру',emptyNote:'У вас её запасной ключ, можно осмотреть квартиру.',
+  otdel:{name:'Районный отдел полиции',short:'Отдел',x:54,y:37},
+  home:{name:'Квартира Колесниковых',addr:'пр. Мира, 23, кв. 14',short:'Мира, 23',x:18,y:38,img:'c2_home',who:['irina'],knock:'Позвонить в квартиру',emptyNote:'У вас её запасной ключ, можно осмотреть квартиру.',
    actions:[{l:'Осмотреть кладовку',sub:'Где лежали походные вещи',doneText:'Половина полок пустая',t:.5,run:()=>addClue('closet')},{l:'Выйти на балкон',sub:'Жена говорила, он ночами курил',doneText:'Банка с окурками',t:.25,run:()=>addClue('prima')},{l:'Осмотреть стол Андрея',sub:'Бумаги, записи',doneText:'Найдена записка',t:.5,run:()=>{addClue('note');pin('garage');found('zhora')}}]},
-  zavod:{name:'Завод «Пригорскмаш»',addr:'ул. Заводская, 40',short:'Завод',x:268,y:196,img:'c2_zavod',who:['kuzmin','zaitseva','chernov'],note:'Проходная, сварочный цех, отдел кадров'},
-  garage:{name:'Гаражный кооператив «Мотор»',addr:'бокс 17',short:'Гаражи',x:352,y:150,img:'c2_garage',who:['zhora'],knock:'Зайти в бокс 17'},
-  tire:{name:'Шиномонтаж «Колесо»',addr:'ул. Промышленная, 3',short:'Шиномонтаж',x:204,y:252,img:'c2_tire',overlay:'<div class="sign" style="left:27.6%;top:34.6%;width:15.2%;height:13.2%">ШИНОМОНТАЖ<small>«КОЛЕСО»</small></div>',who:['barmin','ryabov']},
-  forest:{name:'Лес у Чёрного лога',addr:'15 км от города',far:true,short:'Чёрный лог',x:62,y:232,note:'Место обнаружения тела',
+  zavod:{name:'Завод «Пригорскмаш»',addr:'ул. Заводская, 40',short:'Завод',x:73,y:37,img:'c2_zavod',who:['kuzmin','zaitseva','chernov'],note:'Проходная, сварочный цех, отдел кадров'},
+  garage:{name:'Гаражный кооператив «Мотор»',addr:'бокс 17',short:'Гаражи',x:80,y:55,img:'c2_garage',who:['zhora'],knock:'Зайти в бокс 17'},
+  tire:{name:'Шиномонтаж «Колесо»',addr:'ул. Промышленная, 3',short:'Шиномонтаж',x:71,y:61,img:'c2_tire',overlay:'<div class="sign" style="left:27.6%;top:34.6%;width:15.2%;height:13.2%">ШИНОМОНТАЖ<small>«КОЛЕСО»</small></div>',who:['barmin','ryabov']},
+  forest:{name:'Лес у Чёрного лога',addr:'15 км от города',far:true,short:'Чёрный лог',x:14,y:14,note:'Место обнаружения тела',
    scene:{img:'c2_forest',hot:[
     {l:'Палатка',x:29,y:40,w:31,h:28,clue:'tent',t:.5},{l:'Рюкзак',x:27,y:63,w:10,h:22,clue:'pack',t:.5,also:['photo']},{l:'Термос',x:39.5,y:72,w:7,h:16,clue:'thermos',t:.5},
     {l:'Кострище',x:58,y:76,w:17,h:16,clue:'butt',t:.5},{l:'Колея',x:70,y:40,w:30,h:30,clue:'tracks',t:1},{x:19,y:64,w:8,h:18,text:'Пень. На нём резали хлеб: крошки и свежие следы ножа.'},
@@ -172,15 +172,4 @@ CASES[2]={id:2,no:'№ 2',callAbout:()=>has('ident')?'по делу об уби�
   if(r){if(has('confessR')||(has('buttmatch')&&has('uazsearch')))return {res:'partial',text:'Рябов осуждён на 14 лет. Но тот, кто его послал, остался на свободе: Бармина вы в суд не передали.\nЧерез месяц Бармалей открыл вторую мастерскую.'};
    return {res:'return',text:'Против Рябова недостаточно улик. Дело возвращено, вы потеряли день.'}}
   return {res:'lose',text:'Бармин оправдан: он не был в лесу, прямых улик против него нет. Исполнитель гуляет на свободе.'}},
- mapBase:()=>`<rect width="400" height="300" fill="#e8ddc1"/>
- <g fill="#9fb48d" opacity=".6">${[[30,220],[55,250],[90,270],[20,270],[110,240],[70,205],[40,290],[130,285]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="20"/>`).join('')}</g>
- <text x="14" y="294" font-family="PT Mono,monospace" font-size="8" fill="#4f5e44" letter-spacing="1">ЛЕС · ЧЁРНЫЙ ЛОГ</text>
- <path d="M0 70q120 30 220 6t180 30" stroke="#7fa6bf" stroke-width="14" fill="none" opacity=".7"/><text x="150" y="70" font-family="PT Mono,monospace" font-size="8" fill="#3c5b70" letter-spacing="2">Р. ЗОЛОТУХА</text>
- <rect x="226" y="168" width="92" height="50" fill="#cdbd96"/><g stroke="#b8a77f" stroke-width="2">${Array.from({length:8},(_,i)=>`<path d="M${230+i*11} 214l10-42"/>`).join('')}</g>
- <g fill="#bba980">${Array.from({length:6},(_,i)=>`<rect x="${328+i*9}" y="160" width="7" height="10"/>`).join('')}</g>
- <g stroke="#b8a77f" stroke-width="10" fill="none" stroke-linecap="round"><path d="M20 130H390"/><path d="M170 130V262"/><path d="M170 262H360"/><path d="M268 130V168"/><path d="M332 130V56"/><path d="M350 130V160"/></g>
- <g stroke="#f5efe0" stroke-width="1.2" fill="none" stroke-dasharray="4 4"><path d="M20 130H390"/><path d="M170 130V262"/><path d="M170 262H360"/></g>
- <path d="M170 262Q120 256 66 234" stroke="#8a7550" stroke-width="3" fill="none" stroke-dasharray="6 4"/>
- <g fill="#cdbd96">${[[60,92],[86,92],[130,92],[190,92],[216,96],[60,148],[90,148],[200,148],[230,140],[120,180],[120,206]].map(([x,y])=>`<rect x="${x}" y="${y}" width="20" height="16"/>`).join('')}</g>
- <g font-family="PT Mono,monospace" font-size="8" fill="#6b604a" letter-spacing="1"><text x="24" y="124">ПР. МИРА</text><text x="176" y="200" transform="rotate(90 176 200)">ЗАВОДСКАЯ</text><text x="250" y="278">УЛ. ПРОМЫШЛЕННАЯ</text><text x="244" y="226">ЗАВОД</text><text x="96" y="252" transform="rotate(-25 96 252)">просёлок</text></g>
- <text x="12" y="20" font-family="Oswald,Impact,sans-serif" font-size="16" fill="#2a251b" letter-spacing="2">г. ПРИГОРСК</text>`};
+ mapView:{x:0,y:0,s:100}};

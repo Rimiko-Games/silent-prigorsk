@@ -1,7 +1,8 @@
 /* Silent Prigorsk · Actions: travel, dialogs, court, click handling, startup. */
 /* ================= ACTIONS ================= */
 function startCase(id){RQ.length=0;drawRadio();NQ.length=0;drawNote();CS=CASES[id];S=fresh(CS);Object.assign(UI,{tab:'here',modal:'brief',inside:false,reveal:[],view:null,sel:[],phoneMsg:null,newClues:new Set(),title:false});render();window.scrollTo(0,0)}
-function travel(a,b){if(a===b)return 0;if(a==='otdel'||b==='otdel')return 1;const A=CS.locs[a],B=CS.locs[b];if(A.far||B.far)return 1;return (Math.hypot(A.x-B.x,A.y-B.y)<=60||(Math.abs(A.y-B.y)<12&&Math.abs(A.x-B.x)<=120))?.25:.5}
+/* Travel time by the city map (coordinates in % of the map): same street or next door 15 min, across town 30 min, outskirts and forest 1 h */
+function travel(a,b){if(a===b)return 0;const A=CS.locs[a],B=CS.locs[b];if(A.far||B.far)return 1;if(A.st&&A.st===B.st)return .25;const d=Math.hypot(A.x-B.x,A.y-B.y);return d<=4?.25:d<=40?.5:1}
 const tlabel=h=>(h<=.25?'ехать · 15 мин':h<1?'ехать · 30 мин':'ехать · 1 ч');
 function anim(kind,txt,h,dur,cb){const el=document.getElementById('trav');const t0=S.t,tm=document.querySelector('.bar .time');let done=false,start=performance.now();
  const lab=typeof txt==='function'?txt:()=>txt;el.innerHTML=`<div class="tv ${kind}"><div class="tvin"><b>${lab(0)}</b><div class="tvbar"><i></i></div><span class="tvt">${fmt(t0)}</span></div></div>`;
@@ -49,7 +50,9 @@ document.addEventListener('click',e=>{const el=e.target.closest('[data-a]');if(!
  case 'rvclose':UI.view=null;render();break;
  case 'view':UI.view=id;render();break;
  case 'mus':startMusic(!UI.music);render();break;
- case 'pin':case 'go':go(id);break;
+ case 'pin':if(innerWidth<1000&&S.loc!==id&&UI.mapSel!==id){UI.mapSel=id;render();break}UI.mapSel=null;go(id);break;
+ case 'go':UI.mapSel=null;go(id);break;
+ case 'mapoff':if(e.target===el){UI.mapSel=null;render()}break;
  case 'inside':UI.inside=!UI.inside;render();break;
  case 'spot':{const sc=curScene(),h=sc.hot[+el.dataset.i];if(h.clue&&!has(h.clue)){advance(h.t||.5);if(S.over)return render();addClue(h.clue);arr(h.also).forEach(addClue);if(h.toast)toast(h.toast)}else if(h.text)note(h.text,+el.dataset.i);else toast('Уже осмотрено.');render();break}
  case 'lact':{const i=+el.dataset.i,ac=CS.locs[S.loc].actions[i];if(S.done[S.loc+i]){if(ac.go)setTab(ac.go);return}advance(ac.t);if(S.over)return render();S.done[S.loc+i]=true;ac.run();render();break}

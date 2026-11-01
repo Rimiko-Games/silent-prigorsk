@@ -114,6 +114,8 @@ def case1(g):
     g.js("UI.hintOff=true")
     if pg.viewport_size["width"] < 1000:
         assert not pg.locator("#nav .navx").is_visible(), "PC-only wait/home buttons visible on phone"
+    # City map travel: neighbours on one street 15 min, village 30 min, town 1 h
+    assert g.js("[travel('tk','bu'),travel('scene','la'),travel('scene','otdel')]") == [0.25, 0.5, 1], "case 1 travel times"
     # Lab: knife and wallet
     g.js("UI.modal='labm';render()")
     g.click("[data-a=lab][data-id=knife]")
@@ -202,6 +204,13 @@ def case2(g):
     g.go("home")
     for i in range(3):
         g.click(f"[data-a=lact][data-i='{i}']")
+    # Phone map: tap a pin, then "Go" in the card
+    if pg.viewport_size["width"] < 1000:
+        g.tab("map")
+        g.click('.cmap .mpin[data-id=otdel]')
+        assert g.js("UI.mapSel") == "otdel", "pin tap did not select"
+        g.click('.mpop [data-a=go]')
+        assert g.js("S.loc") == "otdel", "map card did not travel"
     g.go("zavod")
     g.click("[data-a=knock][data-id=kuzmin]"); g.ask("q:a", "q:b"); g.bye()
     g.click("[data-a=knock][data-id=zaitseva]"); g.ask("q:a", "q:b"); g.bye()
