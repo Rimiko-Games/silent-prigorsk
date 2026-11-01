@@ -34,7 +34,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--amber);outline-
 .hint button{margin-left:auto;background:none;border:none;color:var(--dim);font-size:18px;line-height:1;padding:0 2px}
 
 /* sections */
-.view{padding-block:18px 0;display:grid;gap:16px;animation:in .3s ease both}
+.view{padding-block:18px 0;display:grid;gap:16px}
 h1,h2,h3{font-family:var(--display);font-weight:600;margin:0;text-wrap:balance;letter-spacing:.02em}
 h2{font-size:22px}
 h3{font-size:15px;font-weight:400;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
@@ -265,7 +265,7 @@ body::before{background:#151614 url(../img/t_leather.webp) repeat;background-siz
 
 /* modal */
 .modal{position:fixed;inset:0;z-index:20;background:rgba(6,8,7,.82);display:flex;align-items:flex-end;justify-content:center}
-.sheet{width:100%;max-width:560px;max-height:92%;overflow:auto;background:var(--desk2);border-radius:12px 12px 0 0;border:1px solid var(--line);border-bottom:none;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:16px calc(20px + env(safe-area-inset-bottom,0px));display:grid;gap:14px;animation:up .25s ease}
+.sheet{width:100%;max-width:560px;max-height:92%;overflow:auto;background:var(--desk2);border-radius:12px 12px 0 0;border:1px solid var(--line);border-bottom:none;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:16px calc(20px + env(safe-area-inset-bottom,0px));display:grid;gap:14px}
 .sheet .top{display:flex;align-items:center;gap:10px;position:sticky;top:-16px;z-index:10;background:var(--desk2);margin-top:-16px;padding-block:14px 8px}
 .back{width:100%;min-height:50px}
 .sheet{padding-block:16px calc(24px + env(safe-area-inset-bottom,0px))!important;max-height:88%}
@@ -531,3 +531,6 @@ figure.scene{position:relative}
  .vloc>.locside{row-gap:12px}
 }
 
+
+/* no entrance animation on screens and windows: everything stays still */
+.view,.sheet{animation:none!important}

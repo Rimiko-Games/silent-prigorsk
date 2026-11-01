@@ -163,11 +163,7 @@ function render(){const app=document.getElementById('app');deliver();
  if(m==='talk'){const s=M.querySelector('.sheet');if(s){if(S.dlg.log.length<=1)s.scrollTop=0;else{const qs=s.querySelectorAll('.log .q'),last=qs[qs.length-1];if(last)s.scrollTop+=last.getBoundingClientRect().top-s.getBoundingClientRect().top-80;else s.scrollTop=s.scrollHeight}}}
  if(m==='talk'){const sh=M.querySelector('.sheet'),rh=sh&&sh.querySelector('.roomhead'),st=sh&&sh.querySelector('.tstrip.auto');if(rh&&st){const f=()=>st.classList.toggle('show',rh.getBoundingClientRect().bottom<sh.getBoundingClientRect().top+70);sh.addEventListener('scroll',f,{passive:true});f()}}
  const R=document.getElementById('reveal');R.innerHTML=UI.reveal.length?revealHTML(UI.reveal[0],'rvok'):UI.view?revealHTML(UI.view,'rvclose'):'';
- const sd=document.getElementById('side');if(sd)sd.innerHTML=sideHTML();
- /* entrance animations play only when a screen or window really opens, not on every redraw */
- const vk=UI.tab+'|'+S.loc+'|'+UI.inside,mk=m?(typeof m==='object'?JSON.stringify(m):m)+'|'+(S.dlg?S.dlg.who:''):'';
- if(vk===UI._vk){const v=app.querySelector('.view');if(v)v.style.animation='none'}UI._vk=vk;
- if(mk&&mk===UI._mk){const sh=M.querySelector('.sheet');if(sh)sh.style.animation='none'}UI._mk=mk;if(m==='talk'){const sh=M.querySelector('.sheet');if(sh)sh.classList.add('tsheet')}
+ const sd=document.getElementById('side');if(sd)sd.innerHTML=sideHTML();if(m==='talk'){const sh=M.querySelector('.sheet');if(sh)sh.classList.add('tsheet')}
  if(UI.tab==='case')setTimeout(()=>UI.newClues.clear(),1600);fitDesk();checkHint();requestAnimationFrame(threads)}
 function fitDesk(){const o=document.querySelector('.office.deskv');if(!o)return;const bar=document.querySelector('.bar'),nav=document.getElementById('nav');if(!bar||!nav||getComputedStyle(o).display==='none')return;
  const h=window.innerHeight-bar.getBoundingClientRect().bottom-nav.getBoundingClientRect().height-22;o.style.maxHeight=Math.max(260,h)+'px';o.style.width='auto';o.style.marginInline='auto';o.style.height=Math.max(260,h)+'px'}
