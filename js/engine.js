@@ -71,3 +71,7 @@ function prosArrest(id){if(JAIL().includes(id))return short(id)+' уже аре�
  jail(id);mail('Прокурор Ветрова','Санкция на арест: '+short(id),'Санкционирую заключение под стражу '+grazh(id)+' до суда. Доставлен(а) в СИЗО. Допрос возможен в любое время.');
  return 'Хорошо. Санкцию на арест '+genS(id)+' подписываю. Доставят в СИЗО, допрашивайте когда угодно. Дальше дело за судом.'}
 function jail(id){JAIL().push(id);delete S.summons[id];const m=S.smeta[id]=Object.assign(S.smeta[id]||{},{how:'арестован(а) по санкции прокурора',arr:S.t,det:1e9,jail:1,done:true});if(!S.arrived.includes(id))S.arrived.push(id)}
+/* Deal: some people talk only while detained ("скажу, если отпустите"). Question with deal:true, released right after. */
+const dealOn=id=>{const m=S.smeta[id]||{};return !!(m.det&&!m.jail&&!m.deal&&S.t<m.det&&S.arrived.includes(id))};
+const dealQs=id=>dealOn(id)?((CS.dlg[id]||{q:[]}).q.filter(q=>q.deal&&!(S.asked[id]||{})['r'+q.id]&&(!q.cond||q.cond()))):[];
+function release(id,why){const m=S.smeta[id]=S.smeta[id]||{};m.det=0;m.done=true;m.deal=1;S.arrived=S.arrived.filter(x=>x!==id);S.shist.unshift({id,how:m.how,res:why,day:day(),kind:'ok'})}

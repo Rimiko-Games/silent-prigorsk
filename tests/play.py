@@ -206,6 +206,23 @@ def case2(g):
     g.click("[data-a=knock][data-id=chernov]"); g.ask("q:b", "q:c", "q:d"); g.bye()
     g.go("garage"); g.click("[data-a=knock]"); g.ask("press:cards"); g.bye()
     assert g.has("debt"), "Zhora did not talk"
+    # Deal: Zhora talks only while detained, then is released
+    g.js("addClue('body2',true);S.arrived.push('zhora');S.smeta.zhora={how:'повестка',arr:S.t};UI.reveal=[];render()")
+    g.go("otdel")
+    g.tab("calls")
+    g.click("[data-a=room][data-id=zhora]")
+    assert not pg.locator('[data-a=say][data-k="q:deal"]').count(), "deal offered before detention"
+    g.js("say('detain')")
+    pg.locator("#reveal [data-a=detgo]").evaluate("e => e.click()")
+    pg.wait_for_timeout(50)
+    assert g.js("S.smeta.zhora.det>0"), "Zhora not detained"
+    assert pg.locator('[data-a=say][data-k="q:deal"]').count(), "no deal question for detained Zhora"
+    g.click('[data-a=say][data-k="q:deal"]')
+    assert g.has("zh3"), "deal gave no testimony"
+    assert not g.js("S.arrived.includes('zhora')"), "Zhora not released after deal"
+    assert not pg.locator('[data-a=say][data-k=detain]').count(), "can re-detain after deal"
+    g.bye()
+    assert "обмен на свободу" in g.js("S.shist[0].res")
     # Remaining chain scripted through the engine to keep the test short
     g.js("""['ba1','body2','autopsy','tent','pack','thermos','butt','tracks','ident1','ir3','ident','buttlab','tires','uazsearch','shovellab','buttmatch','confessR'].forEach(c=>addClue(c,true));found('barmin');found('ryabov');jail('ryabov');jail('barmin');UI.reveal=[];render()""")
     g.tab("case")

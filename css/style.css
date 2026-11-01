@@ -396,3 +396,7 @@ figure.scene{position:relative}
 .savehint{margin:0;font-size:13px!important;color:#cfc6b0;opacity:.85}
 #saveov .rv{position:fixed;inset:0;z-index:80;background:rgba(4,5,4,.88);display:grid;place-items:center;padding:16px}
 .saveov textarea.savecode{width:100%;min-height:76px;background:#0d0f0d;color:#e6e3da;border:1px solid var(--line);border-radius:6px;padding:8px;font-family:var(--mono);font-size:12px;word-break:break-all}
+
+.dq{color:#9fe0c0;font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.04em;background:rgba(80,190,140,.14);border:1px solid #3f8a68;border-radius:4px;padding:1px 5px;margin-right:4px;white-space:nowrap}
+.act .t .dq+small,.act .t small .dq{display:inline}
+.act .t small.dqo{display:block;margin:6px 0 6px;font-style:italic;color:#c9c2b0}
