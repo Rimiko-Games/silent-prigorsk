@@ -112,6 +112,8 @@ def case1(g):
     pg.click('[data-a=start][data-id="1"]')
     g.click("[data-a=accept]")
     g.js("UI.hintOff=true")
+    if pg.viewport_size["width"] < 1000:
+        assert not pg.locator("#nav .navx").is_visible(), "PC-only wait/home buttons visible on phone"
     # Lab: knife and wallet
     g.js("UI.modal='labm';render()")
     g.click("[data-a=lab][data-id=knife]")
@@ -268,6 +270,7 @@ def desktop_test(pg):
     g.js("UI.hintOff=true")
     g.clear()
     assert pg.locator("#side .sbox").count(), "no side panel on PC"
+    assert pg.locator("#nav .navx").is_visible(), "no wait/home buttons in PC menu"
     pg.keyboard.press("2"); pg.wait_for_timeout(100); g.clear()
     assert g.js("UI.tab") == "map", "key 2 did not open the map"
     pg.keyboard.press("1"); pg.wait_for_timeout(100); g.clear()

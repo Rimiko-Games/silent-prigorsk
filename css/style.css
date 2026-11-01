@@ -402,7 +402,7 @@ figure.scene{position:relative}
 .act .t small.dqo{display:block;margin:6px 0 6px;font-style:italic;color:#c9c2b0}
 
 /* ================= PC / wide screens ================= */
-.side,.board,.tbig,.navx{display:none}
+.side,.board,.tbig,.nav .navx{display:none}
 .locside,.lochead{display:grid;gap:16px;min-width:0}
 .lochead{gap:8px}
 @media (min-width:1000px){
@@ -500,7 +500,7 @@ figure.scene{position:relative}
 
 /* PC: everything fits the window height, no page scroll on office, map and places */
 @media (min-width:1000px){
- .navx{display:grid;gap:6px;margin-top:18px;padding-top:16px;border-top:1px solid #2b2d2a;grid-template-columns:1fr}
+ .nav .navx{display:grid;gap:6px;margin-top:18px;padding-top:16px;border-top:1px solid #2b2d2a;grid-template-columns:1fr}
  .navx button{display:grid;grid-template-columns:44px 1fr auto;align-items:center;gap:12px;padding:10px;border-radius:8px;background:rgba(255,255,255,.03);border:1px solid #2f312c;color:var(--text);font-size:15px;text-align:left;counter-increment:none}
  .navx button::after{content:none!important}
  .navx button:hover{border-color:#6a6450;background:rgba(219,165,68,.08)}
