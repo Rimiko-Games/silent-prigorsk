@@ -21,7 +21,7 @@ function say(k){const d=S.dlg,who=d.who,asked=S.asked[who],room=d.mode==='room';
   const cf=CS.confess&&CS.confess[who];if(cf&&!has(cf.clue)&&cf.check(who)){d.log.push({a:cf.text});addClue(cf.clue);d.done=true}
   if(CS.lawyer&&CS.lawyer[who]===id){S.flags['law_'+who]=1;d.done=true;d.log.push({a:'<i>Скрещивает руки на груди и смотрит в стену. Дальше разговора не будет.</i>'})}render();return}}
 function court(){const r=CS.charge(UI.sel.slice());UI.sel=[];
- if(r.res==='return'){S.t=(Math.floor(S.t/24)+1)*24+8;S.loc='otdel';S.arrived=[];events();mail('Районный суд','Дело возвращено',r.text);toast('Суд вернул дело на доследование');UI.modal=null;if(day()>CS.days){S.over='timeout';UI.modal='end'}render();return}
+ if(r.res==='return'){S.t=(Math.floor(S.t/24)+1)*24+8;S.loc='otdel';S.arrived=S.arrived.filter(x=>JAIL().includes(x));events();mail('Районный суд','Дело возвращено',r.text);toast('Суд вернул дело на доследование');UI.modal=null;if(day()>CS.days){S.over='timeout';UI.modal='end'}render();return}
  S.over=r.res;S.result=r;UI.modal='end';render()}
 function startMusic(on){const a=document.getElementById('bgm');UI.music=on;if(!a)return;if(on){a.volume=.45;a.play().catch(()=>{UI.music=false;render()})}else a.pause()}
 
@@ -58,7 +58,9 @@ document.addEventListener('click',e=>{const el=e.target.closest('[data-a]');if(!
  case 'door':UI.modal=null;setTab('calls');break;
  case 'phone':UI.phoneMsg=null;UI.call=null;UI.modal='phone';render();break;
  case 'dial':startCall(el.dataset.k);break;
- case 'csay':{const c=UI.call;if(!c)break;if(el.dataset.v==='wrong'){c.q='Извините, ошиблись номером.';c.a='<i>(гудки)</i>';c.st='end';render();break}const r=dial(c.k);c.q=r.q;c.a=r.a;c.st='end';render();break}
+ case 'csay':{const c=UI.call;if(!c)break;if(el.dataset.v==='wrong'){c.q='Извините, ошиблись номером.';c.a='<i>(гудки)</i>';c.st='end';render();break}if(el.dataset.v==='srch'||el.dataset.v==='arst'){c.mode=el.dataset.v;c.q=el.dataset.v==='arst'?'Мне нужна санкция на арест.':'Мне нужна санкция на обыск.';c.st='who';render();break}const r=dial(c.k);c.q=r.q;c.a=r.a;c.st='end';render();break}
+ case 'cback':{const c=UI.call;if(c){c.st='pick';c.q=null}render();break}
+ case 'cwho':{const c=UI.call;if(!c)break;const r=c.mode==='arst'?prosArrest(id):prosSearch(id);c.q=(c.mode==='arst'?'Прошу санкцию на арест: ':'Прошу санкцию на обыск: ')+P(id).fio+'.';c.a=r;c.st='end';render();break}
  case 'hang':UI.call=null;render();break;
  case 'base':UI.modal='base';render();setTimeout(()=>{const i=document.getElementById('bq');if(i&&!S.base.rec)i.focus()},50);break;
  case 'brec':S.base.rec=id;found(id);CS.onRec&&CS.onRec(id);render();break;

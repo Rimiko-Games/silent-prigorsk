@@ -1,6 +1,6 @@
 /* Silent Prigorsk · Engine: game state, time, mail, lab, summons, rollover, radio and notes. */
 /* ================= STATE ================= */
-function fresh(c){const s=c.start;const o={cid:c.id,t:9,loc:'otdel',clues:s.clues.slice(),pins:s.pins.slice(),found:(s.found||[]).slice(),ev:s.ev.slice(),lab:{},prints:{},summons:{},arrived:(s.arrived||[]).slice(),phone:!!s.phone,warrant:false,searched:false,done:{},asked:{},presented:{},mail:[],over:null,dlg:null,result:null,base:{q:'',res:null,rec:null},flags:{},smeta:{},shist:[]};(s.arrived||[]).forEach(id=>o.smeta[id]={how:'пришла сама, с заявлением',arr:9});return o}
+function fresh(c){const s=c.start;const o={cid:c.id,t:9,loc:'otdel',clues:s.clues.slice(),pins:s.pins.slice(),found:(s.found||[]).slice(),ev:s.ev.slice(),lab:{},prints:{},summons:{},arrived:(s.arrived||[]).slice(),jail:[],phone:!!s.phone,warrant:false,searched:false,done:{},asked:{},presented:{},mail:[],over:null,dlg:null,result:null,base:{q:'',res:null,rec:null},flags:{},smeta:{},shist:[]};(s.arrived||[]).forEach(id=>o.smeta[id]={how:'пришла сама, с заявлением',arr:9});return o}
 const pc=w=>Object.keys(S.presented).filter(k=>k.startsWith(w+':')).length;
 function toast(m,c){const e=document.createElement('div');e.className='toast '+(c||'');e.textContent=m;document.getElementById('toasts').appendChild(e);setTimeout(()=>e.remove(),3900)}
 function addClue(c,silent){if(has(c))return;const d=CS.clues[c];if(!d)return;S.clues.push(c);UI.newClues.add(c);if(d.ev&&!S.ev.includes(d.ev))S.ev.push(d.ev);if(CS.clueOn&&CS.clueOn[c])CS.clueOn[c]();if(silent){}else if(d.k==='find'||d.k==='lab')UI.reveal.push(c);runTriggers()}
@@ -61,3 +61,13 @@ function events(){
  runTriggers()}
 function cmpPrints(id){const sm=CS.sample,it=CS.items[sm.lab],x=S.lab[sm.lab];const pr=S.prints[id];if(!x||!x.done)return 'Сверка с отпечатками с места происшествия будет проведена, когда готово заключение: '+it.n.toLowerCase()+'.';pr.st='cmp';if(sm.match[id]){pr.clue=sm.match[id];return 'СВЕРКА: отпечатки СОВПАДАЮТ с отпечатками с места происшествия ('+it.n.toLowerCase()+').'}return 'Сверка с отпечатками с места происшествия ('+it.n.toLowerCase()+'): совпадений нет.'}
 function checkSample(){for(const id in S.prints){const pr=S.prints[id];if(pr.st==='card'){const t=cmpPrints(id);mail('Криминалистическая лаборатория','Сверка отпечатков: '+short(id),t,{clues:pr.clue?[pr.clue]:[],tag:'сверка отпечатков: '+short(id)})}}}
+
+/* Prosecutor: search warrant and arrest for a chosen person */
+const JAIL=()=>S.jail||(S.jail=[]);
+function prosCandidates(mode){return S.found.filter(id=>talkable(id)&&!(mode==='arst'&&JAIL().includes(id))&&!(mode==='srch'&&!(P(id).loc&&CS.locs[P(id).loc])))}
+function prosSearch(id){const w=CS.warrant;if(!w||w.who!==id){advance(1.5);return 'Обыск у '+genS(id)+'? На каком основании, Курейко? Против этого человека у вас ничего нет. Не подпишу.'}return warrantReply()}
+function prosArrest(id){if(JAIL().includes(id))return short(id)+' уже арестован(а), Курейко.';advance(1.5);const r=(CS.arrest||{})[id];
+ if(!r||!r.cond())return r&&r.no?val(r.no):'Арест '+genS(id)+'? Курейко, подозрения не доказательства. Мне нужны улики, которые прямо указывают на этого человека. Не подпишу.';
+ jail(id);mail('Прокурор Ветрова','Санкция на арест: '+short(id),'Санкционирую заключение под стражу '+grazh(id)+' до суда. Доставлен(а) в СИЗО. Допрос возможен в любое время.');
+ return 'Хорошо. Санкцию на арест '+genS(id)+' подписываю. Доставят в СИЗО, допрашивайте когда угодно. Дальше дело за судом.'}
+function jail(id){JAIL().push(id);delete S.summons[id];const m=S.smeta[id]=Object.assign(S.smeta[id]||{},{how:'арестован(а) по санкции прокурора',arr:S.t,det:1e9,jail:1,done:true});if(!S.arrived.includes(id))S.arrived.push(id)}

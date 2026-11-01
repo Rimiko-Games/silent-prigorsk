@@ -90,6 +90,19 @@ class Game:
         self.click("[data-a=hang]")
         self.js("UI.modal=null;render()")
 
+    def pros(self, mode, who):
+        self.js("UI.modal='phone';UI.call=null;render()")
+        self.click('[data-a=dial][data-k="pros"]')
+        self.pg.wait_for_timeout(1300)
+        self.click(f"[data-a=csay][data-v={mode}]")
+        self.click(f"[data-a=cwho][data-id={who}]")
+        answer = self.js("UI.call && UI.call.a")
+        if self.pg.locator("[data-a=hang]").count():
+            self.click("[data-a=hang]")
+        self.clear()
+        self.js("UI.modal=null;render()")
+        return answer
+
     def has(self, c):
         return self.js(f"has('{c}')")
 
@@ -128,7 +141,9 @@ def case1(g):
     assert g.has("me2"), "Melnik did not lie"
     # Warrant
     g.go("otdel")
-    g.call("pros")
+    refused = g.pros("srch", "busov")
+    assert not g.js("!!S.warrant") and "Не подпишу" in refused, "search of wrong person was allowed"
+    g.pros("srch", "melnik")
     assert g.js("!!S.warrant"), "warrant refused: " + str(g.js("val(CS.warrant.no)"))
     g.go("me")
     g.click("[data-a=search]")
@@ -157,7 +172,11 @@ def case1(g):
     g.read_mail()
     assert g.has("match"), "prints did not match"
     assert g.has("jacketlab"), "jacket lab missing"
-    # Court
+    # Arrest, then court
+    g.pros("arst", "melnik")
+    assert g.js("S.jail.includes('melnik')"), "arrest refused"
+    g.tab("calls")
+    assert "арестован" in g.pg.locator("[data-a=room][data-id=melnik]").inner_text()
     g.tab("case")
     g.click("[data-a=accuse]")
     g.click("[data-a=pick][data-id=melnik]")
@@ -169,7 +188,7 @@ def case1(g):
 
 def case2(g):
     pg = g.pg
-    g.js("UI.title=true;S=null;render()")
+    g.js("localStorage.clear();UI.title=true;S=null;render()")
     pg.click('[data-a=start][data-id="2"]')
     g.click("[data-a=accept]")
     g.js("UI.hintOff=true")
@@ -188,7 +207,7 @@ def case2(g):
     g.go("garage"); g.click("[data-a=knock]"); g.ask("press:cards"); g.bye()
     assert g.has("debt"), "Zhora did not talk"
     # Remaining chain scripted through the engine to keep the test short
-    g.js("""['ba1','body2','autopsy','tent','pack','thermos','butt','tracks','ident1','ir3','ident','buttlab','tires','uazsearch','shovellab','buttmatch','confessR'].forEach(c=>addClue(c,true));found('barmin');found('ryabov');UI.reveal=[];render()""")
+    g.js("""['ba1','body2','autopsy','tent','pack','thermos','butt','tracks','ident1','ir3','ident','buttlab','tires','uazsearch','shovellab','buttmatch','confessR'].forEach(c=>addClue(c,true));found('barmin');found('ryabov');jail('ryabov');jail('barmin');UI.reveal=[];render()""")
     g.tab("case")
     g.click("[data-a=accuse]")
     g.click("[data-a=pick][data-id=ryabov]")
