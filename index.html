@@ -1,0 +1,1128 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Тихий Пригорск</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=PT+Sans:ital,wght@0,400;0,700;1,400&family=PT+Mono&display=swap">
+<style>
+/* Layout: investigator's desk. Sticky clock bar on top, one working surface in the middle, four drawers (tabs) at the bottom */
+:root{
+  --desk:#1c201e; --desk2:#252a27; --line:#39413b; --text:#e6e3da; --dim:#9aa197;
+  --paper:#e8ddc1; --paper2:#d9cca9; --ink:#2a251b; --ink2:#6b604a;
+  --stamp:#b8362e; --amber:#dba544; --crt:#0b140f; --crtfg:#8fe39a; --crtdim:#4f8a5a; --water:#7fa6bf;
+  --display:'Oswald','Arial Narrow',Impact,sans-serif;
+  --body:'PT Sans','Helvetica Neue',Arial,sans-serif;
+  --mono:'PT Mono',ui-monospace,Menlo,monospace;
+  color-scheme:dark;
+}
+html,body{height:100%}
+body{background:var(--desk) url(img/t_wood.webp) repeat;background-size:420px;color:var(--text);font-family:var(--body);font-size:16px;line-height:1.5;-webkit-tap-highlight-color:transparent}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--desk)}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+.wrap{max-width:560px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 calc(92px + env(safe-area-inset-bottom,0px))}
+
+/* top bar */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:6;background:var(--desk);border-bottom:1px solid var(--line);padding-block:10px;display:grid;gap:8px}
+.clock{display:flex;align-items:center;gap:12px}
+.time{font-family:var(--display);font-size:28px;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:.02em}
+.daybox{display:grid;line-height:1.2}
+.daybox b{font-family:var(--display);font-weight:400;font-size:14px;letter-spacing:.06em;text-transform:uppercase}
+.daybox span{font-size:12px;color:var(--dim)}
+.where{margin-left:auto;text-align:right;font-size:12px;color:var(--dim);line-height:1.3;min-width:0}
+.where b{display:block;color:var(--text);font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.deadline{height:4px;background:var(--desk2);border-radius:2px;overflow:hidden}
+.deadline i{display:block;height:100%;background:var(--amber);transition:width .4s}
+.hint{display:flex;gap:10px;align-items:flex-start;background:var(--desk2);border:1px dashed #5b5236;border-radius:4px;padding:8px 10px;font-size:14px;color:#e9d9a8}
+.hint b{font-family:var(--display);font-weight:400;font-size:12px;letter-spacing:.1em;color:var(--amber);padding-top:2px}
+.hint button{margin-left:auto;background:none;border:none;color:var(--dim);font-size:18px;line-height:1;padding:0 2px}
+
+/* sections */
+.view{padding-block:18px 0;display:grid;gap:16px;animation:in .3s ease both}
+h1,h2,h3{font-family:var(--display);font-weight:600;margin:0;text-wrap:balance;letter-spacing:.02em}
+h2{font-size:22px}
+h3{font-size:15px;font-weight:400;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+.muted{color:var(--dim);font-size:14px}
+
+/* folder */
+.folder{background:var(--paper);color:var(--ink);border-radius:2px 10px 4px 4px;padding:18px 16px 20px;position:relative;box-shadow:0 2px 0 var(--paper2),0 10px 30px rgba(0,0,0,.35)}
+.folder::before{content:"";position:absolute;top:-14px;left:0;width:42%;height:16px;background:var(--paper);border-radius:6px 10px 0 0}
+.folder .no{font-family:var(--mono);font-size:12px;color:var(--ink2);letter-spacing:.06em}
+.folder h2{color:var(--ink);font-size:26px;margin:2px 0 6px}
+.stampmark{position:absolute;top:16px;right:14px;font-family:var(--display);font-size:13px;letter-spacing:.14em;color:var(--stamp);border:2px solid var(--stamp);padding:2px 8px;transform:rotate(6deg);opacity:.85}
+.fsec{margin-top:16px;display:grid;gap:8px}
+.fsec h4{margin:0;font-family:var(--display);font-weight:400;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2);border-bottom:1px solid #bfb08a;padding-bottom:4px}
+.clue{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;font-size:15px;line-height:1.4}
+.clue .k{font-family:var(--mono);font-size:10px;letter-spacing:.04em;text-transform:uppercase;padding:2px 5px;border-radius:2px;background:var(--ink);color:var(--paper);margin-top:2px;white-space:nowrap}
+.clue .k.lab{background:#2f4f6a}.clue .k.wit{background:#5a4a2a}.clue .k.base{background:#2d5a3a}.clue .k.find{background:var(--stamp)}
+.clue.new{animation:glow 1.6s ease}
+.ev{display:flex;gap:10px;flex-wrap:wrap}
+.evc{flex:1 1 140px;background:#f2ead6;border:1px solid #c7b88f;border-radius:3px;padding:8px 10px;font-size:14px}
+.evc b{display:block;font-family:var(--display);font-weight:600;font-size:15px}
+.evc small{color:var(--ink2)}
+.accuse{margin-top:18px;width:100%;background:var(--ink);color:var(--paper);border:none;border-radius:3px;padding:14px;font-family:var(--display);font-size:18px;letter-spacing:.08em;text-transform:uppercase}
+
+/* buttons & cards */
+.card{background:var(--desk2);border:1px solid var(--line);border-radius:6px;padding:14px;display:grid;gap:10px}
+.card h3{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.act{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:#2c322e;border:1px solid var(--line);border-radius:5px;padding:12px 14px;min-height:52px}
+.act:active{transform:scale(.985)}
+.act .t{flex:1;min-width:0}
+.act .c{font-family:var(--mono);font-size:12px;color:var(--amber);white-space:nowrap}
+.act.dis{opacity:.45;cursor:not-allowed}
+.act small{display:block;font-size:12px;color:var(--dim)}
+.primary{background:var(--amber);color:#1c1a12;border:none;border-radius:5px;padding:14px;font-family:var(--display);font-weight:600;font-size:17px;letter-spacing:.06em;text-transform:uppercase;width:100%;min-height:52px}
+.scene{margin:0;aspect-ratio:400/220;max-width:100%;border-radius:6px;overflow:hidden;border:1px solid var(--line);background:#111}
+.scene svg{display:block;width:100%;height:100%}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.row>*{flex:1 1 140px}
+.pill{font-family:var(--mono);font-size:11px;padding:2px 7px;border-radius:10px;background:#33392f;color:var(--dim)}
+.pill.ok{background:#22422c;color:#9fe0a8}.pill.wait{background:#4a3c1c;color:#f0cf7a}
+
+/* office */
+.office{margin:0;border-radius:6px;overflow:hidden;border:1px solid var(--line);aspect-ratio:400/260;max-width:100%;background:#2f3b35}
+.office svg{display:block;width:100%;height:100%}
+.hot{cursor:pointer;transition:filter .15s}
+.hot:hover,.hot:active{filter:brightness(1.18) drop-shadow(0 0 4px rgba(219,165,68,.6))}
+.hot.glow{animation:hot 1.6s ease-in-out infinite}
+.olbl{font-family:'PT Mono',monospace;font-size:7px;fill:#e8ddc1;letter-spacing:.08em;paint-order:stroke;stroke:#1c201e;stroke-width:2.4px;pointer-events:none}
+.blinkt{animation:blink 1s steps(2) infinite}
+@keyframes hot{0%,100%{filter:none}50%{filter:brightness(1.25) drop-shadow(0 0 6px rgba(219,165,68,.95))}}
+/* photo office */
+.office{position:relative;border-radius:6px;overflow:hidden;border:1px solid var(--line);aspect-ratio:2576/1438;max-width:100%;background:#1a1a17}
+.office>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.dim{position:absolute;inset:0;background:#0b0d14;pointer-events:none;transition:opacity .6s}
+.lampglow{position:absolute;left:36%;top:18%;width:44%;height:62%;background:radial-gradient(closest-side,rgba(255,214,140,.22),transparent);pointer-events:none;mix-blend-mode:screen}
+.oclock{position:absolute;left:2%;top:90%;font-family:var(--mono);font-size:clamp(8px,1.8vw,11px);background:rgba(0,0,0,.6);color:#e8ddc1;padding:1px 4px;border-radius:2px;pointer-events:none}
+.hs{position:absolute;background:transparent;border:1.5px solid transparent;border-radius:6px;padding:0;transition:border-color .15s,background .15s}
+.hs:hover,.hs:focus-visible{border-color:rgba(219,165,68,.8);background:rgba(219,165,68,.1)}
+.hs:active{background:rgba(219,165,68,.2)}
+.hs.glow{animation:hsg 1.5s ease-in-out infinite}
+.hl{position:absolute;left:50%;bottom:4px;transform:translateX(-50%);font-family:var(--mono);font-size:clamp(8px,1.9vw,11px);white-space:nowrap;color:#f2e6c8;background:rgba(10,12,10,.62);padding:1px 5px;border-radius:3px;pointer-events:none;letter-spacing:.03em}
+.hb{position:absolute;top:2px;right:2px;min-width:16px;height:16px;border-radius:8px;background:var(--stamp);color:#fff;font-family:var(--mono);font-size:10px;display:grid;place-items:center}
+
+.hs.done{opacity:.5}
+@keyframes hsg{0%,100%{border-color:rgba(219,165,68,.2);box-shadow:none}50%{border-color:rgba(219,165,68,1);box-shadow:0 0 14px rgba(219,165,68,.6),inset 0 0 14px rgba(219,165,68,.25)}}
+.scene img,.face img{display:block;width:100%;height:100%;object-fit:cover}
+.scene{aspect-ratio:2576/1438}
+.face{width:96px;height:128px}
+.item{display:grid;place-items:center;background:radial-gradient(circle,#3a403b,#232825);border-radius:4px;padding:10px;min-height:120px}
+.item img{max-height:150px;max-width:100%;object-fit:contain;filter:drop-shadow(0 6px 8px rgba(0,0,0,.5))}
+.evimg{height:70px;display:grid;place-items:center;margin-bottom:6px;background:#d6c9a6;border-radius:2px}
+.evimg img{max-height:62px;max-width:92%;object-fit:contain;filter:drop-shadow(0 3px 3px rgba(0,0,0,.4))}
+.av{width:36px;height:46px;border-radius:4px;overflow:hidden;flex:none}
+.av img{width:100%;height:100%;object-fit:cover;display:block}
+/* reveal */
+#reveal .rv{position:fixed;inset:0;z-index:40;background:rgba(4,5,4,.86);display:grid;place-items:center;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:calc(16px + env(safe-area-inset-top,0px)) calc(16px + env(safe-area-inset-bottom,0px));animation:in .25s ease}
+.rv-card{width:100%;max-width:440px;background:var(--paper);color:var(--ink);border-radius:4px;padding:18px 16px;display:grid;gap:12px;box-shadow:0 20px 60px rgba(0,0,0,.6);animation:pop .35s cubic-bezier(.2,1.4,.4,1)}
+.rv-card h2{color:var(--ink);font-size:24px}
+.rv-card p{margin:0;font-size:16px;line-height:1.45}
+.rv-stamp{justify-self:start;font-family:var(--display);font-size:13px;letter-spacing:.16em;color:var(--stamp);border:2px solid var(--stamp);padding:2px 8px;transform:rotate(-3deg)}
+.rv-img{background:radial-gradient(circle,#4a4f48,#22261f);border-radius:3px;display:grid;place-items:center;padding:14px;min-height:200px}
+.rv-img img{max-width:100%;max-height:46vh;object-fit:contain;filter:drop-shadow(0 10px 14px rgba(0,0,0,.6))}
+.rv-doc{background:#efe6cf;border:1px solid #c7b88f;border-radius:3px;display:grid;place-items:center;padding:14px;min-height:150px}
+.rv-paper{font-family:var(--mono);font-size:15px;line-height:1.55}
+@keyframes pop{from{transform:scale(.85) rotate(-2deg);opacity:0}to{transform:none;opacity:1}}
+button.clue{width:100%;text-align:left;background:none;border:none;border-bottom:1px dashed #cbbd96;padding:6px 0;color:inherit;grid-template-columns:auto 1fr auto}
+.cv{color:var(--ink2);font-size:18px;line-height:1}
+.evc{cursor:pointer}
+/* title */
+.title{position:fixed;inset:0;z-index:50;background:#0b0c0b;display:grid;align-items:end}
+.title>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:60% 30%}
+.tshade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,8,12,0) 35%,rgba(6,8,12,.9) 75%)}
+.tin{position:relative;max-width:560px;width:100%;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px));padding-block:0 calc(40px + env(safe-area-inset-bottom,0px));display:grid;gap:14px;animation:in .8s ease}
+.title h1{font-family:var(--display);font-weight:600;font-size:clamp(44px,13vw,72px);line-height:.95;text-transform:uppercase;letter-spacing:.02em;color:#efe6cf}
+.tk{font-family:var(--mono);font-size:12px;letter-spacing:.18em;color:var(--amber)}
+.title p{margin:0;color:#cfc6b0;font-size:17px;max-width:34ch}
+.ghost{background:none;border:1px solid #5d5a4c;color:#e6e3da;border-radius:5px;padding:12px;font-size:15px}
+.pill.due{display:grid;justify-items:center;gap:1px;line-height:1.15;padding:4px 10px;border-radius:8px;font-weight:400}.pill.due b{font-weight:400}.pill.due small{font-size:10px;opacity:.75;letter-spacing:.08em}
+#radios .rv{position:fixed;inset:0;z-index:45;background:rgba(4,5,4,.86);display:grid;place-items:center;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:calc(16px + env(safe-area-inset-top,0px)) calc(16px + env(safe-area-inset-bottom,0px));animation:in .25s ease}
+.rhead{display:flex;gap:10px;align-items:center;color:var(--amber);font-family:var(--mono);font-size:12px;letter-spacing:.12em}.rhead svg{flex:none}
+.rsay{font-size:18px!important;line-height:1.45;color:#efe6cf}
+.act.next{border-color:#6b5a2c;background:rgba(40,36,24,.85)}.act.next small{color:#f0d68a;font-size:14px;line-height:1.4;margin-top:4px}
+.toasts{top:0;bottom:0;align-content:center}
+#notes .rv{position:fixed;inset:0;z-index:44;background:rgba(4,5,4,.7);display:grid;place-items:center;padding:16px;animation:in .2s ease}
+.nwrap{width:100%;max-width:400px}
+#notes .rv.anch{display:block;background:transparent}
+.nhl{position:fixed;border:2px solid var(--amber);border-radius:6px;box-shadow:0 0 0 9999px rgba(4,5,4,.72),0 0 18px rgba(219,165,68,.7);pointer-events:none;animation:in .2s ease}
+.note{width:100%;max-width:400px;background:#1b1d1b;border:1px solid #5b5236;border-radius:8px;padding:16px;display:grid;grid-template-columns:auto 1fr;gap:12px 14px;align-items:start;box-shadow:0 20px 60px rgba(0,0,0,.6);animation:pop .3s cubic-bezier(.2,1.4,.4,1)}
+.note svg{color:var(--amber);margin-top:2px}.note p{margin:0;font-size:17px;line-height:1.45;color:#efe6cf}
+.note button{grid-column:1/-1;justify-self:center;background:var(--amber);color:#1c1a12;border:none;border-radius:5px;padding:9px 30px;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.08em}
+button.srow{width:100%;background:none;border:none;border-top:1px dashed var(--line);color:inherit;text-align:left;font:inherit}
+button.srow:first-of-type{border-top:none}
+.srow small.lnk{color:var(--amber)}
+.act.todo{border-left:4px solid #c0392b}.act.okd{border-left:4px solid #3f9a57}
+.act.todo .c,.act.okd .c{text-align:right;display:grid;gap:2px}.act.todo .c{color:#ef6a5a}.act.okd .c{color:#7fd08f}.act .c small{color:var(--dim);font-size:11px}
+.badge.okb,.hb.okb{background:#2f7a45}
+.nav button.tohq{position:absolute;color:#f0d68a;font-size:16px;left:0;right:0;margin:0 auto;width:max-content;bottom:calc(100% + 10px);display:flex;align-items:center;gap:8px;background:#17160f;border:1.5px solid var(--amber);color:#f0d68a;border-radius:24px;padding:10px 18px;min-height:44px;font-family:var(--display);font-size:16px;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;box-shadow:0 6px 18px rgba(0,0,0,.7);animation:none}
+.nav button.tohq small{font-family:var(--mono);font-size:12px;color:var(--amber);opacity:.8;text-transform:none}
+button.hqbtn{background:none;border:none;padding:0;min-width:max-content;flex:none;display:grid;justify-items:end;gap:4px;font:inherit}
+button.hqbtn b{font-size:13px;color:var(--dim);font-weight:400}
+.hq{display:block;font-family:var(--display);font-weight:600;font-size:13px;line-height:1.15;letter-spacing:.05em;text-transform:uppercase;color:#1c1408;background:#e8862a;border-radius:8px;padding:6px 12px;white-space:nowrap;text-align:center;animation:hqpulse 1.6s ease-in-out infinite}
+@keyframes hqpulse{0%,100%{box-shadow:0 0 0 0 rgba(232,134,42,.0);filter:brightness(.95)}50%{box-shadow:0 0 14px 4px rgba(232,134,42,.6);filter:brightness(1.12)}}
+.nav button{position:relative}.youhere{position:absolute;top:-6px;left:50%;transform:translateX(-50%);font-style:normal;font-family:var(--mono);font-size:9px;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;background:var(--amber);color:#1c1a12;border-radius:6px;padding:1px 5px;z-index:2}
+.mus.sm{padding:4px 9px;font-size:14px}.mus.sm.off{opacity:.45;text-decoration:line-through}
+.daybox b{white-space:nowrap}
+.locdesc{font-size:17px!important;line-height:1.45;color:#c4c6bc}
+.view h2{font-size:26px}
+.act{font-size:17px}.act small{font-size:14px!important;line-height:1.35;margin-top:2px}.act .c{font-size:13px}
+.hint b{display:grid;line-height:1.1}.hint b small{font-size:10px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-top:2px}
+.hint button{flex:none;width:40px;height:40px;margin:-6px -6px -6px auto!important;padding:0!important;display:grid;place-items:center;font-size:30px!important;line-height:1;border-radius:20px!important;color:#cfc6b0!important}
+.hint button:active{background:rgba(255,255,255,.08)!important}
+.hlbl{flex:none;margin-top:1px}
+/* small-text bump */
+.bhead .tk{font-size:13px!important}.bhead .who span,.who span,.person .who span{font-size:15px!important}
+.muted{font-size:15px}.daybox span{font-size:13px}.msg span{font-size:13px}.msg b{font-size:16px}
+.srow small{font-size:13px!important}.srow .t b{font-size:16px!important}.act .c small{font-size:12px!important}
+.pill{font-size:12px}.rec{font-size:15px}.rec div{grid-template-columns:118px 1fr}.res button small{font-size:13px}
+.rv-sign{font-size:13px}.rv-obj span{font-size:12px}.doc{font-size:15px}.hl{font-size:clamp(9px,2.2vw,12px)}
+.rname span{font-size:13px}.nav button{font-size:13px}
+.sheet .top{flex-wrap:wrap}
+.tstrip{flex-basis:100%;display:grid;grid-template-columns:40px 1fr;grid-template-rows:auto auto;column-gap:10px;align-items:center;padding-top:6px;border-top:1px solid var(--line)}
+.tstrip .ava{grid-row:1/3;width:40px;height:50px}.tstrip b{font-family:var(--display);font-size:17px;line-height:1.15}.tstrip span:last-child{font-size:13px;color:var(--dim);line-height:1.2}
+.tstrip.auto{display:none}.tstrip.auto.show{display:grid}
+.modal.brief .bsheet{overflow:hidden;display:flex!important;flex-direction:column;max-height:90%}
+.bsheet .bhead{flex:none}
+.bspeech{font-size:18.5px!important;line-height:1.5!important;color:#1f1a10!important;font-weight:500}
+.q,.a{font-size:17px!important;line-height:1.45}.bsheet .bspeech{flex:1 1 auto;min-height:0;overflow:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}.bsheet .primary{flex:none}
+button.srow.hk{border-left:4px solid transparent;padding-left:8px}
+button.srow.ok{border-left-color:#3f9a57}button.srow.ok .c small:nth-child(2){color:#7fd08f}
+button.srow.late{border-left-color:#c0392b}button.srow.late .c small:nth-child(2){color:#ef6a5a}
+button.srow.noshow{border-left-color:#a24bd0}button.srow.noshow .c small:nth-child(2){color:#c98af0;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.note.tip{grid-template-columns:1fr;border-color:#7a6a2c}.note.tip .hlbl{justify-self:start}
+.note button.hoff{background:transparent;color:#cfc6b0;border:1px solid #6e6956;border-radius:5px;font-family:var(--body);font-weight:400;font-size:14px;letter-spacing:0;padding:8px 16px;margin-top:12px}
+.note.tip button[data-a=nok]{min-width:120px}
+.mus.qh{width:34px;padding:4px 0;font-family:var(--display);font-size:16px;color:var(--amber);border-color:#6b5a2c;margin-left:auto}
+button.hqbtn{flex:1 0 auto!important;min-width:max-content!important;margin:0 4px;justify-items:stretch}
+button.hqbtn .hq{font-size:15px;padding:9px 8px;white-space:normal;border-radius:10px;background:#f08c2a;box-shadow:0 0 0 1px #ffb15c inset}
+@keyframes hqpulse{0%,100%{box-shadow:0 0 6px 1px rgba(255,150,50,.45),0 0 0 1px #ffb15c inset;filter:brightness(1)}50%{box-shadow:0 0 22px 7px rgba(255,150,50,.85),0 0 0 1px #ffd08a inset;filter:brightness(1.2)}}
+.daybox{flex:0 1 auto;min-width:0;overflow:hidden}
+.person .who .pill{display:block!important;width:max-content;margin-top:6px!important}
+@media (max-width:420px){.clock{gap:8px}.time{font-size:26px}button.hqbtn .hq{font-size:13px;padding:7px 6px}.daybox b{font-size:13px}.daybox span{font-size:12px}.mus.qh{width:30px}}
+.tarrow{pointer-events:none;filter:drop-shadow(0 0 6px rgba(242,199,102,.6));animation:in .3s ease}
+button.empty{width:100%;display:grid;gap:4px;text-align:left;background:rgba(0,0,0,.18);border:1px dashed #4b524b;border-radius:6px;padding:12px 14px;color:inherit;font:inherit}
+button.empty b{font-size:16px;color:#cfd1c8}button.empty span{font-size:14px;color:var(--dim)}button.empty i{font-style:normal;font-family:var(--mono);font-size:13px;color:var(--amber);justify-self:end}
+.ghostbtn{position:fixed;display:block;animation:tblink 1.2s ease-in-out infinite}
+.tlines{position:fixed;left:0;top:0;pointer-events:none;filter:drop-shadow(0 0 6px rgba(242,199,102,.7));animation:tblink 1.2s ease-in-out infinite}
+#notes .nhl{animation:tblink 1.2s ease-in-out infinite}
+@keyframes tblink{0%,100%{opacity:1}50%{opacity:.35}}
+.ghostbtn .hq{display:block!important;font-size:15px!important;padding:9px 8px!important;line-height:1.15;animation:none!important;box-shadow:0 0 0 2px var(--amber),0 0 18px 5px rgba(219,165,68,.7)}
+#notes .nhl{box-shadow:0 0 0 9999px rgba(4,5,4,.72),0 0 18px 5px rgba(219,165,68,.7)!important;border-color:var(--amber)!important}.ghostbtn .hq{font-size:14px;padding:8px 6px}
+@media (max-width:420px){.ghostbtn .hq{font-size:13px!important;padding:7px 6px!important}}
+.folder{color:#17130b}.folder .clue span:nth-child(2){color:#17130b}.folder .evc small,.folder .evc{color:#2a2318}.folder .evc small{color:#3d3424}.folder .fsec h4{color:#4a4030}.folder>div[style*=ink2]{color:#3d3424!important}
+.nq{color:#f2c766;font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.04em;background:rgba(219,165,68,.15);border:1px solid #8a7330;border-radius:4px;padding:1px 5px;margin-right:4px;white-space:nowrap}
+.pill.nqp{display:block;width:max-content;margin-top:6px;background:#4a3c1c;color:#f2c766}
+.act.detd{border-left:4px solid #6c7a8c}.act.detd .c{color:#a9b8cc;text-align:right;display:grid;gap:2px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stats div{background:rgba(0,0,0,.25);border:1px solid var(--line);border-radius:8px;padding:14px 8px;display:grid;justify-items:center;gap:4px}
+.stats b{font-family:var(--display);font-size:40px;line-height:1;color:#efe6cf}.stats b small{font-size:20px;color:var(--dim)}.stats span{font-size:14px;color:var(--dim);text-transform:uppercase;letter-spacing:.08em}
+#trav .tv{position:fixed;inset:0;z-index:70;background:rgba(4,5,4,.9);display:grid;place-items:center;animation:in .15s ease}
+#trav .tv.night{background:rgba(2,3,8,.92)}
+.tvin{width:min(320px,80vw);display:grid;gap:12px;justify-items:center;text-align:center}
+.tvin b{font-family:var(--display);font-size:20px;letter-spacing:.04em;color:#efe6cf}
+.tvbar{width:100%;height:4px;border-radius:2px;background:#2a2d29;overflow:hidden}.tvbar i{display:block;height:100%;width:0;background:var(--amber);box-shadow:0 0 10px rgba(219,165,68,.8)}
+.tvt{font-family:var(--display);font-size:34px;color:var(--amber);font-variant-numeric:tabular-nums}
+.bprog{display:grid;gap:6px;font-family:var(--mono);color:var(--crtfg)}.bprog span{font-size:13px;letter-spacing:.1em}.bprog div{height:8px;border:1px solid var(--crtdim);border-radius:2px;overflow:hidden}.bprog i{display:block;height:100%;width:0;background:repeating-linear-gradient(90deg,var(--crtfg) 0 6px,transparent 6px 8px);box-shadow:0 0 8px rgba(143,227,154,.7)}.bprog b{justify-self:end;font-size:14px}
+.callhd{display:grid;justify-items:center;gap:6px;text-align:center;padding:6px 0 4px}.callhd b{font-family:var(--display);font-size:22px}.callhd span{color:var(--dim);font-size:14px}.face.nophoto{display:grid;place-items:center;font-size:40px;color:var(--amber)}
+.ringbar{width:60%;height:3px;background:#2a2d29;border-radius:2px;overflow:hidden;margin-top:4px}.ringbar i{display:block;height:100%;width:0;background:var(--amber);animation:ring 1.1s linear forwards}@keyframes ring{to{width:100%}}
+.rv-card .ghost{width:100%;color:var(--ink);border-color:#a3967a;min-height:48px}
+.rv-card.night .ghost{color:#e6e3da;border-color:#6e6956;font-size:16px}
+.mus{flex:none;background:rgba(15,18,16,.8);border:1px solid var(--line);color:var(--text);border-radius:14px;padding:4px 10px;font-family:var(--mono);font-size:12px}
+
+/* textures */
+body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 50% 30%,rgba(20,16,12,.35),rgba(8,7,6,.78))}
+.bar{background:#151614 url(img/t_leather.webp) repeat;background-size:360px;box-shadow:0 6px 14px rgba(0,0,0,.45);border-bottom:1px solid #2b2d2a}
+body::before{background:#151614 url(img/t_leather.webp) repeat;background-size:360px}
+.nav{background:#121311 url(img/t_leather.webp) repeat;background-size:360px;box-shadow:0 -6px 16px rgba(0,0,0,.5)}
+.nav button.on::after{content:"";position:absolute;bottom:0;left:30%;right:30%;height:2px;background:var(--amber);border-radius:1px}
+.sheet{background:linear-gradient(rgba(30,32,29,.9),rgba(30,32,29,.9)),url(img/t_paper.webp) repeat;background-size:auto,380px}
+.sheet .top{background:linear-gradient(rgba(30,32,29,.94),rgba(30,32,29,.94)),url(img/t_paper.webp) repeat;background-size:auto,380px}
+.card,.act,.msg{background-color:rgba(44,50,46,.72);backdrop-filter:blur(1px)}
+.folder,.folder::before,.doc,.rv-card,.a,.evc{background-image:url(img/t_paper.webp);background-size:380px;background-color:var(--paper);background-blend-mode:multiply}
+.rv-doc{background:url(img/t_paper.webp);background-size:380px}
+.hint{background:rgba(30,28,20,.85)}
+/* vertical desk on phones */
+.office.deskv{display:none;aspect-ratio:1696/2528}
+.lampglow.v{left:50%;top:38%;width:46%;height:36%}
+.oclock.v{left:44.5%;top:18.6%;top:calc(18.6% + 2px)}
+@media (max-width:700px){.office.deskh{display:none}.office.deskv{display:block}.hidev{display:none}.view:has(.deskv){padding-block:10px 0}}
+/* map */
+.map{background:var(--paper);border-radius:6px;overflow:hidden;border:1px solid var(--line);aspect-ratio:400/300;max-width:100%}
+.map svg{display:block;width:100%;height:100%}
+.pin{cursor:pointer}
+.pin circle.dot{transition:r .2s}
+.pinlist{display:grid;gap:8px}
+
+/* mail */
+.mail{display:grid;gap:8px}
+.msg{display:grid;gap:2px;text-align:left;width:100%;background:var(--desk2);border:1px solid var(--line);border-radius:5px;padding:10px 12px}
+.msg.unread{border-left:3px solid var(--amber)}
+.msg b{font-size:15px}
+.msg span{font-size:12px;color:var(--dim);font-family:var(--mono)}
+
+/* nav */
+.nav{position:fixed;left:0;right:0;bottom:0;z-index:7;background:#141715;border-top:1px solid var(--line);padding-left:max(8px,env(safe-area-inset-left,0px));padding-right:max(8px,env(safe-area-inset-right,0px));padding-block:6px calc(6px + env(safe-area-inset-bottom,0px))}
+.nav div{max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr)}
+.nav button{background:none;border:none;display:grid;justify-items:center;gap:2px;padding:6px 2px;color:var(--dim);font-size:12px;position:relative}
+.nav button svg{width:24px;height:24px}
+.nav button.on{color:var(--amber)}
+.badge{position:absolute;top:2px;right:calc(50% - 20px);background:var(--stamp);color:#fff;font-size:10px;min-width:16px;height:16px;border-radius:8px;display:grid;place-items:center;font-family:var(--mono)}
+
+/* modal */
+.modal{position:fixed;inset:0;z-index:20;background:rgba(6,8,7,.82);display:flex;align-items:flex-end;justify-content:center}
+.sheet{width:100%;max-width:560px;max-height:92%;overflow:auto;background:var(--desk2);border-radius:12px 12px 0 0;border:1px solid var(--line);border-bottom:none;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:16px calc(20px + env(safe-area-inset-bottom,0px));display:grid;gap:14px;animation:up .25s ease}
+.sheet .top{display:flex;align-items:center;gap:10px;position:sticky;top:-16px;z-index:10;background:var(--desk2);margin-top:-16px;padding-block:14px 8px}
+.back{width:100%;min-height:50px}
+.sheet{padding-block:16px calc(24px + env(safe-area-inset-bottom,0px))!important;max-height:88%}
+.sheet .top h2{flex:1;min-width:0}
+.x{background:#313833;border:1px solid var(--line);color:var(--text);font-size:24px;line-height:1;width:40px;height:40px;border-radius:20px;flex:none}
+
+/* document */
+.doc{background:var(--paper);color:var(--ink);font-family:var(--mono);font-size:14px;line-height:1.55;padding:18px 16px;border-radius:2px;position:relative}
+.doc h4{font-family:var(--display);font-size:16px;letter-spacing:.1em;text-align:center;margin:0 0 12px;font-weight:600}
+.doc p{margin:0 0 10px}
+.doc .sign{text-align:right;margin-top:14px}
+
+/* dialogue */
+.talk{display:grid;grid-template-columns:96px 1fr;gap:12px;align-items:start}
+.face{width:96px;height:106px;border-radius:6px;overflow:hidden;border:1px solid var(--line);background:#3a3f3b}
+.face svg{display:block;width:100%;height:100%}
+.who b{font-family:var(--display);font-size:18px;font-weight:600;display:block;line-height:1.2}
+.who span{font-size:13px;color:var(--dim)}
+.log{display:grid;gap:10px}
+.q{justify-self:end;max-width:85%;background:#34403a;border-radius:10px 10px 2px 10px;padding:8px 12px;font-size:15px}
+.a{max-width:92%;background:var(--paper);color:var(--ink);border-radius:10px 10px 10px 2px;padding:9px 12px;font-size:15px}
+.a i{color:var(--ink2)}
+.opts{display:grid;gap:8px}
+
+/* crt */
+.crt{background:var(--crt);border:1px solid #1f3a28;border-radius:8px;padding:14px;font-family:var(--mono);color:var(--crtfg);font-size:14px;display:grid;gap:12px;box-shadow:inset 0 0 40px rgba(143,227,154,.06);position:relative}
+.crt::after{content:"";position:absolute;inset:0;pointer-events:none;border-radius:8px;background:repeating-linear-gradient(0deg,rgba(0,0,0,.25) 0 1px,transparent 1px 3px)}
+.crt .hd{display:flex;justify-content:space-between;color:var(--crtdim);font-size:12px;letter-spacing:.06em}
+.crt form{display:flex;gap:8px}
+.crt input{flex:1;min-width:0;background:#050a07;border:1px solid var(--crtdim);color:var(--crtfg);font-family:var(--mono);font-size:16px;padding:10px;border-radius:3px}
+.crt button{background:var(--crtdim);color:var(--crt);border:none;border-radius:3px;padding:10px 12px;font-family:var(--mono);font-weight:700}
+.res{display:grid;gap:6px}
+.res button{background:none;border:1px solid #1f3a28;color:var(--crtfg);text-align:left;padding:8px 10px;border-radius:3px;font-family:var(--mono);font-size:14px}
+.res button small{display:block;color:var(--crtdim);font-size:12px}
+.rec{display:grid;gap:4px;font-size:14px}
+.rec div{display:grid;grid-template-columns:110px 1fr;gap:8px}
+.rec div span:first-child{color:var(--crtdim)}
+.crtacts{display:grid;gap:6px}
+.crtacts button{background:#132619;color:var(--crtfg);border:1px solid var(--crtdim);text-align:left;font-weight:400}
+.crtacts button[disabled]{opacity:.4}
+.blink{animation:blink 1s steps(2) infinite}
+
+/* ending */
+.verdict{font-family:var(--display);font-size:30px;letter-spacing:.14em;color:var(--stamp);border:3px solid var(--stamp);padding:4px 14px;justify-self:center;transform:rotate(-4deg);margin:8px 0}
+.verdict.ok{color:#2f7a45;border-color:#2f7a45}
+
+/* toasts */
+.toasts{position:fixed;left:0;right:0;bottom:calc(76px + env(safe-area-inset-bottom,0px));z-index:30;display:grid;justify-items:center;gap:6px;pointer-events:none;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.toast{background:#0f1210;border:1px solid var(--line);color:var(--text);padding:12px 18px;border-radius:6px;font-size:16px;animation:toast 3.8s ease forwards;max-width:420px;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,.6)}
+.toast.good{border-color:#5b5236;color:#f0d68a}
+
+@keyframes in{from{opacity:.4;transform:translateY(6px)}to{opacity:1;transform:none}}
+@keyframes up{from{transform:translateY(30px);opacity:.5}to{transform:none;opacity:1}}
+@keyframes glow{0%{background:#f5d97a}100%{background:transparent}}
+@keyframes toast{0%{opacity:0;transform:translateY(8px)}10%{opacity:1;transform:none}85%{opacity:1}100%{opacity:0}}
+@keyframes blink{50%{opacity:0}}
+@keyframes pulse{0%{r:9;opacity:.7}100%{r:20;opacity:0}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="wrap" id="app"></div>
+<nav class="nav" id="nav"></nav>
+<div class="toasts" id="toasts"></div>
+<div class="radios" id="radios"></div>
+<div id="notes"></div>
+<div id="trav"></div>
+<div id="modal"></div>
+<div id="reveal"></div>
+<audio id="bgm" src="audio/theme.mp3" loop preload="auto"></audio>
+<section id="title" class="title"><img src="img/cover.webp" alt=""><div class="tshade"></div><div class="tin"><span class="tk">ДЕЛА СЛЕДОВАТЕЛЯ КУРЕЙКО</span><h1>Тихий<br>Пригорск</h1><p>Глухая провинция. Убийства, пропажи и люди, которые врут в лицо.</p><button class="primary" data-a="start" data-id="1">Новая игра</button><button class="ghost" data-a="start" data-id="2">Дело № 2 · Пропавший</button></div></section>
+<style>
+[hidden]{display:none!important}
+*,*::before,*::after{box-sizing:border-box}
+.person{display:grid;grid-template-columns:64px 1fr;gap:10px 12px;align-items:center;background:rgba(44,50,46,.72);border:1px solid var(--line);border-radius:6px;padding:10px}
+.person .primary{grid-column:1/-1;min-height:46px;font-size:15px}
+.person .who b{font-family:var(--display);font-size:17px;display:block;line-height:1.2}.person .who span{font-size:13px;color:var(--dim)}
+.face.sm{width:64px;height:84px}.face.big{width:104px;height:138px}
+.modal.brief{background:rgba(6,8,7,.5);align-items:flex-end}
+.bsheet{gap:14px}
+.bhead{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:end}
+.bhead .who b{font-family:var(--display);font-size:22px;display:block}.bhead .who span{color:var(--dim);font-size:13px}
+.bhead .tk{display:block;margin-bottom:8px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--amber)}
+.bspeech{background:var(--paper) url(img/t_paper.webp);background-size:380px;background-blend-mode:multiply;color:var(--ink);border-radius:4px;padding:14px 16px;display:grid;gap:8px;font-size:16px;line-height:1.5}
+.bspeech p{margin:0}
+.pick.on{border-color:var(--stamp);background:rgba(184,54,46,.2)}
+.primary:disabled{opacity:.4;cursor:not-allowed}
+.verdict.part{color:#b07a1e;border-color:#b07a1e}
+.title .ghost{width:100%}
+.toast.radio{display:flex;gap:10px;align-items:center;border-color:#5b5236;color:#f0d68a;animation:toast 4.7s ease forwards;text-align:left}
+.toast.radio svg{flex:none;color:var(--amber)}
+.radiobox{display:flex;gap:12px;align-items:flex-start;background:rgba(30,28,20,.85);border:1px dashed #5b5236;border-radius:5px;padding:12px;color:#e9d9a8}
+.radiobox svg{flex:none;color:var(--amber);margin-top:2px}.radiobox p{margin:0}
+.rv-card.exam{max-height:88vh;overflow:auto}
+.rv-card.night{background:#1b1d1b;color:var(--text);background-image:none}
+.rv-card.night h2{color:#efe6cf}
+.rv-photo{position:relative;border-radius:3px;overflow:hidden;aspect-ratio:16/9}
+.rv-photo img{width:100%;height:100%;object-fit:cover;object-position:50% 55%;display:block}
+.rv-photo span{position:absolute;right:10px;bottom:8px;font-family:var(--display);font-size:30px;color:#f0d68a;text-shadow:0 2px 8px #000}
+.rv-card.exam .rv-img{min-height:0;padding:10px}.rv-card.exam .rv-img img{max-height:26vh}
+.rv-obj{display:grid;gap:2px;border-bottom:1px solid #c7b88f;padding-bottom:8px}
+.rv-obj span{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2)}
+.rv-obj b{font-family:var(--display);font-size:22px;font-weight:600}
+.rv-pts{margin:0;padding-left:22px;display:grid;gap:6px;font-size:15px;line-height:1.45}
+.rv-sign{font-family:var(--mono);font-size:12px;color:var(--ink2);text-align:right;display:flex;align-items:center;justify-content:flex-end;gap:8px}
+.srow{display:grid;grid-template-columns:36px 1fr auto;gap:10px;align-items:center;padding:8px 0;border-top:1px dashed var(--line)}
+.srow:first-of-type{border-top:none}
+.srow .t{min-width:0}.srow .t b{display:block;font-size:15px;font-weight:700}
+.srow small{display:block;color:var(--dim);font-size:12px;line-height:1.35}
+.srow .c{text-align:right;font-family:var(--mono);font-size:13px;color:var(--amber)}
+.badge.wait{background:#8a6a1e}
+.nav .ni{width:40px;height:40px;border-radius:7px;object-fit:cover;display:block;filter:grayscale(.75) brightness(.6) contrast(1.1);box-shadow:0 2px 6px rgba(0,0,0,.6),inset 0 0 0 1px rgba(255,255,255,.08);transition:filter .2s,transform .2s}
+.nav button.on .ni{filter:none;transform:translateY(-2px);box-shadow:0 0 0 2px var(--amber),0 4px 12px rgba(0,0,0,.7)}
+.nav button.on::after{display:none}
+.nav button.on .ni{animation:navglow 2.1s ease-in-out infinite}
+@keyframes navglow{0%,100%{box-shadow:0 0 0 2px rgba(219,165,68,.75),0 4px 12px rgba(0,0,0,.7);filter:brightness(.93)}50%{box-shadow:0 0 0 2px #f8cd68,0 0 18px 5px rgba(240,180,70,.62),0 4px 12px rgba(0,0,0,.7);filter:brightness(1.07)}}
+.nav button.on span{animation:navtxt 2.1s ease-in-out infinite}
+@keyframes navtxt{0%,100%{opacity:.85;text-shadow:none}50%{opacity:1;text-shadow:0 0 9px rgba(255,190,70,.65)}}
+.nav button{gap:4px;padding-top:4px}
+.sheet{grid-auto-rows:max-content;align-content:start;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+.sheet>*{min-height:min-content}
+.roomhead{position:relative;isolation:isolate;z-index:0;border-radius:6px;overflow:hidden;border:1px solid var(--line);aspect-ratio:2000/1116;flex:none;min-height:180px;background:#0b0b0a}
+.roomhead>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.rcard{position:absolute;left:6%;bottom:9%;width:23%;max-width:120px;aspect-ratio:3/4;padding:4px 4px 14px;background:#e9e2d2;transform:rotate(-5deg);box-shadow:0 8px 18px rgba(0,0,0,.75);z-index:2}
+.rcard img,.rcard svg{width:100%;height:100%;object-fit:cover;display:block;filter:sepia(.2) contrast(1.05)}
+.rcard .clip{position:absolute;top:-8px;left:22%;width:12px;height:28px;border:2.5px solid #9aa0a3;border-radius:6px;z-index:3}
+.arow{display:grid;grid-template-columns:34px 1fr;gap:8px;align-items:end;max-width:96%}
+.arow .a{max-width:none}
+.ava{width:34px;height:42px;border-radius:5px;overflow:hidden;flex:none;box-shadow:0 2px 6px rgba(0,0,0,.4)}
+.ava img,.ava svg{width:100%;height:100%;object-fit:cover;display:block}
+.rname{position:absolute;left:34%;right:0;bottom:0;padding:28px 12px 10px;z-index:3;background:linear-gradient(transparent,rgba(8,9,8,.92));display:grid;gap:1px}
+.rname b{font-family:var(--display);font-size:18px;line-height:1.15;color:#efe6cf}
+.rname span{font-size:12px;color:var(--dim)}
+figure.scene{position:relative}
+.sign{position:absolute;background:#e9e2d2;border:2px solid #7a2a22;color:#7a2a22;display:grid;place-items:center;align-content:center;font-family:var(--display);font-weight:600;font-size:clamp(5px,1.55vw,11px);letter-spacing:.02em;overflow:hidden;line-height:1.05;text-align:center;box-shadow:0 2px 4px rgba(0,0,0,.4);transform:rotate(-.8deg)}
+.sign small{font-size:.8em;color:#3b2a1d}
+</style>
+
+<script>
+(function(){
+/* ================= CORE ================= */
+const MON=['янв','фев','мар','апр','мая','июн','июл','авг','сен','окт','ноя','дек'];
+const KN={lab:'экспертиза',wit:'показания',base:'база',find:'улика'};
+const SHARED={gavrilov:{fio:'Гаврилов Николай',img:'p_gavrilov',job:'начальник районного отдела',summon:false},vetrova:{fio:'Ветрова Анна',img:'p_vetrova',job:'районный прокурор',summon:false},lapteva:{fio:'Лаптева Елена',img:'p_lapteva',job:'эксперт-криминалист',summon:false},duty:{fio:'Дежурный',img:'p_duty',job:'дежурная часть',summon:false}};
+let CS,S,UI={tab:'here',modal:null,hintOff:false,newClues:new Set(),reveal:[],view:null,title:true,music:false,inside:false,sel:[],phoneMsg:null,lampOff:false};
+const P=id=>(CS&&CS.people[id])||SHARED[id];
+const has=c=>S.clues.includes(c);
+const day=()=>Math.floor(S.t/24)+1;
+const hour=()=>S.t%24;
+const fmt=t=>{const h=Math.floor(t%24),m=Math.round((t%1)*60);return String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')};
+const DATE=d=>{const x=new Date(2026,CS.month,CS.d0+d-1);return x.getDate()+' '+MON[x.getMonth()]};
+const DUE=t=>{const d=Math.floor(t/24)+1;return d===day()?'сегодня':d===day()+1?'завтра':DATE(d)};
+const WHEN=t=>{const d=Math.floor(t/24)+1,c=day();return d===c?'сегодня':d===c+1?'завтра':d===c-1?'вчера':DATE(d)};
+const short=id=>{const f=P(id).fio.split(' ');return f[0]+' '+f[1][0]+'.'};
+const val=v=>typeof v==='function'?v():v;
+const hf=t=>t<1?Math.round(t*60)+' мин':String(t).replace('.',',')+' ч';
+const talkable=id=>{const p=P(id);return p&&(p.img||p.face)&&!val(p.status)};
+const arr=x=>x?(Array.isArray(x)?x:[x]):[];
+
+/* ================= ART ================= */
+function face(p){if(!p)return '';const w=p.age>=2?'<path d="M36 56q4 2 8 0M56 56q4 2 8 0M42 76q8 4 16 0" stroke="#8a6a52" stroke-width="1" fill="none" opacity=".6"/>':(p.age?'<path d="M40 74q10 4 20 0" stroke="#8a6a52" stroke-width="1" fill="none" opacity=".5"/>':'');
+ let hair='';if(p.style==='short')hair=`<path d="M26 50q0-30 24-30t24 30q-4-14-24-16t-24 16z" fill="${p.hair}"/>`;
+ if(p.style==='cap')hair=`<path d="M24 46q2-26 26-26t26 26z" fill="#33363a"/><path d="M50 44h32q-4 6-32 6z" fill="#26282b"/>`;
+ if(p.style==='long')hair=`<path d="M22 64q-4-46 28-46t28 46v32q-8-8-8-34q-4-18-20-18t-20 18q0 26-8 34z" fill="${p.hair}"/>`;if(p.style==='kerchief')hair=`<path d="M20 60q-2-44 30-44t30 44q-6-28-30-28t-30 28z" fill="${p.hair}"/><path d="M28 80l-10 22h64l-10-22" fill="${p.hair}"/><circle cx="34" cy="30" r="2" fill="#e8ddc1" opacity=".5"/><circle cx="60" cy="24" r="2" fill="#e8ddc1" opacity=".5"/><circle cx="70" cy="40" r="2" fill="#e8ddc1" opacity=".5"/>`;
+ const beard=p.beard?`<path d="M30 64q2 26 20 26t20-26q-6 10-20 10t-20-10z" fill="${p.hair}"/>`:'';
+ const stub=p.stubble?`<path d="M32 66q4 22 18 22t18-22q-4 8-18 8t-18-8z" fill="#3a2e24" opacity=".25"/>`:'';
+ const mus=p.mustache?`<path d="M40 72q10-6 20 0q-10 3-20 0z" fill="${p.hair}"/>`:'';
+ return `<svg viewBox="0 0 100 110"><rect width="100" height="110" fill="#454b46"/><rect y="0" width="100" height="110" fill="url(#)" opacity="0"/>
+ <path d="M8 110q4-24 42-26q38 2 42 26z" fill="${p.shirt}"/><rect x="42" y="74" width="16" height="16" fill="${p.skin}"/>
+ <ellipse cx="50" cy="54" rx="24" ry="29" fill="${p.skin}"/>${stub}${w}
+ <circle cx="41" cy="52" r="2.6" fill="#1d1a16"/><circle cx="59" cy="52" r="2.6" fill="#1d1a16"/>
+ <path d="M35 45l11 1M54 46l11-1" stroke="${p.style==='kerchief'?'#6b5b4b':p.hair}" stroke-width="2.4" stroke-linecap="round"/>
+ <path d="M50 54l-3 12h5" stroke="#9b7458" stroke-width="1.5" fill="none"/>${beard}${mus}<path d="M43 75q7 3 14 0" stroke="#7a4b3a" stroke-width="2" fill="none"/>${hair}</svg>`}
+
+function house(o){o=o||{};const wall=o.wall||'#6b4e34',roof=o.roof||'#3d4a3f';
+ return `<svg viewBox="0 0 400 220" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="dusk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3b4a5c"/><stop offset="1" stop-color="#c58f62"/></linearGradient></defs>
+ <rect width="400" height="220" fill="url(#dusk)"/><circle cx="330" cy="54" r="16" fill="#f1d9a8" opacity=".6"/>
+ <path d="M0 150q60-16 120-6t140-4t140 6V220H0z" fill="#2c3a2f"/>
+ <g fill="#1f2a22"><circle cx="30" cy="140" r="26"/><circle cx="60" cy="130" r="20"/><circle cx="370" cy="136" r="24"/></g>
+ <path d="M110 92L190 46L270 92z" fill="${roof}"/><rect x="118" y="92" width="144" height="82" fill="${wall}"/>
+ <g stroke="rgba(0,0,0,.18)" stroke-width="2">${[104,116,128,140,152,164].map(y=>`<path d="M118 ${y}H262"/>`).join('')}</g>
+ <rect x="134" y="110" width="30" height="26" fill="${o.dark?'#1b1d22':'#e8b866'}"/><rect x="216" y="110" width="30" height="26" fill="${o.dark?'#1b1d22':'#e8b866'}" opacity=".85"/>
+ <path d="M134 123h30M149 110v26M216 123h30M231 110v26" stroke="${wall}" stroke-width="3"/>
+ <rect x="128" y="108" width="6" height="30" fill="#c9b48a"/><rect x="164" y="108" width="6" height="30" fill="#c9b48a"/><rect x="210" y="108" width="6" height="30" fill="#c9b48a"/><rect x="246" y="108" width="6" height="30" fill="#c9b48a"/>
+ <rect x="178" y="134" width="24" height="40" fill="#3a2a1d"/><circle cx="197" cy="155" r="1.6" fill="#d6b45a"/>
+ <g fill="#8c7350">${Array.from({length:22},(_,i)=>`<rect x="${6+i*18}" y="168" width="7" height="34" rx="2"/>`).join('')}</g><rect x="0" y="178" width="400" height="5" fill="#76603f"/>
+ <path d="M0 202H400V220H0z" fill="#3b3326"/>
+ ${o.tape?`<g transform="rotate(-8 190 150)"><rect x="150" y="146" width="90" height="9" fill="#e4c33d"/><text x="195" y="153.5" font-size="7" text-anchor="middle" font-family="PT Mono,monospace" fill="#1d1a12">НЕ ВХОДИТЬ · НЕ ВХОДИТЬ</text></g><g transform="rotate(9 190 160)"><rect x="150" y="156" width="90" height="8" fill="#e4c33d"/></g>`:''}
+ ${o.niva?`<g transform="translate(286 166)"><rect x="0" y="0" width="86" height="22" rx="3" fill="#e9e6dc"/><path d="M10 0l8-16h44l8 16z" fill="#e9e6dc"/><path d="M20-2l6-11h14v11zM44-2v-11h14l6 11z" fill="#4c5b66"/><circle cx="18" cy="24" r="8" fill="#1b1b1b"/><circle cx="68" cy="24" r="8" fill="#1b1b1b"/><rect x="78" y="6" width="8" height="5" fill="#f2d27a"/></g>`:''}
+ ${o.bar?`<rect x="150" y="76" width="80" height="18" fill="#2a1f16"/><text x="190" y="89" text-anchor="middle" font-family="Oswald,Impact,sans-serif" font-size="13" fill="#f2b84b" letter-spacing="3">КОЛОС</text><circle cx="190" cy="85" r="40" fill="#f2b84b" opacity=".08"/>`:''}
+ </svg>`}
+
+const pic=(n,alt)=>`<img src="img/${n}.webp" alt="${alt||''}">`;
+const por=id=>{const p=P(id);if(!p)return '';return p.img?`<img src="img/${p.img}.webp" alt="${p.fio}">`:face(p.face)};
+const locArt=id=>{const l=CS.locs[id];return (l.img?pic(l.img,l.name):(l.svg?l.svg():house(l.house||{})))+(l.overlay||'')};
+const tint=()=>{const h=S.t%24;return h>=19?.45:h>=17?.28:h>=15?.12:0};
+function fpSVG(match){return `<svg viewBox="0 0 120 140" width="120" height="140"><g fill="none" stroke="${match?'#b8362e':'#2a251b'}" stroke-width="2.2" stroke-linecap="round">${Array.from({length:9},(_,i)=>`<ellipse cx="60" cy="72" rx="${10+i*5.5}" ry="${14+i*7}" stroke-dasharray="${8+i*3} ${3+i%3*2}" transform="rotate(${i%2?4:-4} 60 72)"/>`).join('')}</g></svg>`}
+const BAG='<svg viewBox="0 0 48 48" width="40" height="40"><path d="M10 10h28v32H10z" fill="#e6dcc2" stroke="#6b604a" stroke-width="2"/><path d="M10 16h28" stroke="#b8362e" stroke-width="3"/><path d="M16 24h16M16 30h12M16 36h14" stroke="#9a8e72" stroke-width="2"/></svg>';
+const dusk=(id,a,b)=>`<defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient></defs>`;
+function townSVG(k){const W='<svg viewBox="0 0 400 220" preserveAspectRatio="xMidYMid slice">';
+ if(k==='home')return W+dusk('gh','#3b4656','#8c7a6a')+`<rect width="400" height="220" fill="url(#gh)"/><rect x="60" y="30" width="280" height="160" fill="#8f8a80"/><g>${Array.from({length:5},(_,r)=>Array.from({length:8},(_,c)=>`<rect x="${74+c*33}" y="${40+r*29}" width="18" height="18" fill="${(r*3+c)%7===2||(r+c)%5===0?'#e6b45e':'#2c3038'}"/>`).join('')).join('')}</g><rect x="186" y="168" width="28" height="22" fill="#3a2d22"/><rect x="0" y="190" width="400" height="30" fill="#3a3a36"/><rect x="40" y="178" width="40" height="6" fill="#5b4a36"/><path d="M0 220V190H400V220" fill="#2e2e2b"/></svg>`;
+ if(k==='zavod')return W+dusk('gz','#4a5260','#a08a70')+`<rect width="400" height="220" fill="url(#gz)"/><g fill="#5a5d60"><rect x="300" y="20" width="16" height="110"/><rect x="330" y="40" width="14" height="90"/></g><g fill="#cfd3d6" opacity=".35"><circle cx="308" cy="14" r="12"/><circle cx="320" cy="2" r="16"/><circle cx="338" cy="30" r="10"/></g><path d="M20 190V100l40-24v24l40-24v24l40-24v24l40-24v24l40-24v24l40-24v114z" fill="#6e6a63"/><g fill="#d9b35a" opacity=".8">${[40,90,140,190,240].map(x=>`<rect x="${x}" y="130" width="30" height="16"/>`).join('')}</g><rect x="140" y="160" width="60" height="30" fill="#2d2a26"/><rect x="100" y="66" width="120" height="16" fill="#2a251b"/><text x="160" y="78" text-anchor="middle" font-family="Oswald,Impact,sans-serif" font-size="11" fill="#e8ddc1" letter-spacing="2">ПРИГОРСКМАШ</text><rect y="190" width="400" height="30" fill="#34332f"/></svg>`;
+ if(k==='garage')return W+dusk('gg','#2f3846','#6a5a4e')+`<rect width="400" height="220" fill="url(#gg)"/><rect x="0" y="80" width="400" height="110" fill="#6a665e"/>${Array.from({length:6},(_,i)=>{const x=10+i*66,open=i===3;return `<rect x="${x}" y="100" width="56" height="90" fill="${open?'#e0a64e':'#4f5256'}"/>${open?`<rect x="${x+6}" y="140" width="44" height="50" fill="#2b231b"/><rect x="${x+12}" y="150" width="30" height="18" fill="#7a6a52"/>`:`<path d="M${x} ${110}h56M${x} 122h56M${x} 134h56M${x} 146h56M${x} 158h56M${x} 170h56" stroke="#3d4044" stroke-width="2"/>`}<text x="${x+28}" y="96" text-anchor="middle" font-family="PT Mono,monospace" font-size="9" fill="#e8ddc1">${14+i}</text>`}).join('')}<rect y="190" width="400" height="30" fill="#3b3a35"/><path d="M0 200q200 10 400 0" stroke="#55534c" stroke-width="3" fill="none"/></svg>`;
+ if(k==='tire')return W+dusk('gt','#2e3644','#7a5e46')+`<rect width="400" height="220" fill="url(#gt)"/><rect x="40" y="60" width="220" height="130" fill="#7b7468"/><rect x="60" y="40" width="180" height="24" fill="#1d1d1f"/><text x="150" y="57" text-anchor="middle" font-family="Oswald,Impact,sans-serif" font-size="13" fill="#e6b84a" letter-spacing="2">ШИНОМОНТАЖ «КОЛЕСО»</text><rect x="70" y="100" width="90" height="90" fill="#e0a64e"/><rect x="78" y="110" width="74" height="80" fill="#2b241d"/><g fill="#1c1c1c" stroke="#3a3a3a" stroke-width="3">${[0,1,2,3].map(i=>`<ellipse cx="200" cy="${180-i*16}" rx="26" ry="8"/>`).join('')}${[0,1,2].map(i=>`<ellipse cx="236" cy="${182-i*16}" rx="22" ry="7"/>`).join('')}</g><g transform="translate(272 132)"><rect x="0" y="12" width="110" height="34" rx="4" fill="#141518"/><path d="M14 12l10-22h56l12 22z" fill="#141518"/><path d="M28 10l6-14h18v14zM58 10v-14h18l8 14z" fill="#3c4650"/><circle cx="24" cy="48" r="11" fill="#090909"/><circle cx="88" cy="48" r="11" fill="#090909"/><rect x="100" y="20" width="10" height="6" fill="#f2d27a"/></g><rect y="190" width="400" height="30" fill="#36342f"/></svg>`;
+ return W+`<rect width="400" height="220" fill="#222"/></svg>`}
+function forestSVG(){return `<svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice">${dusk('gf','#3a433e','#121713')}<rect width="400" height="260" fill="url(#gf)"/>
+ <g fill="#151b17">${Array.from({length:16},(_,i)=>{const x=i*27+((i*37)%13),h=110+((i*53)%40);return `<rect x="${x}" y="0" width="${7+(i%3)*3}" height="${h+40}"/><path d="M${x-22} ${h}l${26+(i%3)} -${60+(i%4)*10}l${26+(i%3)} ${60+(i%4)*10}z"/>`}).join('')}</g>
+ <rect width="400" height="260" fill="#cfd8d4" opacity=".07"/>
+ <path d="M0 150q100-14 200-4t200 0V260H0z" fill="#232b22"/><path d="M0 190q120 30 260 10t140 10V260H0z" fill="#1a2019"/>
+ <polygon points="70,182 110,118 152,182" fill="#56664a"/><polygon points="102,182 110,140 120,182" fill="#1a1f18"/><path d="M110 118L60 186M110 118l52 68" stroke="#3c4834" stroke-width="2"/>
+ <g transform="translate(160 168)"><rect width="34" height="38" rx="8" fill="#4d3c2a"/><rect x="6" y="6" width="22" height="12" rx="3" fill="#3a2d20"/><path d="M8 0v-6h18v6" stroke="#2f241a" stroke-width="3" fill="none"/></g>
+ <g transform="translate(206 180)"><rect width="13" height="30" rx="3" fill="#8b918b"/><rect x="-1" y="-5" width="15" height="7" rx="2" fill="#5e635e"/></g>
+ <g transform="translate(240 190)"><g fill="#4a4d48">${[0,10,20,30,6,26].map((x,i)=>`<circle cx="${x+4}" cy="${i>3?2:12}" r="5"/>`).join('')}</g><path d="M6 8l26 2M10 2l20 10" stroke="#0e0e0c" stroke-width="3"/><rect x="34" y="12" width="7" height="2.5" fill="#efe6cf" transform="rotate(-18 34 12)"/></g>
+ <g stroke="#0f130f" stroke-width="5" fill="none" stroke-dasharray="6 5"><path d="M300 258q40-26 100-34"/><path d="M318 260q40-24 82-28"/></g>
+ <path d="M8 236q26-26 56 0z" fill="#3a2f22"/><path d="M4 230h68" stroke="#e4c33d" stroke-width="3" stroke-dasharray="8 6"/></svg>`}
+
+/* ================= CASES ================= */
+const CASES={};
+/* ---------- CASE 1 ---------- */
+CASES[1]={id:1,no:'№ 1',callAbout:'по делу об убийстве Петра Сомова',title:'Убийство в Золотухино',days:5,month:9,d0:15,next:2,
+ folder:'Убийство Сомова П.',place:'с. Золотухино, ул. Речная, 7',
+ brief:['Курейко, заходи, садись. Без раскачки.','Сегодня утром в селе Золотухино, на кухне собственного дома, нашли убитым Петра Сомова, 54 года. Местный ростовщик.','Судмедэксперт уже отработал: одно проникающее ножевое ранение в грудь. Смерть наступила вчера, 14 октября, между 22:00 и 23:30. От этого времени и пляши: кто где был.','Орудие убийства нашли у порога: складной нож, весь в крови. Кошелёк потерпевшего пустой, денег нет, документы на месте. Похоже на ограбление, но ты сам посмотри.','Нож и кошелёк уже на складе вещдоков. Отправь их в лабораторию, пусть снимут отпечатки. Потом место преступления и соседи.','И ещё: городская линия опять легла, связисты обещают к утру. Сегодня людей вызываешь повестками, ногами. Внутренние номера работают.','Срок пять дней. Не найдёшь убийцу, дело заберёт область, а ты поедешь охранять склад.'],
+ start:{clues:['body','tod','knife','wallet'],pins:['otdel','scene'],ev:['knife','wallet'],found:[],phone:false},
+ people:{
+  somov:{fio:'Сомов Пётр',born:'03.02.1971',addr:'Золотухино, ул. Речная, 7',loc:'scene',job:'частный заимодавец',crim:'нет',car:'нет',prints:'нет в картотеке',status:'УМЕР 14.10'},
+  tkachuk:{fio:'Ткачук Зинаида',born:'11.06.1949',addr:'Золотухино, ул. Речная, 5',loc:'tk',job:'пенсионерка',crim:'нет',car:'нет',prints:'нет в картотеке',img:'p_tkachuk'},
+  busov:{fio:'Бусов Анатолий',born:'22.09.1966',addr:'Золотухино, ул. Речная, 9',loc:'bu',job:'автомеханик',crim:'нет',car:'мотоцикл «Урал»',prints:'нет в картотеке',img:'p_busov'},
+  lastochkin:{fio:'Ласточкин Григорий',born:'17.04.1988',addr:'Золотухино, ул. Садовая, 2',loc:'la',job:'не работает',crim:'2019 хулиганство; 2022 мелкая кража',car:'нет',prints:'ЕСТЬ в картотеке',img:'p_lastochkin',cmp:'laprint',cmpLab:'knife'},
+  melnik:{fio:'Мельник Виктор',born:'08.12.1979',addr:'Золотухино, ул. Лесная, 14',loc:'me',job:'ИП, пасека',crim:'нет',car:'ВАЗ-2121 «Нива», белая',prints:'нет в картотеке',img:'p_melnik'},
+  ramil:{fio:'Гусейнов Рамиль',born:'30.01.1983',addr:'Золотухино, ул. Центральная, 1',loc:'bar',job:'бармен, бар «Колос»',crim:'нет',car:'нет',prints:'нет в картотеке',img:'p_ramil',summon:false},
+  lastochkina:{fio:'Ласточкина Вера',born:'05.05.1961',addr:'Золотухино, ул. Садовая, 2',loc:'la',job:'доярка',crim:'нет',car:'нет',prints:'нет в картотеке',note:'мать Ласточкина Г.'},
+  fedorov:{fio:'Фёдоров Иван',born:'14.07.1974',addr:'Пригорск, ул. Заводская, 12',job:'водитель',crim:'нет',car:'ВАЗ-2121 «Нива», зелёная',prints:'нет в картотеке'},
+  melnikova:{fio:'Мельникова Анна',born:'19.03.1992',addr:'Пригорск, ул. Мира, 4',job:'учитель',crim:'нет',car:'нет',prints:'нет в картотеке'},
+  somova:{fio:'Сомова Ольга',born:'02.10.1996',addr:'Пригорск, ул. Мира, 17',job:'медсестра',crim:'нет',car:'Kia Rio, синяя',prints:'нет в картотеке',note:'дочь Сомова П., в момент убийства на смене (больница)'}},
+ locs:{
+  otdel:{name:'Районный отдел полиции',short:'Отдел',x:352,y:44},
+  scene:{name:'Дом Сомова',addr:'ул. Речная, 7',short:'Речная, 7',x:176,y:220,img:'scene',note:'Место опечатано. Тело увезли в морг',enter:true,inLabel:'Войти в дом',outLabel:'Выйти во двор',inName:'Кухня Сомова',inText:'Здесь его нашли. Нажимайте на всё, что кажется важным.',
+   scene:{img:'kitchen',hot:[{l:'Ящик стола',x:23,y:40,w:18,h:14,clue:'notebook',t:1,toast:'В ящике стола: долговая тетрадь'},{x:5,y:33,w:35,h:8,text:'На столе немытые чашки и пачка квитанций за свет. Чашки две: Сомов пил чай не один.'},{l:'Стул',x:44,y:47,w:17,h:22,text:'Стул опрокинут. Здесь была борьба, но короткая.'},{l:'Контур',x:47,y:63,w:40,h:37,text:'Меловой контур. Сомов упал лицом к двери: он видел, кто вошёл.'},{l:'Бумаги',x:21,y:72,w:20,h:20,text:'На полу разбросаны расписки. Кто-то рылся в бумагах, но тетрадь в ящике не нашёл.'},{x:5,y:0,w:25,h:32,text:'Окно заклеено на зиму. Через него никто не лез.'},{x:82,y:30,w:18,h:30,text:'Печь давно остыла. В чугунке недоеденная каша.'}]},
+   actions:[{l:'Обойти соседей',sub:'Узнать, кто живёт рядом',doneText:'Разумно начать с ближайших соседей: из домов 5 и 9 могли видеть или слышать, что происходило у Сомова в ту ночь. Оба дома отмечены у вас на карте. Нажмите сюда или на «Карту» внизу и выберите, с какого начать опрос.',go:'map',t:.5,run:()=>{pin('tk');pin('bu')}}]},
+  tk:{name:'Дом Ткачук',addr:'ул. Речная, 5',short:'Речная, 5',x:122,y:220,img:'tk',who:['tkachuk'],knock:'Постучать в дверь'},
+  bu:{name:'Дом Бусова',addr:'ул. Речная, 9',short:'Речная, 9',x:230,y:220,img:'bu',who:['busov'],knock:'Постучать в дверь'},
+  la:{name:'Дом Ласточкиных',addr:'ул. Садовая, 2',short:'Садовая, 2',x:96,y:142,img:'la',who:['lastochkin'],knock:'Постучать в дверь'},
+  bar:{name:'Бар «Колос»',addr:'ул. Центральная, 1',short:'«Колос»',x:248,y:146,img:'bar',who:['ramil'],knock:'Войти и поговорить'},
+  me:{name:'Дом Мельника',addr:'ул. Лесная, 14',short:'Лесная, 14',x:296,y:86,img:'me',who:['melnik'],knock:'Постучать в дверь'}},
+ items:{
+  knife:{n:'Складной нож',img:'knife',d:'Изъят у порога',clue:'knife',lab:4,pts:['Следы крови на клинке принадлежат потерпевшему Сомову П.','Отпечатки пальцев на рукояти пригодны для идентификации. В картотеке совпадений нет: владелец ранее не задерживался.'],res:['prints'],ms:'Заключение по ножу',mb:'Отпечатки пальцев на рукояти пригодны для идентификации. По картотеке совпадений нет.'},
+  wallet:{n:'Кошелёк потерпевшего',img:'wallet',d:'Пустой',clue:'wallet',lab:6,pts:['Денег не обнаружено. Документы потерпевшего на месте.','Смазанные отпечатки пальцев. Совпадают с неизвестным лицом с ножа.'],res:['wprints'],ms:'Заключение по кошельку',mb:'Смазанные отпечатки. Совпадают с неизвестным лицом с ножа. Денег и следов купюр не обнаружено.'},
+  notebook:{n:'Долговая тетрадь',img:'notebook',d:'Из ящика стола',clue:'notebook'},
+  jacket:{n:'Куртка Мельника',img:'jacket',d:'Изъята при обыске',clue:'search',lab:4,pts:['Бурые пятна на рукаве и полах куртки являются следами крови человека.','Группа крови совпадает с группой крови потерпевшего Сомова П.','На купюрах из конверта следы той же крови.'],res:['jacketlab'],ms:'Заключение по куртке Мельника',mb:'Пятна на куртке являются кровью человека, группа совпадает с потерпевшим Сомовым П. На купюрах следы той же крови.'}},
+ clues:{
+  body:{k:'find',n:'Тело жертвы',t:'Сомов П., 54 года. Ножевое ранение в грудь. Найден утром 15.10 на кухне своего дома.'},
+  knife:{k:'find',n:'Складной нож',img:'knife',t:'Складной нож с деревянной рукоятью, в крови. Лежал у порога. Такие носят с собой, а не держат на кухне.'},
+  wallet:{k:'find',n:'Кошелёк жертвы',img:'wallet',t:'Кошелёк жертвы. Пустой. Документы на месте.'},
+  prints:{k:'lab',n:'Отпечатки на ноже',img:'fp',t:'На ноже отпечатки пальцев. В картотеке совпадений НЕТ: владелец ранее не задерживался.'},
+  tod:{k:'lab',n:'Время смерти',t:'Судмедэкспертиза: смерть наступила 14.10 между 22:00 и 23:30 от проникающего ножевого ранения в грудь.'},
+  wprints:{k:'lab',n:'Отпечатки на кошельке',img:'fp',t:'На кошельке смазанные отпечатки того же неизвестного, что и на ноже.'},
+  notebook:{k:'find',n:'Долговая тетрадь',img:'notebook',ev:'notebook',t:'Долговая тетрадь Сомова. Последняя запись: «Мельник В. 40 000. Срок 10.10. Не отдал!»'},
+  tk1:{k:'wit',t:'Ткачук: около 23:00 видела у забора Сомова «Гришку Ласточкина».'},
+  tk2:{k:'wit',t:'Ткачук не уверена: фонарь не горит, лица она не видела, узнала «по походке».'},
+  tk3:{k:'wit',t:'Ткачук слышала, как у дома урчал мотор машины.'},
+  bu1:{k:'wit',t:'Бусов: около 22:30 у Сомова ругались из-за денег. «Отдашь, или пожалеешь». Голос мужской.'},
+  bu2:{k:'wit',t:'Бусов: у дома Сомова стояла белая «Нива». Номер не разглядел.'},
+  bu3:{k:'wit',t:'Бусов: Сомов давал деньги в долг под проценты, многие были ему должны.'},
+  la1:{k:'wit',t:'Ласточкин: весь вечер 14.10 был в баре «Колос» до закрытия.'},
+  laprint:{k:'base',n:'Отпечатки не совпадают',img:'fp',t:'Сверка по картотеке: отпечатки Ласточкина Г. НЕ совпадают ни с одними отпечатками, изъятыми по делу. Следы на уликах оставил не он.'},
+  ra1:{k:'wit',t:'Бармен Рамиль: Ласточкин сидел в «Колосе» с 20:00 до 01:00.'},
+  ra2:{k:'wit',t:'Бармен Рамиль: около 22:00 заезжал Виктор Мельник, взял водку, был злой, уехал.'},
+  niva:{k:'base',n:'Белая «Нива»',t:'По базе: белая «Нива» в Золотухино одна, у Мельника В. (Лесная, 14).'},
+  me1:{k:'wit',t:'Мельник: вечером 14.10 «был дома, смотрел телевизор».'},
+  me2:{k:'wit',t:'Мельник: с Сомовым «почти не знаком».'},
+  match:{k:'lab',n:'Совпадение отпечатков',img:'fp',match:true,t:'Отпечатки Мельника СОВПАЛИ с отпечатками на ноже и кошельке.'},
+  search:{k:'find',n:'Куртка Мельника',img:'jacket',ev:'jacket',t:'Обыск у Мельника: куртка с бурыми пятнами на рукаве, в конверте 12 000. Изъято, можно отправить на экспертизу.'},
+  jacketlab:{k:'lab',n:'Кровь на куртке',img:'jacket',t:'Экспертиза: пятна на куртке Мельника являются кровью, группа совпадает с потерпевшим Сомовым П. На деньгах из конверта следы той же крови.'},
+  confess:{k:'find',n:'Признание',t:'Мельник признался в убийстве Сомова.'}},
+ dlg:{
+  tkachuk:{greet:'Ой, вы из полиции? Про Петю? Горе-то какое, я ж его и нашла…',q:[
+   {id:'a',q:'Что вы видели вечером 14-го?',a:'Около одиннадцати выглянула в окно, а у Петиного забора Гришка Ласточкин топчется. Пьянь с Садовой. Он это, больше некому!',clue:'tk1',ra:'Я ж говорила: Гришка там был. Хотя… лица-то я не видела, если честно.',rclue:['tk1','tk2']},
+   {id:'b',q:'Вы уверены, что это был Ласточкин?',need:'a',a:'Ну… фонарь-то у нас третий месяц не горит. Лица не видела. Но сутулый, как он. Кто ж ещё?',clue:'tk2'},
+   {id:'c',q:'Машину у дома не видели?',a:'Видеть не видела. А мотор урчал, да. Долго урчал, потом уехала.',clue:'tk3'},
+   {id:'d',q:'Каким был Сомов?',a:'Да прижимистый был. Деньги людям давал, а потом тряс. Но меня не обижал.'}]},
+  busov:{greet:'Здравствуйте. Я так и думал, что придёте.',q:[
+   {id:'a',q:'Что вы слышали вечером 14-го?',a:'Где-то в пол-одиннадцатого у Петра орали. Про деньги. «Отдашь, или пожалеешь». Голос мужской, не Петра.',clue:'bu1'},
+   {id:'b',q:'Видели кого-нибудь у дома?',a:'Людей не видел. А машина стояла, белая «Нива». Номер не разглядел, темно.',clue:'bu2'},
+   {id:'c',q:'Ласточкина в тот вечер видели?',cond:()=>has('tk1'),a:'Гришку? Нет. Он по вечерам в «Колосе» сидит, это вся деревня знает.',pin:'bar'},
+   {id:'d',q:'У Сомова были враги?',a:'Врагов не было. Должники были. Пётр в долг давал под проценты, полдеревни ему должна.',clue:'bu3'}]},
+  lastochkin:{greet:'Чего надо, начальник? Опять я, что ли?',q:[
+   {id:'a',q:'Где вы были 14-го с 22:00 до 23:30?',a:'В «Колосе». До самого закрытия. Рамиль подтвердит, я ему в нарды проиграл.',clue:'la1',pin:'bar'},
+   {id:'b',q:'Соседка видела вас у дома Сомова.',need:'a',cond:()=>has('tk1'),a:'Ткачиха? Да она меня с любым столбом спутает. Не был я у Сомова. И денег ему не должен, он мне не давал, говорил «не вернёшь».'},
+   {id:'c',q:'Кто мог желать Сомову зла?',a:'Да кто угодно из должников. Мельник вон с пасеки у него крупно занимал, все знают.'}]},
+  ramil:{greet:'Добрый день. Пива не предлагаю, вы на службе.',q:[
+   {id:'a',q:'Ласточкин был у вас вечером 14-го?',cond:()=>has('tk1')||has('la1'),a:'С восьми до часу ночи. Пил, проиграл мне в нарды, ушёл последним.',clue:'ra1'},
+   {id:'b',q:'Кто ещё заходил в тот вечер?',a:'Свои. А, около десяти Виктор Мельник заезжал. Взял бутылку, злой как чёрт. Сел в «Ниву» и уехал.',clue:'ra2'}]},
+  melnik:{greet:'Здравствуйте… Чем обязан?',q:[
+   {id:'a',q:'Где вы были вечером 14-го?',a:'Дома. Весь вечер дома, телевизор смотрел. Один.',clue:'me1'},
+   {id:'b',q:'Вы знали Сомова?',a:'Ну… так. Мёд у меня брал пару раз. Близко не знаком.',clue:'me2'},
+   {id:'c',q:'У Сомова записан ваш долг: 40 000.',cond:()=>has('notebook'),a:'<i>(пауза)</i> Это… старый долг. Я отдавал. Слушайте, мне некогда.'},
+   {id:'d',q:'Вас видели в «Колосе» в 22:00.',cond:()=>has('ra2'),a:'Ну заезжал. И что? Взял бутылку и домой. Это запрещено?'}]}},
+ press:{melnik:{
+  match:{l:'Предъявить: отпечатки на ноже совпали',a:'<i>(пожимает плечами)</i> Нож мой, не отрицаю. Только он у меня неделю как пропал. Может, в сарай залезли, у нас воруют. Я-то тут при чём?'},
+  notebook:{l:'Предъявить: долговую тетрадь',a:'Да, должен! Сорок тысяч! Он требовал вдвое больше, проценты… Я бы отдал!'},
+  niva:{l:'Предъявить: белая «Нива» у дома Сомова',a:'<i>(смотрит в стол)</i> Мало ли белых «Нив» в районе.',cond:()=>has('niva')&&has('bu2')},
+  ra2:{l:'Предъявить: бармен видел вас злым в 22:00',a:'Ну выпил. Ну злой был. Это не преступление.'},
+  search:{l:'Предъявить: куртку с пятнами и деньги',a:'Это… свинью колол. А деньги мои.'},
+  jacketlab:{l:'Предъявить: на куртке и деньгах кровь Сомова',a:'<i>(бледнеет, потом поднимает глаза)</i> Свинью колол… Всё. Больше ни слова без адвоката.'},
+  bu1:{l:'Предъявить: сосед слышал «отдашь, или пожалеешь»',a:'Это не я кричал. Это… не я.'}}},
+ confess:{},
+ lawyer:{melnik:'jacketlab'},
+ sample:{l:'Снять отпечатки пальцев',lab:'knife',match:{melnik:'match'}},
+ onRec:id=>{if(id==='melnik'&&has('bu2'))addClue('niva')},
+ onQuery:(q,res)=>{if(q.includes('нив')&&has('bu2')&&res.includes('melnik'))addClue('niva')},
+ phoneSus:{melnik:{refuse:'<i>(раздражённо)</i> Сейчас? Пасека, пчёлы, мне некогда по отделам ходить. Есть что сказать, присылайте повестку. <i>(кладёт трубку)</i>'}},
+ detain:{melnik:()=>has('match')||has('jacketlab')||has('confess'),lastochkin:()=>false},
+ warrant:{loc:'me',cond:()=>S.found.includes('melnik')&&(has('match')||(has('notebook')&&((has('niva')&&has('bu2'))||has('ra2'))&&has('me2'))),ok:'Санкционирую обыск по адресу: ул. Лесная, 14 (Мельник В.). Основания приняты.',okSay:'Основания приняты. Подписываю ордер на обыск у Мельника, Лесная, 14. Копия у вас в почте.',no:()=>{if(!S.found.includes('melnik'))return 'Курейко, на кого ордер? Мне нужен конкретный человек и улики против него. Без этого не подпишу.';const m=has('notebook'),o=(has('niva')&&has('bu2'))||has('ra2'),l=has('me2');const miss=[];if(!m)miss.push('мотив: зачем ему убивать Сомова');if(!o)miss.push('что он был рядом с домом Сомова той ночью');if(!l)miss.push('что он вам врёт');return 'Курейко, против Мельника пока догадки. Мне нужно три вещи: мотив, что он был на месте, и что он врёт следствию. Не вижу: '+miss.join('; ')+'. Принесёте, подпишу.'},l:'Провести обыск по ордеру',sub:'Дом, сарай, машина',h:2,clue:'search',toast:'Изъято: куртка и деньги'},
+ hint:()=>{if(!S.lab.knife)return 'Начните с лаборатории: нажмите на коробку «Вещдоки» и отправьте нож на экспертизу.';
+  if(!has('notebook')&&S.loc!=='scene')return 'Пока лаборатория работает, поезжайте на место преступления. Кнопка «Карта».';
+  if(!has('notebook'))return 'Войдите в дом и осмотрите кухню. Жертва могла что-то записывать: проверьте ящик стола.';
+  if(!S.done.scene0)return 'Обойдите соседей: кто-то мог что-то видеть или слышать.';
+  if(!has('tk1')&&!has('bu1'))return 'Опросите соседей с Речной, 5 и Речной, 9.';
+  if(has('tk1')&&!S.found.includes('lastochkin'))return 'Соседка назвала Ласточкина. Найдите его в базе: компьютер на столе.';
+  if(has('bu2')&&!has('niva'))return 'Белая «Нива» у дома Сомова. У кого из фигурантов такая машина? Проверяйте в базе фамилии, которые всплывали в деле.';
+  if(!S.found.includes('melnik'))return 'В тетради должник Мельник. Найдите его в базе.';
+  if(!has('match')&&!has('jacketlab'))return 'Сверьте показания с временем смерти. Кто врёт? Вызовите подозреваемого и снимите отпечатки.';
+  if(!has('jacketlab'))return S.searched?'Отправьте куртку Мельника на экспертизу: коробка «Вещдоки».':(S.warrant?'Обыщите дом Мельника по ордеру: Лесная, 14.':'Мельник не признаётся, а одного ножа суду мало. Остаётся одно: обыскать его дом. Позвоните прокурору Ветровой с рабочего телефона и запросите ордер на обыск.');
+  return 'Дело готово. Папка «Дело» → «Передать дело в суд».'},
+ charge:sel=>{const bad=sel.filter(x=>x!=='melnik');
+  if(bad.length)return {res:'lose',text:bad.map(x=>P(x).fio).join(', ')+': суд оправдал. Против этих людей нет ни одной прямой улики.\n'+(bad.includes('lastochkin')?'Бармен подтвердил алиби Ласточкина, отпечатки на ноже чужие. ':'')+'Настоящий убийца остался на свободе.'};
+  const soft=['notebook','ra2','search','bu1'].filter(has).length+(has('niva')&&has('bu2')?1:0);
+  if(has('match')&&has('jacketlab'))return {res:'win',text:'Мельник В. признан виновным в убийстве Сомова П. Вину не признал, но нож с его отпечатками и кровь Сомова на его куртке не оставили защите шансов. Версия о краже ножа развалилась.\nПриговор: 9 лет колонии строгого режима. Блестящая работа, следователь.'};
+  if(has('jacketlab'))return {res:'win',text:'Мельник В. признан виновным. Адвокат пытался развалить дело, но кровь Сомова на куртке подсудимого решила исход.\nПриговор: 8 лет колонии.'};
+  if(has('match'))return {res:'return',text:'Отпечатки Мельника на ноже есть, но сам он вину отрицает: нож, мол, украли из сарая. При хорошей защите адвоката суд счёл, что одного ножа мало: нужно доказать, что Мельник был в доме той ночью. Суд вернул дело на доследование. Вы потеряли день.'};
+  if(soft>=3)return {res:'win',text:'Мельник В. признан виновным по совокупности косвенных улик. Повезло: судья был строгий.\nВ следующий раз добудьте прямые доказательства.'};
+  return {res:'return',text:'Обвинение против Мельника В. основано на догадках. Улик недостаточно. Дело возвращено на доследование. Вы потеряли день.'}},
+ mapBase:()=>`<rect width="400" height="300" fill="#e8ddc1"/>
+ <g fill="#9fb48d" opacity=".55">${[[250,40],[270,30],[230,52],[300,40],[210,40],[320,64],[190,60]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="16"/>`).join('')}</g>
+ <text x="220" y="22" font-family="PT Mono,monospace" font-size="9" fill="#5f6d52" letter-spacing="2">ЛЕС</text>
+ <path d="M0 262q100-22 200-6t200-10V300H0z" fill="#7fa6bf" opacity=".7"/><text x="40" y="286" font-family="PT Mono,monospace" font-size="9" fill="#3c5b70" letter-spacing="2">Р. ЗОЛОТУХА</text>
+ <g stroke="#b8a77f" stroke-width="10" fill="none" stroke-linecap="round"><path d="M40 232H330"/><path d="M60 156H330"/><path d="M200 232V96"/><path d="M200 96H340"/><path d="M330 156L352 44"/></g>
+ <g stroke="#f5efe0" stroke-width="1.2" fill="none" stroke-dasharray="4 4"><path d="M40 232H330"/><path d="M60 156H330"/><path d="M200 232V96"/><path d="M200 96H340"/><path d="M330 156L352 44"/></g>
+ <g font-family="PT Mono,monospace" font-size="8" fill="#6b604a" letter-spacing="1"><text x="44" y="250">УЛ. РЕЧНАЯ</text><text x="64" y="174">УЛ. САДОВАЯ</text><text x="206" y="124" transform="rotate(-90 206 124)">ЦЕНТРАЛЬНАЯ</text><text x="214" y="112">УЛ. ЛЕСНАЯ</text><text x="300" y="20">→ ПРИГОРСК</text></g>
+ <g fill="#cdbd96">${[[110,206],[140,206],[166,206],[196,206],[222,206],[250,206],[80,128],[120,128],[150,128],[236,128],[270,128],[262,74],[300,72]].map(([x,y])=>`<rect x="${x}" y="${y}" width="18" height="14"/>`).join('')}</g>
+ <text x="12" y="20" font-family="Oswald,Impact,sans-serif" font-size="16" fill="#2a251b" letter-spacing="2">с. ЗОЛОТУХИНО</text>`};
+
+/* ---------- CASE 2 ---------- */
+CASES[2]={id:2,no:'№ 2',callAbout:()=>has('ident')?'по делу об убийстве Андрея Колесникова':'по делу о пропаже Андрея Колесникова',title:'Пропавший',days:7,month:10,d0:3,
+ folder:()=>has('ident')?'Убийство Колесникова А.':'Розыск: Колесников А.',place:()=>has('ident')?'г. Пригорск, лес у Чёрного лога':'г. Пригорск, пр. Мира, 23',
+ brief:['Курейко, садись. С первым делом поздравляю, но расслабляться некогда.','У дежурного заявление: пропал Андрей Колесников, 41 год, сварщик с «Пригорскмаша». В пятницу ушёл на смену и не вернулся. Четвёртый день, телефон выключен.','Жена ждёт тебя в допросной. Может, мужик загулял. А может, и нет. Чутьё мне подсказывает, что нет.','Срок неделя. Работай.'],
+ start:{clues:['report'],pins:['otdel'],ev:[],found:['irina','kolesnikov'],arrived:['irina'],phone:true},
+ people:{
+  kolesnikov:{fio:'Колесников Андрей',born:'12.03.1985',addr:'Пригорск, пр. Мира, 23, кв. 14',job:'сварщик, «Пригорскмаш»',crim:'нет',car:'нет',prints:'нет в картотеке',status:()=>has('ident')?'ПОГИБ, опознан':'В РОЗЫСКЕ с 30.10',face:{skin:'#dcb08c',hair:'#3b2d22',style:'short',age:1,shirt:'#4a5a6a',stubble:true}},
+  irina:{fio:'Колесникова Ирина',born:'27.08.1987',addr:'Пригорск, пр. Мира, 23, кв. 14',loc:'home',job:'жена пропавшего, продавщица',crim:'нет',car:'нет',prints:'нет в картотеке',img:'p_irina',face:{skin:'#e8c6a8',hair:'#6a4a30',style:'long',age:0,shirt:'#5d4a66'}},
+  kuzmin:{fio:'Кузьмин Олег',born:'04.11.1968',addr:'Пригорск, ул. Заводская, 40',loc:'zavod',job:'начальник сварочного цеха',crim:'нет',car:'Lada Granta, серая',prints:'нет в картотеке',img:'p_kuzmin',face:{skin:'#e0b48f',hair:'#8a8780',style:'short',mustache:true,age:2,shirt:'#3c4f66'}},
+  zaitseva:{fio:'Зайцева Тамара',born:'19.01.1962',addr:'Пригорск, ул. Ленина, 8',loc:'zavod',job:'отдел кадров завода',crim:'нет',car:'нет',prints:'нет в картотеке',img:'p_zaitseva',face:{skin:'#ecc7a6',hair:'#9b4a3a',style:'long',age:2,shirt:'#6b5a3a'},show:()=>has('ku2')},
+  chernov:{fio:'Чернов Александр',born:'02.06.1984',addr:'Пригорск, общежитие №3',loc:'zavod',job:'сварщик, бригада Колесникова',crim:'нет',car:'нет',prints:'нет в картотеке',img:'p_chernov',face:{skin:'#d8a882',hair:'#2a2018',style:'cap',stubble:true,age:1,shirt:'#5a4030'},show:()=>has('za2')},
+  zhora:{fio:'Гаврюшин Георгий',born:'15.09.1975',addr:'ГК «Мотор», бокс 17',loc:'garage',job:'автослесарь, «Жора»',crim:'2009 незаконная игорная деятельность',car:'ВАЗ-2107',prints:'ЕСТЬ в картотеке',img:'p_zhora',face:{skin:'#d4a07a',hair:'#5a4a3a',style:'short',beard:true,age:1,shirt:'#3a3a3a'}},
+  barmin:{fio:'Бармин Тимур',born:'21.02.1979',addr:'Пригорск, ул. Промышленная, 3',loc:'tire',job:'владелец шиномонтажа «Колесо», кличка «Бармалей»',crim:'2015 вымогательство (4 года)',car:'УАЗ «Патриот», чёрный',prints:'ЕСТЬ в картотеке',img:'p_barmin',face:{skin:'#c99a72',hair:'#141210',style:'short',stubble:true,age:1,shirt:'#1c1c20'}},
+  ryabov:{fio:'Рябов Константин',born:'09.07.2002',addr:'Пригорск, общежитие №3',loc:'tire',job:'работник шиномонтажа «Колесо»',crim:'нет',car:'нет',prints:'нет в картотеке',img:'p_ryabov',face:{skin:'#e0b48f',hair:'#5a4030',style:'short',age:0,shirt:'#4a3a2e'},show:()=>has('ba1')},
+  barmina:{fio:'Бармина Лилия',born:'03.03.1985',addr:'Пригорск, ул. Промышленная, 3',job:'бухгалтер',crim:'нет',car:'Kia Sportage, белая',prints:'нет в картотеке',note:'жена Бармина Т.'},
+  kolesnikovv:{fio:'Колесников Виктор',born:'01.05.1950',addr:'Пригорск, пр. Мира, 23',job:'пенсионер',crim:'нет',car:'нет',prints:'нет в картотеке',status:'УМЕР 2019',note:'отец Колесникова А.'}},
+ locs:{
+  otdel:{name:'Районный отдел полиции',short:'Отдел',x:332,y:42},
+  home:{name:'Квартира Колесниковых',addr:'пр. Мира, 23, кв. 14',short:'Мира, 23',x:106,y:112,img:'c2_home',who:['irina'],knock:'Позвонить в квартиру',emptyNote:'У вас её запасной ключ, можно осмотреть квартиру.',
+   actions:[{l:'Осмотреть кладовку',sub:'Где лежали походные вещи',doneText:'Половина полок пустая',t:.5,run:()=>addClue('closet')},{l:'Выйти на балкон',sub:'Жена говорила, он ночами курил',doneText:'Банка с окурками',t:.25,run:()=>addClue('prima')},{l:'Осмотреть стол Андрея',sub:'Бумаги, записи',doneText:'Найдена записка',t:.5,run:()=>{addClue('note');pin('garage');found('zhora')}}]},
+  zavod:{name:'Завод «Пригорскмаш»',addr:'ул. Заводская, 40',short:'Завод',x:268,y:196,img:'c2_zavod',who:['kuzmin','zaitseva','chernov'],note:'Проходная, сварочный цех, отдел кадров'},
+  garage:{name:'Гаражный кооператив «Мотор»',addr:'бокс 17',short:'Гаражи',x:352,y:150,img:'c2_garage',who:['zhora'],knock:'Зайти в бокс 17'},
+  tire:{name:'Шиномонтаж «Колесо»',addr:'ул. Промышленная, 3',short:'Шиномонтаж',x:204,y:252,img:'c2_tire',overlay:'<div class="sign" style="left:27.6%;top:34.6%;width:15.2%;height:13.2%">ШИНОМОНТАЖ<small>«КОЛЕСО»</small></div>',who:['barmin','ryabov']},
+  forest:{name:'Лес у Чёрного лога',addr:'15 км от города',far:true,short:'Чёрный лог',x:62,y:232,note:'Место обнаружения тела',
+   scene:{img:'c2_forest',hot:[
+    {l:'Палатка',x:29,y:40,w:31,h:28,clue:'tent',t:.5},{l:'Рюкзак',x:27,y:63,w:10,h:22,clue:'pack',t:.5,also:['photo']},{l:'Термос',x:39.5,y:72,w:7,h:16,clue:'thermos',t:.5},
+    {l:'Кострище',x:58,y:76,w:17,h:16,clue:'butt',t:.5},{l:'Колея',x:70,y:40,w:30,h:30,clue:'tracks',t:1},{x:19,y:64,w:8,h:18,text:'Пень. На нём резали хлеб: крошки и свежие следы ножа.'},
+    {l:'Овраг',x:0,y:44,w:20,h:22,text:'Овраг. В сотне метров ниже по склону нашли тело. Яма неглубокая, копали наспех и притоптали.'},{x:0,y:0,w:100,h:36,text:'Тихо. Только ворона где-то каркает. До ближайшей дороги метров триста.'}]}}},
+ items:{
+  corpse:{n:'Тело мужчины из леса',d:'В морге, на вскрытии',clue:'body2',lab:3,pts:['Мужчина 38–45 лет. Смерть наступила 3–4 дня назад от удара тупым предметом по затылку.','Голова и кисти рук отделены после смерти, грубо, тяжёлым инструментом.','Особые приметы: послеоперационный рубец справа внизу живота (аппендэктомия).'],auto:true,res:['autopsy'],ms:'Судебно-медицинское заключение',mb:'Мужчина 38–45 лет. Смерть наступила 3–4 дня назад от удара тупым предметом по затылку.\nГолова и кисти рук отделены после смерти, грубо, тяжёлым инструментом.\nОсобые приметы: послеоперационный рубец справа внизу живота (аппендэктомия).'},
+  thermos:{n:'Термос',img:'ev_thermos',d:'Из палатки в лесу',clue:'thermos',note:'Можно показать родственникам на допросе'},
+  pack:{n:'Рюкзак',img:'ev_pack',d:'Из палатки в лесу',clue:'pack'},
+  butt:{n:'Окурок «Ява»',img:'ev_butt',d:'У кострища',clue:'butt',lab:5,pts:['Окурок сигареты «Ява», выкурен 3–5 дней назад.','Следы слюны и частичный отпечаток большого пальца. Пригодно для сравнения с подозреваемым.'],res:['buttlab'],ms:'Заключение по окурку',mb:'На окурке следы слюны и частичный отпечаток большого пальца. Пригодно для сравнения с отпечатками подозреваемого.'},
+  cast:{n:'Слепок протектора',img:'ev_cast',d:'С просёлка у оврага',clue:'tracks',lab:4,pts:['Протектор шин 245/75 R16, рисунок характерен для УАЗ «Патриот» в заводской комплектации.','Следы свежие, оставлены 3–5 дней назад.'],res:['tires'],ms:'Трасологическая экспертиза',mb:'Протектор шин 245/75 R16, рисунок характерен для УАЗ «Патриот» в заводской комплектации. Следы свежие, 3–5 дней.'},
+  photo:{n:'Фото девочки',img:'ev_photo',d:'Из рюкзака',clue:'photo',note:'Можно показать жене'},
+  shovel:{n:'Лопата и монтировка',img:'ev_shovel',d:'Изъяты из УАЗа Бармина',clue:'uazsearch',lab:4,pts:['На сгибе монтировки и на штыке лопаты обнаружены следы крови человека.','Группа крови совпадает с группой крови погибшего Колесникова А.','Глина на лопате по составу совпадает с почвой у Чёрного лога.'],res:['shovellab'],ms:'Заключение по лопате и монтировке',mb:'Следы крови человека. Группа совпадает с погибшим Колесниковым А. Глина совпадает с почвой у Чёрного лога.'},
+  key:{n:'Запасной ключ',img:'',d:'От квартиры Колесниковых, пр. Мира, 23, кв. 14. Дала жена',clue:'keyc'}},
+ clues:{
+  report:{k:'find',n:'Заявление о пропаже',t:'Колесникова И. заявила: муж Андрей, 41 год, ушёл утром 30.10 «на смену» и не вернулся. Телефон выключен с того же дня.'},
+  closet:{k:'find',n:'Полупустая кладовка',t:'В кладовке половина полок пустая. Для тесной квартиры странно: в таких кладовках обычно всё забито до потолка.'},
+  prima:{k:'find',n:'Банка с окурками',t:'На балконе банка из-под кофе, полная окурков. Все до одного «Прима». Андрей курил только «Приму».'},
+  note:{k:'find',n:'Записка на столе',t:'Под стеклом на столе бумажка: «Жора, бокс 17, пт 19:00». И ниже, с нажимом: «300 до 30-го!!!»'},
+  ir1:{k:'wit',t:'Жена: Андрей тихий, не пьёт. Последний месяц был нервный, ночами курил на балконе.'},
+  ir2:{k:'wit',t:'Жена: из кладовки пропали палатка, рюкзак, спальник, котелок и складная лопатка. Сама она этого не заметила.'},
+  ir3:{k:'wit',t:'Жена: особая примета, шрам от аппендицита справа на животе.'},
+  ir4:{k:'wit',t:'Жена не знала про отпуск: Андрей каждое утро «уходил на смену».'},
+  ir6:{k:'wit',t:'Жена: на фото Настя, дочь Андрея от первого брака. Он всегда носил это фото с собой.'},
+  ir5:{k:'wit',t:'Жена: до свадьбы Андрей играл в карты, клялся, что завязал.'},
+  ku1:{k:'wit',t:'Начальник цеха Кузьмин: Колесников «золотые руки», не пил, не прогуливал.'},
+  ku2:{k:'wit',t:'Кузьмин: Колесникова нет на заводе с понедельника 26.10. Отправил в отдел кадров.'},
+  leave:{k:'find',n:'Заявление на отпуск',t:'Отдел кадров: Колесников взял отпуск за свой счёт с 26.10 по 13.11. Приносил заявление сам, «руки тряслись».'},
+  za2:{k:'wit',t:'Зайцева: Колесников дружил с Черновым, они в одной бригаде.'},
+  cards:{k:'wit',t:'Чернов: Андрей по пятницам играл в карты у Жоры в гаражах, кооператив «Мотор».'},
+  ch2:{k:'wit',t:'Чернов: Андрей говорил, что «влип по-крупному».'},
+  ch3:{k:'wit',t:'Чернов: Андрей рыбак, лес знает. Говорил: «если что, уйду в лес, никто не найдёт».'},
+  zh0:{k:'wit',t:'Жора отрицает, что в гаражах играют в карты.'},
+  debt:{k:'wit',t:'Жора: в сентябре Андрей проиграл в карты 300 000 Бармину Тимуру по кличке «Бармалей».'},
+  zh2:{k:'wit',t:'Жора: 23.10 Бармин сказал Андрею при всех: «Неделя сроку». Андрей «побелел».'},
+  barminrec:{k:'base',n:'Бармин Т.',t:'По базе: Бармин Т., судим за вымогательство (2015). Машина: УАЗ «Патриот», чёрный. Владеет шиномонтажом на Промышленной, 3.'},
+  ba1:{k:'wit',t:'Бармин: «Был должен. Я его сам ищу. Найдёте, передайте, что я жду».'},
+  ba2:{k:'wit',t:'Бармин: 31.10 был в мастерской, «Костя подтвердит».'},
+  ba3:{k:'wit',t:'Бармин: на его УАЗе ездит работник Костя Рябов, «за запчастями».'},
+  ry1:{k:'wit',t:'Рябов: «Колесникова не знаю».'},
+  ry2:{k:'wit',t:'Рябов курит сигареты «Ява».'},
+  ry3:{k:'wit',t:'Рябов: 31.10 «ездил за запчастями в область» на УАЗе.'},
+  body2:{k:'find',n:'Тело в лесу',ev:'corpse',t:'Грибник нашёл в лесу у Чёрного лога тело мужчины. Голова и кисти рук отсутствуют. Тело было присыпано землёй и ветками. Кто-то очень не хотел, чтобы его опознали.'},
+  autopsy:{k:'lab',n:'Вскрытие',t:'Мужчина 38–45 лет, убит 3–4 дня назад ударом тупым предметом по затылку. Голову и кисти отделили после смерти. Справа на животе старый шрам от аппендицита.'},
+  tent:{k:'find',n:'Палатка в овраге',t:'Брошенная палатка, спальник, котелок. Здесь кто-то прятался несколько дней.'},
+  pack:{k:'find',n:'Рюкзак',img:'ev_pack',ev:'pack',t:'Рюкзак: свитер, бритва, фото девочки лет десяти. Документов нет.'},
+  photo:{k:'find',n:'Фото из рюкзака',img:'ev_photo',ev:'photo',t:'Старая фотокарточка девочки лет десяти, с загнутым углом. Он носил её с собой.'},
+  thermos:{k:'find',n:'Термос',img:'ev_thermos',ev:'thermos',t:'Старый термос, на боку гравировка «А + И».'},
+  butt:{k:'find',n:'Окурок «Ява»',img:'ev_butt',ev:'butt',t:'Свежий окурок сигареты «Ява» у кострища. Кто-то сидел здесь и курил.'},
+  tracks:{k:'find',n:'Следы протектора',img:'ev_cast',ev:'cast',t:'На просёлке у оврага широкие следы внедорожника. Сделан гипсовый слепок протектора.'},
+  ident1:{k:'wit',t:'Жена опознала термос: «Я подарила ему на десять лет свадьбы. А + И, Андрей и Ирина».'},
+  ident:{k:'find',n:'Личность установлена',t:'Погибший опознан: Андрей Колесников. Термос из палатки и шрам на теле совпадают с показаниями жены.'},
+  buttlab:{k:'lab',n:'Окурок: заключение',img:'fp',t:'На окурке слюна и частичный отпечаток пальца. Курил не Колесников. Нужен подозреваемый для сравнения.'},
+  tires:{k:'lab',n:'Протектор',img:'ev_cast',t:'Следы у оврага оставил внедорожник УАЗ «Патриот». Следы свежие, 3–5 дней.'},
+  uazsearch:{k:'find',n:'Обыск в шиномонтаже',img:'ev_shovel',ev:'shovel',t:'Обыск: в багажнике УАЗа бурые пятна и лопата с налипшей глиной. Под сиденьем монтировка, отмытая, но на сгибе бурые пятна. Изъято, можно отправить на экспертизу.'},
+  shovellab:{k:'lab',n:'Кровь на монтировке',img:'ev_shovel',t:'Экспертиза: бурые пятна на монтировке и лопате оказались кровью. Группа совпадает с погибшим Колесниковым А. Глина на лопате с Чёрного лога.'},
+  keyc:{k:'find',n:'Запасной ключ',ev:'key',t:'Запасной ключ от квартиры Колесниковых, пр. Мира, 23, кв. 14. Ирина дала его, чтобы вы могли осмотреть квартиру.'},
+  buttmatch:{k:'lab',n:'Совпадение отпечатка',img:'fp',match:true,t:'Отпечаток на окурке из леса СОВПАЛ с Рябовым К.'},
+  confessR:{k:'find',n:'Признание Рябова',t:'Рябов признался: Бармин послал его найти и «припугнуть» Колесникова. Рябов убил его монтировкой, а Бармин по телефону велел сделать так, «чтобы не опознали».'},
+  ba4:{k:'wit',t:'Бармин всё отрицает: «Пацан врёт. Машину брал Костя».'}},
+ dlg:{
+  irina:{greet:'<i>(сжимает платок)</i> Вы следователь? Найдите его, пожалуйста. Он не мог просто так уйти…',q:[
+   {id:'a',q:'Расскажите о муже.',a:'Андрей тихий, не пьёт. Сварщик на «Пригорскмаше», пятнадцать лет там. Последний месяц сам не свой: ночами курил на балконе, а ведь бросил.',clue:'ir1',pin:'zavod',found:['kuzmin']},
+   {id:'h',q:'Можно осмотреть вашу квартиру?',a:'Конечно. Проспект Мира, 23, квартира 14. <i>(достаёт из сумки ключ)</i> Вот запасной ключ, я специально взяла, на всякий случай. Я здесь посижу, вдруг новости будут. Только, пожалуйста, ничего там не трогайте. Это его вещи… Моя память.',pin:'home',clue:'keyc'},
+   {id:'b',q:'Почему у вас в кладовке полки пустые?',cond:()=>has('closet'),a:'Пустые? <i>(растерянно)</i> Как пустые?.. Там же палатка лежала, полкладовки занимала. Рюкзак справа наверху, спальник, котелок, лопатка складная… Я туда месяц не заглядывала. Он что, всё забрал?',clue:'ir2'},
+   {id:'c',q:'Особые приметы у мужа есть?',a:'Шрам от аппендицита, справа на животе. Шесть лет назад резали.',clue:'ir3'},
+   {id:'d',q:'Вы знали, что он взял отпуск?',cond:()=>has('leave'),a:'Какой отпуск? Он каждое утро уходил на смену, с тормозком, который я собирала… Куда же он ходил?',clue:'ir4'},
+   {id:'e',q:'Ваш муж играл в карты?',cond:()=>has('cards'),a:'<i>(отводит глаза)</i> До свадьбы играл. Клялся мне, что завязал. Господи…',clue:'ir5'},
+   {id:'g',q:'Кто эта девочка на фото?',cond:()=>has('photo'),a:'<i>(берёт фото дрожащими руками)</i> Это Настя, его дочка от первого брака. Она в Самаре с матерью. Он это фото всегда с собой носил…',clue:'ir6'},
+   {id:'f',q:'Узнаёте этот термос?',cond:()=>has('thermos'),a:'<i>(долго молчит)</i> Это я ему подарила. На десять лет свадьбы. Там гравировка: «А + И»… Где он? Где Андрей?!',clue:'ident1'}]},
+  kuzmin:{greet:'Полиция? Если про Колесникова, то я сам не понимаю, что стряслось.',q:[
+   {id:'a',q:'Что скажете о Колесникове?',a:'Золотые руки. Пятнадцать лет в цеху, ни одного прогула, не пил. Таких сейчас нет.',clue:'ku1'},
+   {id:'b',q:'Он был на смене в пятницу, 30-го?',a:'В пятницу? Да его с понедельника нет. Это вам в отдел кадров, к Зайцевой, она в курсе.',clue:'ku2'}]},
+  zaitseva:{greet:'Зайцева, отдел кадров. Что вас интересует?',q:[
+   {id:'a',q:'Колесников работал на этой неделе?',a:'Нет. Заявление на отпуск за свой счёт, с 26 октября по 13 ноября. Сам приносил. Руки тряслись, я ещё спросила, не заболел ли.',clue:'leave'},
+   {id:'b',q:'С кем он дружил на заводе?',a:'С Черновым Саней, они в одной бригаде. Он сейчас в цеху, позвать?',clue:'za2'}]},
+  chernov:{greet:'<i>(снимает маску сварщика)</i> Про Андрюху? Ну спрашивайте.',q:[
+   {id:'a',q:'Где Андрей?',a:'Не знаю, начальник. Честно. Сам переживаю.'},
+   {id:'b',q:'Чем он занимался после работы?',a:'Ну… По пятницам у Жоры в гаражах в карты катали. Кооператив «Мотор», бокс 17. Я завязал, а Андрюха втянулся.',clue:'cards',pin:'garage',found:['zhora']},
+   {id:'c',q:'Он кому-то был должен?',need:'b',a:'Говорил, что влип по-крупному. Больше ничего не знаю, правда.',clue:'ch2'},
+   {id:'d',q:'Где он мог спрятаться?',need:'b',a:'Он рыбак, лес знает как свои пять пальцев. Говорил как-то: «если что, уйду в лес, никто не найдёт».',clue:'ch3'}]},
+  zhora:{greet:'Чего надо, начальник? Тут кооператив, машины чиним.',pressDoor:true,q:[
+   {id:'n',q:'Колесников ходил к вам по пятницам в семь. Зачем?',cond:()=>has('note')&&!has('cards'),a:'Машину чинил. Мало ли кто ко мне ходит, у меня бокс, а не церковь.',clue:'zh0'},
+   {id:'a',q:'У вас в гаражах играют в карты?',cond:()=>has('cards'),a:'Какие карты? Тут люди работают. Кто вам такое наплёл?',clue:'zh0'},
+   {id:'b',q:'Когда вы последний раз видели Колесникова?',cond:()=>has('debt'),a:'23-го, в пятницу. Бармалей сказал ему при всех: «Неделя сроку». Андрюха аж побелел.',clue:'zh2'}]},
+  barmin:{greet:'<i>(вытирает руки ветошью)</i> Начальник. Чем обязан?',pressDoor:true,q:[
+   {id:'a',q:'Колесников был вам должен?',cond:()=>has('debt'),a:'Был. Карточный долг, дело чести. Я его сам ищу, начальник. Найдёте, передайте, что я жду.',clue:'ba1',found:['ryabov']},
+   {id:'b',q:'Где вы были 31 октября?',cond:()=>has('autopsy'),a:'Здесь, в мастерской. Весь день. Костя подтвердит.',clue:'ba2'},
+   {id:'c',q:'Какая у вас машина?',a:'УАЗ «Патриот». Костя на нём за запчастями мотается, мне некогда.',clue:'ba3'}]},
+  ryabov:{greet:'<i>(не поднимает глаз)</i> Я тут просто работаю.',q:[
+   {id:'a',q:'Вы знали Колесникова?',a:'Не, не знаю такого.',clue:'ry1'},
+   {id:'b',q:'Курите? Какие сигареты?',a:'Ну, «Яву». А что, нельзя?',clue:'ry2'},
+   {id:'c',q:'Где вы были 31 октября?',cond:()=>has('autopsy'),a:'Тут, на работе. А, не… За запчастями ездил, в область. На УАЗе.',clue:'ry3'}]}},
+ press:{
+  zhora:{note:{l:'Предъявить: записку «Жора, бокс 17, пт 19:00. 300 до 30-го!!!»',a:'<i>(долго смотрит на бумажку)</i> Ну… Играли у меня. По маленькой. А Андрюха в сентябре проиграл Бармалею триста тысяч. Бармин Тимур, шиномонтаж на Промышленной. Только я вам ничего не говорил.',give:['debt'],pin:['tire'],found:['barmin'],cond:()=>has('note')&&!has('debt')},
+  cards:{cond:()=>has('cards')&&!has('debt'),l:'Предъявить: Чернов говорит, вы каждую пятницу играете',a:'<i>(сплёвывает)</i> Ладно, ладно. Играли. Андрюха в сентябре проиграл Бармалею триста тысяч. Бармин Тимур, шиномонтаж на Промышленной. Только я вам ничего не говорил.',give:['debt'],pin:['tire'],found:['barmin']}},
+  ryabov:{
+   buttmatch:{l:'Предъявить: ваш окурок в лесу, у палатки',a:'<i>(бледнеет)</i> Мало ли кто там курил… Я в лес за грибами ездил.'},
+   uazsearch:{l:'Предъявить: лопата и монтировка из УАЗа',a:'Это… это не моё. Машина Тимура.'},
+   shovellab:{l:'Предъявить: на монтировке кровь Колесникова',a:'<i>(смотрит на заключение, губы дрожат)</i> Я… я её мыл…'},
+   tires:{l:'Предъявить: следы УАЗа у оврага',a:'Я же говорил, за запчастями ездил… <i>(голос дрожит)</i>'},
+   ident:{l:'Предъявить: погибший опознан, это Колесников',a:'<i>(долго молчит)</i> Я не хотел, чтобы так…'}},
+  barmin:{
+   confessR:{l:'Предъявить: Рябов дал показания против вас',a:'Пацан врёт. Я его пальцем не трогал, Андрюху этого. Машину брал Костя.',give:['ba4']},
+   uazsearch:{l:'Предъявить: лопата и монтировка из вашего УАЗа',a:'Машину брал Костя. Спрашивайте с него.'},
+   shovellab:{l:'Предъявить: на монтировке из вашего УАЗа кровь Колесникова',a:'<i>(долго молчит)</i> Без адвоката больше ни слова.'}}},
+ confess:{ryabov:{clue:'confessR',check:w=>{const n=pc(w);return (S.presented['ryabov:buttmatch']&&n>=2)||n>=3},text:'Хватит… Это Тимур! Он сказал: найди его и припугни, чтоб отдал. Я нашёл по дыму от костра. Андрей кинулся бежать, я догнал… ударил монтировкой. Он упал и не встал. Я позвонил Тимуру. Он сказал: «Сделай так, чтобы его никогда не опознали». Дал лопату и топор… Я не хотел!'}},
+ sample:{l:'Снять отпечатки пальцев',lab:'butt',match:{ryabov:'buttmatch'}},
+ onRec:id=>{if(id==='barmin')addClue('barminrec')},
+ phoneEager:['irina'],
+ phoneSus:{barmin:{refuse:'<i>(усмехается)</i> Начальник, я работаю, у меня клиенты, на монтаже очередь. Есть что предъявить, присылай повестку, как положено. <i>(гудки)</i>'},ryabov:{ghost:true}},
+ detain:{ryabov:()=>has('buttmatch')||has('shovellab')||has('confessR'),barmin:()=>has('confessR')||has('shovellab')},
+ warrant:{loc:'tire',cond:()=>S.found.includes('barmin')&&has('ident')&&(has('tires')||has('ry3')||has('ba3')),ok:'Санкционирую обыск в шиномонтаже «Колесо», ул. Промышленная, 3, включая автомобиль УАЗ «Патриот».',okSay:'Хорошо, Курейко. Опознание есть, связь с УАЗом есть. Подписываю обыск в шиномонтаже и машине.',no:'Сначала установите личность погибшего и свяжите подозреваемого с местом. Без этого обыск не подпишу.',l:'Провести обыск по ордеру',sub:'Мастерская и УАЗ «Патриот»',h:2,clue:'uazsearch',toast:'Изъяты лопата и монтировка'},
+ triggers:[
+  {id:'body',when:()=>(S.flags.bfAt&&S.t>=S.flags.bfAt)||S.t>=3*24+9,run:()=>{S.lab.corpse={due:S.t+3,done:false};mail('Дежурная часть','Сводка: обнаружено тело','Сегодня утром гражданин Сидорчук, собирая грибы у Чёрного лога, обнаружил тело мужчины. Голова и кисти рук отсутствуют. Тело направлено в морг на вскрытие.\nМесто обнаружения отмечено на вашей карте.',{clues:['body2'],pins:['forest'],tag:'сводка дежурной части: обнаружено тело'})}},
+  {id:'ident',when:()=>has('ident1')&&has('autopsy')&&has('ir3'),run:()=>addClue('ident')}],
+ clueOn:{ba1:()=>{S.flags.bfAt=(Math.floor(S.t/24)+1)*24+9}},
+ hint:()=>{if(!has('ir1'))return 'Жена пропавшего ждёт в допросной. Нажмите на дверь «Допросная».';
+  if(!S.pins.includes('home'))return 'Спросите жену, можно ли осмотреть квартиру.';
+  if(!has('closet'))return 'Осмотрите квартиру Колесниковых: жена дала вам запасной ключ.';
+  if(!has('ir2'))return 'В квартире что-то не так с кладовкой. Спросите жену, что там должно лежать.';
+  if(!has('leave'))return 'Проверьте, был ли он на работе. Езжайте на завод, спросите начальника цеха и отдел кадров.';
+  if(!has('cards'))return 'Он врал жене про работу. Узнайте на заводе, с кем Андрей дружил.';
+  if(!has('debt'))return 'Жора отпирается. Предъявите ему показания Чернова прямо у гаража.';
+  if(!has('ba1'))return 'Найдите кредитора в базе и навестите его в шиномонтаже.';
+  if(!has('body2'))return 'Кредитор тоже ищет Андрея. Опросите всех ещё раз или подождите сводку из дежурки.';
+  if(!has('thermos')||!has('butt')||!has('tracks'))return 'Обыщите лес у Чёрного лога: палатка, кострище, дорога.';
+  if(!has('ident'))return 'Нужно опознание. Покажите жене термос и дождитесь вскрытия: сверьте приметы.';
+  if(!S.lab.butt||!S.lab.cast)return 'Отправьте окурок и слепок протектора в лабораторию: коробка «Вещдоки».';
+  if(!S.warrant)return 'Позвоните прокурору и запросите ордер на шиномонтаж Бармина.';
+  if(!S.searched)return 'Проведите обыск в шиномонтаже по ордеру.';
+  if(!has('buttmatch'))return 'Кто курит «Яву»? Вызовите его на допрос и снимите отпечатки.';
+  if(!has('confessR'))return 'Давите на Рябова уликами в допросной, по одной.';
+  return 'Обвиняйте: и исполнителя, и того, кто его послал. Папка «Дело».'},
+ accuseNote:'Можно выбрать нескольких: исполнителя и заказчика. Решение суда окончательное.',
+ charge:sel=>{const r=sel.includes('ryabov'),b=sel.includes('barmin'),bad=sel.filter(x=>x!=='ryabov'&&x!=='barmin');
+  if(!has('ident'))return {res:'return',text:'Суд: личность погибшего не установлена. Нельзя судить за убийство неизвестно кого. Дело возвращено, вы потеряли день.'};
+  if(bad.length)return {res:'lose',text:bad.map(x=>P(x).fio).join(', ')+': суд оправдал, улик нет. Пока судили невиновных, Бармин продал УАЗ и уехал из города.'};
+  const strong=has('uazsearch')||has('tires')||has('shovellab');
+  if(r&&b){if(has('confessR')&&strong)return {res:'win',text:'Рябов К. признан виновным в убийстве: 14 лет.\nБармин Т. признан организатором: показания Рябова подтвердили обыск и следы УАЗа. 16 лет строгого режима.\nИрина Колесникова похоронила мужа. На похороны пришёл весь цех.'};
+   if(has('confessR'))return {res:'partial',text:'Рябов осуждён на 14 лет. Бармина оправдали: кроме слов Рябова против него ничего, машину в лесу не доказали.\nБармалей вышел из зала суда и улыбнулся вам.'};
+   if(has('buttmatch'))return {res:'partial',text:'Рябов осуждён по отпечатку и уликам из УАЗа. Бармина оправдали: без признания исполнителя связи нет.'};
+   return {res:'return',text:'Обвинение держится на догадках. Нет ни признания, ни прямых улик. Дело возвращено, вы потеряли день.'}}
+  if(r){if(has('confessR')||(has('buttmatch')&&has('uazsearch')))return {res:'partial',text:'Рябов осуждён на 14 лет. Но тот, кто его послал, остался на свободе: Бармина вы в суд не передали.\nЧерез месяц Бармалей открыл вторую мастерскую.'};
+   return {res:'return',text:'Против Рябова недостаточно улик. Дело возвращено, вы потеряли день.'}}
+  return {res:'lose',text:'Бармин оправдан: он не был в лесу, прямых улик против него нет. Исполнитель гуляет на свободе.'}},
+ mapBase:()=>`<rect width="400" height="300" fill="#e8ddc1"/>
+ <g fill="#9fb48d" opacity=".6">${[[30,220],[55,250],[90,270],[20,270],[110,240],[70,205],[40,290],[130,285]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="20"/>`).join('')}</g>
+ <text x="14" y="294" font-family="PT Mono,monospace" font-size="8" fill="#4f5e44" letter-spacing="1">ЛЕС · ЧЁРНЫЙ ЛОГ</text>
+ <path d="M0 70q120 30 220 6t180 30" stroke="#7fa6bf" stroke-width="14" fill="none" opacity=".7"/><text x="150" y="70" font-family="PT Mono,monospace" font-size="8" fill="#3c5b70" letter-spacing="2">Р. ЗОЛОТУХА</text>
+ <rect x="226" y="168" width="92" height="50" fill="#cdbd96"/><g stroke="#b8a77f" stroke-width="2">${Array.from({length:8},(_,i)=>`<path d="M${230+i*11} 214l10-42"/>`).join('')}</g>
+ <g fill="#bba980">${Array.from({length:6},(_,i)=>`<rect x="${328+i*9}" y="160" width="7" height="10"/>`).join('')}</g>
+ <g stroke="#b8a77f" stroke-width="10" fill="none" stroke-linecap="round"><path d="M20 130H390"/><path d="M170 130V262"/><path d="M170 262H360"/><path d="M268 130V168"/><path d="M332 130V56"/><path d="M350 130V160"/></g>
+ <g stroke="#f5efe0" stroke-width="1.2" fill="none" stroke-dasharray="4 4"><path d="M20 130H390"/><path d="M170 130V262"/><path d="M170 262H360"/></g>
+ <path d="M170 262Q120 256 66 234" stroke="#8a7550" stroke-width="3" fill="none" stroke-dasharray="6 4"/>
+ <g fill="#cdbd96">${[[60,92],[86,92],[130,92],[190,92],[216,96],[60,148],[90,148],[200,148],[230,140],[120,180],[120,206]].map(([x,y])=>`<rect x="${x}" y="${y}" width="20" height="16"/>`).join('')}</g>
+ <g font-family="PT Mono,monospace" font-size="8" fill="#6b604a" letter-spacing="1"><text x="24" y="124">ПР. МИРА</text><text x="176" y="200" transform="rotate(90 176 200)">ЗАВОДСКАЯ</text><text x="250" y="278">УЛ. ПРОМЫШЛЕННАЯ</text><text x="244" y="226">ЗАВОД</text><text x="96" y="252" transform="rotate(-25 96 252)">просёлок</text></g>
+ <text x="12" y="20" font-family="Oswald,Impact,sans-serif" font-size="16" fill="#2a251b" letter-spacing="2">г. ПРИГОРСК</text>`};
+
+/* ================= STATE ================= */
+function fresh(c){const s=c.start;const o={cid:c.id,t:9,loc:'otdel',clues:s.clues.slice(),pins:s.pins.slice(),found:(s.found||[]).slice(),ev:s.ev.slice(),lab:{},prints:{},summons:{},arrived:(s.arrived||[]).slice(),phone:!!s.phone,warrant:false,searched:false,done:{},asked:{},presented:{},mail:[],over:null,dlg:null,result:null,base:{q:'',res:null,rec:null},flags:{},smeta:{},shist:[]};(s.arrived||[]).forEach(id=>o.smeta[id]={how:'пришла сама, с заявлением',arr:9});return o}
+const pc=w=>Object.keys(S.presented).filter(k=>k.startsWith(w+':')).length;
+function toast(m,c){const e=document.createElement('div');e.className='toast '+(c||'');e.textContent=m;document.getElementById('toasts').appendChild(e);setTimeout(()=>e.remove(),3900)}
+function addClue(c,silent){if(has(c))return;const d=CS.clues[c];if(!d)return;S.clues.push(c);UI.newClues.add(c);if(d.ev&&!S.ev.includes(d.ev))S.ev.push(d.ev);if(CS.clueOn&&CS.clueOn[c])CS.clueOn[c]();if(silent){}else if(d.k==='find'||d.k==='lab')UI.reveal.push(c);runTriggers()}
+let PINQ=[];function flushPins(){if(!PINQ.length||UI.modal==='talk')return;const L=PINQ;PINQ=[];note(L.length===1?`<b>${L[0].name}</b> (${L[0].addr||L[0].short}) добавлен на карту.`:'На карту добавлены: '+L.map(x=>`<b>${x.name}</b>`).join(', ')+'.')}
+function pin(l){if(!S.pins.includes(l)){S.pins.push(l);PINQ.push(CS.locs[l]);setTimeout(flushPins,0)}}
+function summon(id,at,how){S.summons[id]=at;S.smeta[id]={how,set:S.t}}
+function found(id){if(!S.found.includes(id))S.found.push(id)}
+function mail(from,subj,body,o){S.mail.unshift(Object.assign({from,subj,body,t:S.t,read:false,dv:false},o||{}));if(S.loc!=='otdel')radio((o&&o.tag)||subj.toLowerCase());const w=/Ветрова/.test(from)?'vetrova':/Гаврилов/.test(from)?'gavrilov':null;if(w){S.mail[0].who=w;S.mail[0].role=w==='vetrova'?'Районный прокурор':'Начальник отдела'}}
+const RADIO='<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="6" y="7" width="12" height="15" rx="2"/><path d="M9 7V2"/><rect x="9" y="10" width="6" height="4" rx="1"/><path d="M9 17h.01M12 17h.01M15 17h.01M9 19.5h6"/></svg>';
+const BULB='<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.8.6 1.1 1.4 1.1 2.2h5c0-.8.3-1.6 1.1-2.2A6 6 0 0 0 12 3z"/><path d="M12 7v3" opacity=".6"/></svg>';
+const HLBL='<svg class="hlbl" viewBox="0 0 74 34" width="74" height="34" aria-label="Совет, обучение"><text x="0" y="16" textLength="74" lengthAdjust="spacingAndGlyphs" font-family="Oswald,Impact,sans-serif" font-size="18" fill="#dba544">СОВЕТ</text><text x="0" y="31" textLength="74" lengthAdjust="spacingAndGlyphs" font-family="Oswald,Impact,sans-serif" font-size="11" fill="#dba544" opacity=".85">ОБУЧЕНИЕ</text></svg>';
+const NQ=[];function note(t,i){NQ.push({t,i});setTimeout(drawNote,0)}
+function drawNote(){const el=document.getElementById('notes');if(!el)return;if(!NQ.length){el.innerHTML='';return}const n=NQ[0];
+ const b=n.i!=null&&document.querySelector(`.office [data-a=spot][data-i="${n.i}"]`);let wrap='',hl='';
+ if(b){const box=b.closest('.office');box.scrollIntoView({block:'center'});const r=box.getBoundingClientRect(),h=b.getBoundingClientRect();
+  wrap=`style="position:fixed;left:${r.left+r.width/2}px;top:${r.top+r.height/2}px;transform:translate(-50%,-50%);width:min(400px,calc(100vw - 32px))"`;
+  hl=`<div class="nhl" style="left:${h.left}px;top:${h.top}px;width:${h.width}px;height:${h.height}px"></div>`}
+ if(n.tour&&n.down){const t=document.querySelector(n.tour);if(t){const h=t.getBoundingClientRect();
+  el.innerHTML=`<div class="rv anch"><div class="nhl" style="left:${h.left-4}px;top:${h.top-14}px;width:${h.width+8}px;height:${h.height+18}px"></div>
+  ${n.ghost?(()=>{const q=document.querySelector('.mus.qh')||document.querySelector('.mus'),c=document.querySelector('.clock');if(!q||!c)return '';const cr=c.getBoundingClientRect(),nar=innerWidth<=420;const w=nar?110:130,hh=nar?44:52,x=cr.right-(nar?78:90)-w,y=cr.top+cr.height/2-hh/2;
+   return `<div class="ghostbtn" style="left:${x}px;top:${y}px;width:${w}px"><span class="hq"><span style="white-space:nowrap">⌂&nbsp;Вернуться</span><br>в отдел</span></div>
+`})():''}
+  <div class="nwrap" style="position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);width:min(400px,calc(100vw - 32px))"><div class="note tip">${HLBL}<p>${n.t}</p><button data-a="nok">OK</button></div></div></div>`;requestAnimationFrame(()=>tourArrows(el));return}NQ.shift();return drawNote()}
+ if(n.tour){const t=document.querySelector(n.tour);if(t){const h=t.getBoundingClientRect();const top=h.bottom+70;
+  el.innerHTML=`<div class="rv anch"><div class="nhl" style="left:${h.left-4}px;top:${h.top-4}px;width:${h.width+8}px;height:${h.height+8}px"></div>
+  <svg class="tarrow" style="position:fixed;left:${h.left+h.width/2-70}px;top:${h.bottom+6}px" width="80" height="62" viewBox="0 0 80 62" fill="none" stroke="#f2c766" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 58 C 20 30, 50 30, 68 8"/><path d="M52 8 L68 8 L66 24"/></svg>
+  <div class="nwrap" style="position:fixed;left:50%;top:${top}px;transform:translateX(-50%);width:min(400px,calc(100vw - 32px))"><div class="note tip">${HLBL}<p>${n.t}</p><button data-a="nok">OK</button></div></div></div>`;return}NQ.shift();return drawNote()}
+ el.innerHTML=n.hint?`<div class="rv"><div class="nwrap"><div class="note tip">${HLBL}<p>${n.t}</p><button data-a="nok">OK</button><button class="hoff" data-a="hoff">Больше не подсказывать</button></div></div></div>`:`<div class="rv${b?' anch':''}">${hl}<div class="nwrap" ${wrap}><div class="note">${BULB}<p>${n.t}</p><button data-a="nok">OK</button></div></div></div>`}
+function seen(k){try{return localStorage.getItem('tp_'+k)==='1'}catch(e){return !!UI['seen_'+k]}}
+function markSeen(k){UI['seen_'+k]=1;try{localStorage.setItem('tp_'+k,'1')}catch(e){}}
+function tourArrows(el){const card=el.querySelector('.note'),hl=el.querySelector('.nhl'),gh=el.querySelector('.ghostbtn');if(!card||!hl)return;const c=card.getBoundingClientRect(),b=hl.getBoundingClientRect();
+ const head=(x,y,ang)=>{const L=14,a1=ang+2.6,a2=ang-2.6;return `M${x+L*Math.cos(a1)} ${y+L*Math.sin(a1)} L${x} ${y} L${x+L*Math.cos(a2)} ${y+L*Math.sin(a2)}`};
+ let d='';const sx=c.left+c.width/2;
+ {const ex=b.left+b.width/2,ey=b.top-6,sy=c.bottom+6;d+=`M${sx} ${sy} L${ex} ${ey} `+head(ex,ey,Math.atan2(ey-sy,ex-sx))}
+ if(gh){const g=gh.getBoundingClientRect(),ex=g.left+g.width/2,ey=g.bottom+10,sy=c.top-6;d+=` M${sx} ${sy} L${ex} ${ey} `+head(ex,ey,Math.atan2(ey-sy,ex-sx))}
+ const sv=document.createElementNS('http://www.w3.org/2000/svg','svg');sv.setAttribute('class','tlines');sv.setAttribute('width',innerWidth);sv.setAttribute('height',innerHeight);sv.innerHTML=`<path d="${d}" fill="none" stroke="#f2c766" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="9 7"/>`;el.querySelector('.rv').appendChild(sv)}
+function checkHint(){if(!S||S.over||UI.title)return;if(UI.modal||UI.reveal.length||UI.view||RQ.length||NQ.length)return;
+ if(UI.tab==='map'&&!S.flags.maptour&&document.querySelector('.nav [data-id=here]')){S.flags.maptour=1;NQ.push({t:'<b>Вверху</b> появится кнопка «Вернуться в отдел», когда вы будете не в отделе. Из любого места она вернёт вас в отдел полиции за 1 час.<br><br><b>Внизу</b> всегда видно, где вы сейчас: «Вы здесь».',ghost:1,tour:'.nav [data-id=here]',down:true});setTimeout(drawNote,0);return}
+ if(UI.hintOff||!CS.hint)return;const h=CS.hint();if(!h||h===S.flags.lastHint)return;S.flags.lastHint=h;NQ.push({t:h,hint:true});setTimeout(drawNote,0)}
+const UND=()=>S.arrived.filter(id=>!(S.smeta[id]||{}).done);
+const RQ=[];function radio(t,full){RQ.push(full?{full:t}:t);drawRadio()}
+const BUSY=['Ой, сегодня никак, у меня смена до ночи. Давайте повесткой, на завтра.','Не могу, ребёнка не с кем оставить. Присылайте повестку.','Сегодня не получится, я в городе по делам. Другой раз.','<i>(шум, крики на фоне)</i> Не слышу вас! Перезвоните завтра! <i>(гудки)</i>','Я на работе, кто меня отпустит? Пишите официально.'];
+function phoneMood(id){const ps=(CS.phoneSus||{})[id];if(ps)return ps;if((CS.phoneEager||[]).includes(id))return null;const k='ph_'+id+'_'+day();if(S.flags[k]===undefined)S.flags[k]=Math.random()<.3?BUSY[Math.floor(Math.random()*BUSY.length)]:0;return S.flags[k]?{refuse:S.flags[k],busy:1}:null}
+const WAIT=5;const callT=()=>hour()+2<21?S.t+2:(Math.floor(S.t/24)+1)*24+10;const callLbl=()=>{const t=callT();return WHEN(t)==='сегодня'?'придёт сегодня к '+fmt(t):'вечером уже не придёт, '+WHEN(t)+' к '+fmt(t)};const fem=id=>/[ая]$/.test((P(id).fio.split(' ')[1]||''));const genS=id=>{const f=P(id).fio.split(' '),sn=f[0],i=f[1][0]+'.';let g=sn;if(fem(id)){if(/ова$|ева$|ина$|ына$/.test(sn))g=sn.slice(0,-1)+'ой'}else if(/[бвгджзклмнпрстфхцчшщ]$/.test(sn))g=sn+'а';return g+' '+i};
+const grazh=id=>(fem(id)?'гражданки ':'гражданина ')+genS(id);
+function drawRadio(){const el=document.getElementById('radios');if(!el)return;const t=RQ[0];el.innerHTML=t===undefined?'':`<div class="rv"><div class="rv-card night radio"><div class="rv-photo"><img src="img/radio.webp" alt="" onerror="this.parentNode.remove()"></div><div class="rhead">${RADIO}<span>РАЦИЯ · ${fmt(S.t)}${RQ.length>1?' · ещё '+(RQ.length-1):''}</span></div><p class="rsay">${typeof t==='object'?t.full:`Капитан Курейко, дежурная часть. В отдел поступило: ${t.replace(/\.$/,'')}. Приём.`}</p><button class="primary" data-a="rok">Принял</button></div></div>`}
+function deliver(){if(!S||S.loc!=='otdel')return;S.mail.forEach(m=>m.dv=true)}
+function readMail(m){m.read=true;if(m.ap)return;m.ap=true;(m.clues||[]).forEach(c=>addClue(c,m.silent));(m.pins||[]).forEach(pin);if(m.exam){const x=S.lab[m.exam];if(x)x.seen=true;UI.reveal.push({exam:m.exam})}}
+function runTriggers(){(CS.triggers||[]).forEach(tr=>{if(!S.flags['tr_'+tr.id]&&tr.when()){S.flags['tr_'+tr.id]=1;tr.run()}})}
+function advance(h){S.t+=h;events();if(hour()>=22||hour()<8){if(UI.modal==='talk'&&S.dlg){S.flags.late=true;return}rollover()}}
+function rollover(){S.flags.late=false;const prevLoc=S.loc,wasTalk=UI.modal==='talk',left=S.arrived.filter(id=>!(S.smeta[id]||{}).talked&&!(S.smeta[id]||{}).det).map(short);const dd=day()-(hour()<8?1:0);S.arrived.filter(id=>!(S.smeta[id]||{}).det).forEach(id=>{const m=S.smeta[id]||{};S.shist.unshift({id,how:m.how,res:m.talked?'допрошен, ушёл домой':'не дождался допроса и ушёл',day:dd,kind:m.talked?'ok':'late'})});const d=Math.floor(S.t/24)+(hour()>=22||S.t%24>=8?1:0);S.t=d*24+8;S.loc='otdel';UI.inside=false;S.arrived=S.arrived.filter(id=>(S.smeta[id]||{}).det);if(UI.modal!=='end'){UI.modal=null;S.dlg=null}if(day()===2&&!S.phone){S.phone=true;S.flags.pnote=day();mail('Майор Гаврилов','Городская линия работает','Курейко, связисты починили городскую линию. Теперь звони людям с рабочего телефона: придут через пару часов, а не через сутки, как по почте.')}events();if(day()>CS.days&&!S.over){S.over='timeout';UI.modal='end'}if(!S.over)UI.reveal.unshift({night:{left}},{daycard:{d:day()}})}
+function events(){
+ for(const k in S.lab){const x=S.lab[k];if(!x.done&&S.t>=x.due){x.done=true;const it=CS.items[k];S.examNo=(S.examNo||0)+1;x.no=S.examNo;mail('Криминалистическая лаборатория',it.ms+' № '+x.no,(it.pts||[it.mb]).map((q,i)=>(i+1)+'. '+q).join('\n'),{clues:it.res||[],silent:true,exam:k,tag:'заключение экспертизы ('+it.n.toLowerCase()+')'});if(CS.sample&&CS.sample.lab===k)checkSample()}}
+ for(const id in S.prints){const pr=S.prints[id];if(pr.st==='taken'&&S.t>=pr.due){pr.st='card';const ct=cmpPrints(id);mail('Криминалистическая лаборатория','Дактилокарта: '+short(id),P(id).fio+'. Отпечатки пальцев сняты '+DATE(Math.floor(pr.at/24)+1)+' в '+fmt(pr.at)+' и внесены в картотеку.\n'+ct,{clues:pr.clue&&pr.st==='cmp'?[pr.clue]:[],tag:'дактилокарта: '+short(id)})}}
+ for(const id in S.summons){const at=S.summons[id];if(at&&S.t>=at){if(Math.floor(at/24)===Math.floor(S.t/24)&&!(S.smeta[id]||{}).ghost){if(!S.arrived.includes(id))S.arrived.push(id);if(S.smeta[id])S.smeta[id].arr=at;mail('Дежурная часть','Явка по вызову',P(id).fio+' явился(ась) в отдел и ждёт в допросной до '+fmt(Math.min(at+WAIT,Math.floor(at/24)*24+22))+'.',{tag:'явка по вызову: '+short(id)})}else{S.shist.unshift({id,how:(S.smeta[id]||{}).how,res:fem(id)?'не явилась по вызову':'не явился по вызову',day:day(),kind:'noshow'});radio('Капитан Курейко, дежурная часть. '+(fem(id)?'Гражданка ':'Гражданин ')+short(id)+' по вызову '+(fem(id)?'не явилась':'не явился')+'. Приём.',true)}delete S.summons[id]}}
+ for(const id of S.arrived.slice()){const m=S.smeta[id]||{};if(m.det){if(S.t>=m.det){S.arrived=S.arrived.filter(x=>x!==id);m.det=0;S.shist.unshift({id,how:m.how,res:'срок задержания истёк, '+(fem(id)?'отпущена':'отпущен'),day:day(),kind:'ok'});radio('Капитан Курейко, дежурная часть. Срок задержания '+grazh(id)+' истёк, '+(fem(id)?'её':'его')+' отпускаем. Приём.',true)}continue}if(m.arr!==undefined&&S.t>=m.arr+WAIT&&!(UI.modal==='talk'&&S.dlg&&S.dlg.who===id)){S.arrived=S.arrived.filter(x=>x!==id);if(m.done||m.talked)S.shist.unshift({id,how:m.how,res:'допрошен, ушёл домой',day:day(),kind:'ok'});else{S.shist.unshift({id,how:m.how,res:(fem(id)?'ждала ':'ждал ')+WAIT+' ч и '+(fem(id)?'ушла':'ушёл')+': вы не пришли',day:day(),kind:'late'});radio('Капитан Курейко, дежурная часть. Время ожидания для допроса '+grazh(id)+' истекло, '+(fem(id)?'её':'его')+' отпускаем домой. Повестка утратила силу. Приём.',true)}}}
+ if(S.warrant&&!S.searched&&S.t>=S.warrant){S.warrant=false;radio('Капитан Курейко, дежурная часть. Срок действия ордера на обыск истёк. Для обыска нужен новый ордер от прокурора. Приём.',true)}
+ runTriggers()}
+function cmpPrints(id){const sm=CS.sample,it=CS.items[sm.lab],x=S.lab[sm.lab];const pr=S.prints[id];if(!x||!x.done)return 'Сверка с отпечатками с места происшествия будет проведена, когда готово заключение: '+it.n.toLowerCase()+'.';pr.st='cmp';if(sm.match[id]){pr.clue=sm.match[id];return 'СВЕРКА: отпечатки СОВПАДАЮТ с отпечатками с места происшествия ('+it.n.toLowerCase()+').'}return 'Сверка с отпечатками с места происшествия ('+it.n.toLowerCase()+'): совпадений нет.'}
+function checkSample(){for(const id in S.prints){const pr=S.prints[id];if(pr.st==='card'){const t=cmpPrints(id);mail('Криминалистическая лаборатория','Сверка отпечатков: '+short(id),t,{clues:pr.clue?[pr.clue]:[],tag:'сверка отпечатков: '+short(id)})}}}
+
+/* ================= OFFICE ================= */
+const HOT=[['base','Компьютер',6,5,27,48],['base','Картотека',36,19,10,25],['lamp','',52,3,15,35],['labbox','Вещдоки',69,21,21,23],['door','',72,0,26,20],['phone','Телефон',4,55,15,22],['case','Дело',19,57,28,27],['map','Карта',49,59,19,22],['mail','Почта',68,55,18,28],['tea','',86,50,9,17],['door','Допросная',87,70,12,17]];
+const VHOT=[['window','',0,5,23,40],['wait','Ждать час',43,9,14,9],['map','Карта',27,20,45,23],['endday','Домой',72,24,14,30],['door','Допросная',86,13,14,48],['base','Компьютер',0,45,19,28],['base','Картотека',21,56,17,11],['labbox','Вещдоки',39,56,15,11],['mail','Почта',55,58,15,10],['lamp','',62,44,17,12],['tea','',69,66,10,8],['phone','Телефон',80,62,20,13],['case','Дело',12,72,67,17]];
+function hotTarget(){if(UI.hintOff||!S)return '';if(S.ev.some(id=>CS.items[id].lab&&!CS.items[id].auto&&!S.lab[id]))return 'lab';if(UND().length)return 'door';if(S.mail.some(m=>!m.read))return 'tray';return ''}
+function hotHTML(img,list,extra,cls){const tg=hotTarget(),unread=S.mail.filter(m=>!m.read).length;const map={base:'pc',case:'folder',mail:'tray',labbox:'lab',map:'mapw',door:'door',phone:'phone'};const seen={};
+ return `<div class="office ${cls||''}">${pic(img,'')}${extra||''}
+ ${list.map(([a,l,x,y,w,h])=>{const tab=['case','mail','map'].includes(a);const g=tg&&map[a]===tg&&!seen[a]&&l;if(g)seen[a]=1;const lab=a==='case'?'Дело '+CS.no:l;return `<button class="hs${g?' glow':''}" data-a="${tab?'tab':a}" ${tab?`data-id="${a}"`:''} style="left:${x}%;top:${y}%;width:${w}%;height:${h}%" aria-label="${lab||a}">${lab?`<span class="hl">${lab}</span>`:''}${a==='mail'&&unread&&l?`<span class="hb">${unread}</span>`:''}${a==='door'&&l&&S.arrived.length?(UND().length?`<span class="hb">${UND().length}</span>`:`<span class="hb okb">✓</span>`):''}</button>`}).join('')}</div>`}
+function officeHTML(){const dim=`<div class="dim" style="opacity:${tint()+(UI.lampOff?.4:0)}"></div>`;return hotHTML('desk',HOT,dim+(UI.lampOff?'':'<div class="lampglow"></div>')+`<span class="oclock">${fmt(S.t)}</span>`,'deskh')+hotHTML('deskv',VHOT,dim+(UI.lampOff?'':'<div class="lampglow v"></div>')+`<span class="oclock v">${fmt(S.t)}</span>`,'deskv')}
+const curScene=()=>{const l=CS.locs[S.loc];return l&&l.scene&&(!l.enter||UI.inside)?l.scene:null};
+function sceneHTML(sc){return `<div class="office" style="aspect-ratio:${sc.ratio||'2576/1438'}">${sc.img?pic(sc.img,''):sc.svg()}${sc.hot.map((h,i)=>`<button class="hs${h.clue&&has(h.clue)?' done':''}" data-a="spot" data-i="${i}" style="left:${h.x}%;top:${h.y}%;width:${h.w}%;height:${h.h}%" aria-label="${h.l||'осмотреть'}"></button>`).join('')}</div>`}
+
+/* ================= VIEWS ================= */
+function hintHTML(){if(UI.hintOff)return '';const h=CS.hint();return h?`<div class="hint"><svg class="hlbl" viewBox="0 0 74 34" width="74" height="34" aria-label="Совет, обучение"><text x="0" y="16" textLength="74" lengthAdjust="spacingAndGlyphs" font-family="Oswald,Impact,sans-serif" font-size="18" fill="#dba544">СОВЕТ</text><text x="0" y="31" textLength="74" lengthAdjust="spacingAndGlyphs" font-family="Oswald,Impact,sans-serif" font-size="11" fill="#dba544" opacity=".85">ОБУЧЕНИЕ</text></svg><span>${h}</span><button data-a="hintoff" aria-label="Скрыть подсказки">×</button></div>`:''}
+const NAV=[['case','Дело','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 7h7l2 2h9v10H3z"/></svg>'],
+ ['map','Карта','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2z"/><path d="M9 4v14M15 6v14"/></svg>'],
+ ['here','Место','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>'],
+ ['calls','Допросы',''],
+ ['mail','Почта','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="5" width="18" height="14"/><path d="M3 6l9 7 9-7"/></svg>']];
+function top(){const pct=Math.max(0,Math.min(100,(1-(S.t-9)/((CS.days-1)*24+13))*100));
+ return `<header class="bar"><div class="clock"><span class="time">${fmt(S.t)}</span><span class="daybox"><b>День ${day()} из ${CS.days}</b><span>${DATE(day())} · смена до 22:00</span></span>
+ ${S.loc==='otdel'||S.over?'<span class="where"></span>':`<button class="where hqbtn" data-a="hqask"><span class="hq"><span style="white-space:nowrap">⌂&nbsp;Вернуться</span><br>в отдел</span></button>`}${CS.hint&&!S.over?'<button class="mus qh" data-a="hint" aria-label="Совет">?</button>':''}<button class="mus${S.loc!=='otdel'&&!S.over?' sm':''}${UI.music?'':' off'}" data-a="mus" aria-label="Музыка">${S.loc!=='otdel'&&!S.over?'♪':UI.music?'♪ вкл':'♪ выкл'}</button></div><div class="deadline" title="Срок по делу"><i style="width:${pct}%"></i></div></header>`}
+function vCase(){const groups=[['find','Улики и находки'],['lab','Экспертизы'],['wit','Показания'],['base','Данные базы']];const stamp={win:'РАСКРЫТО',partial:'ЧАСТИЧНО'}[S.over]||'В РАБОТЕ';
+ return `<section class="view"><div class="folder"><span class="stampmark">${stamp}</span><div class="no">ДЕЛО ${CS.no} / 2026</div><h2>${val(CS.folder)}</h2>
+ <div style="font-size:14px;color:var(--ink2)">${val(CS.place)}. Следователь: Курейко. Срок: до конца ${CS.days}-го дня.</div>
+ ${S.ev.length?`<div class="fsec"><h4>Вещественные доказательства</h4><div class="ev">${S.ev.map(id=>{const it=CS.items[id],l=S.lab[id];return `<div class="evc" data-a="view" data-id="${l&&l.seen?'exam:'+id:it.clue}" role="button" tabindex="0"><div class="evimg">${it.img?pic(it.img,it.n):BAG}</div><b>${it.n}</b><small>${it.d}.${it.lab?' '+(l?(l.done?(l.seen?'Экспертиза готова':'Заключение в почте'):'В лаборатории до '+fmt(l.due)+', '+DUE(l.due)):'На складе'):''}</small></div>`}).join('')}</div></div>`:''}
+ ${groups.map(([k,n])=>{const list=S.clues.filter(c=>CS.clues[c].k===k);return list.length?`<div class="fsec"><h4>${n}</h4>${list.map(c=>`<button class="clue ${UI.newClues.has(c)?'new':''}" data-a="view" data-id="${c}"><span class="k ${k}">${KN[k]}</span><span>${CS.clues[c].t}</span><span class="cv">›</span></button>`).join('')}</div>`:''}).join('')}
+ ${S.found.length?`<div class="fsec"><h4>Фигуранты</h4>${S.found.map(id=>`<div class="clue"><span class="k base">${val(P(id).status)?'жертва':'лицо'}</span><span><b>${P(id).fio}</b>, ${P(id).job}. ${P(id).addr}</span></div>`).join('')}</div>`:''}
+ ${S.over?'':'<button class="accuse" data-a="accuse">Передать дело в суд</button>'}</div></section>`}
+function mapSVG(){const pins=S.pins.map(id=>{const l=CS.locs[id];const here=S.loc===id;
+ return `<g class="pin" data-a="pin" data-id="${id}">${here?`<circle cx="${l.x}" cy="${l.y}" r="16" fill="#e0473c" opacity=".25"><animate attributeName="opacity" values=".1;.45;.1" dur="1.6s" repeatCount="indefinite"/></circle><circle cx="${l.x}" cy="${l.y}" r="9" fill="none" stroke="#e0473c" stroke-width="2.5"><animate attributeName="r" values="9;26" dur="1.6s" begin="0s" repeatCount="indefinite"/><animate attributeName="opacity" values=".9;0" dur="1.6s" begin="0s" repeatCount="indefinite"/></circle><circle cx="${l.x}" cy="${l.y}" r="9" fill="none" stroke="#e0473c" stroke-width="2.5"><animate attributeName="r" values="9;26" dur="1.6s" begin="0.8s" repeatCount="indefinite"/><animate attributeName="opacity" values=".9;0" dur="1.6s" begin="0.8s" repeatCount="indefinite"/></circle><text x="${l.x}" y="${l.y+24}" text-anchor="middle" font-family="PT Mono,monospace" font-size="8" fill="#b8362e" paint-order="stroke" stroke="#e8ddc1" stroke-width="3" letter-spacing="1">ВЫ ЗДЕСЬ</text>`:''}<circle class="dot" cx="${l.x}" cy="${l.y}" r="9" fill="${here?'#b8362e':(id==='otdel'?'#2f5d8a':'#2a251b')}" stroke="#e8ddc1" stroke-width="2"/><circle cx="${l.x}" cy="${l.y}" r="22" fill="transparent"/><text x="${l.x}" y="${l.y-14}" text-anchor="middle" font-family="PT Sans,Arial,sans-serif" font-weight="700" font-size="11" fill="#2a251b" paint-order="stroke" stroke="#e8ddc1" stroke-width="3">${l.short}</text></g>`}).join('');
+ return `<svg viewBox="0 0 400 300">${CS.mapBase()}${pins}</svg>`}
+function vMap(){const unknown=Object.keys(CS.locs).filter(k=>!S.pins.includes(k)).length;
+ return `<section class="view"><h2>Карта района</h2><div class="map">${mapSVG()}</div>
+ <p class="muted" style="margin:0">Метки появляются, когда вы узнаёте адрес: из базы, показаний или сводок. Соседние дома 15 мин, по селу 30 мин, в отдел и из отдела 1 ч.</p>
+ <div class="pinlist">${S.pins.map(id=>{const l=CS.locs[id];const here=S.loc===id;return `<button class="act ${here?'next':''}" data-a="go" data-id="${id}"><span class="t">${l.name}<small>${l.addr||'г. Пригорск'}</small></span><span class="c">${here?'вы здесь · открыть ›':tlabel(travel(S.loc,id))}</span></button>`}).join('')}</div></section>`}
+function vHere(){if(S.loc==='otdel')return `<section class="view">${officeHTML()}<p class="muted hidev" style="margin:0">Кабинет 14. Всё на столе кликается. Ключи ведут в допросную, лампу можно выключить, чай давно остыл.</p>
+  <div class="row hidev"><button class="act" data-a="wait"><span class="t">Ждать</span><span class="c">1 ч</span></button><button class="act" data-a="endday"><span class="t">Домой</span><span class="c">до утра</span></button></div></section>`;
+ const l=CS.locs[S.loc],sc=curScene(),inn=sc&&l.enter;
+ const away=id=>S.arrived.includes(id)||(S.summons[id]&&Math.floor(S.summons[id]/24)===Math.floor(S.t/24));const all=(l.who||[]).filter(id=>{const p=P(id);return !p.show||p.show()});const ppl=all.filter(id=>!away(id));const gone=all.filter(away);
+ const w=CS.warrant;
+ return `<section class="view">${sc?sceneHTML(sc):`<figure class="scene">${locArt(S.loc)}</figure>`}
+ <h2>${inn?l.inName:l.name}</h2><p class="muted locdesc" style="margin:0">${inn?l.inText:l.addr+(l.note?'. '+l.note:'')}${sc&&!l.enter?'. Нажимайте на всё, что кажется важным.':''}</p>
+ ${l.enter?`<button class="primary" data-a="inside">${UI.inside?l.outLabel:l.inLabel}</button>`:''}
+ ${(l.actions||[]).map((a,i)=>{const dn=S.done[S.loc+i];return `<button class="act ${dn?(a.go?'next':'dis'):''}" data-a="lact" data-i="${i}"><span class="t">${a.l} ${dn?'✓':''}<small>${dn?a.doneText:a.sub}</small></span><span class="c">${dn?(a.go?'на карту ›':''):hf(a.t)}</span></button>`}).join('')}
+ ${gone.map(id=>`<p class="muted locdesc" style="margin:0">${short(id)}: ${S.arrived.includes(id)?'сейчас в отделе, в допросной.':'уехал(а) к вам в отдел по вызову.'}${l.emptyNote?' '+l.emptyNote:''}</p>`).join('')}${ppl.map(id=>`<div class="person"><div class="face sm">${por(id)}</div><div class="who"><b>${P(id).fio}</b><span>${P(id).job}</span>${newQ(id)?`<span class="pill nqp">★ есть новые вопросы</span>`:''}${S.summons[id]?`<span class="pill wait" style="display:inline-block;margin-top:4px">вызван: ${DUE(S.summons[id])}, ${fmt(S.summons[id])}</span>`:''}</div><button class="primary" data-a="knock" data-id="${id}">${l.knock||'Поговорить'}</button></div>`).join('')}
+ ${w&&w.loc===S.loc&&S.warrant&&!S.searched?`<button class="act" data-a="search"><span class="t">${w.l}<small>${w.sub} · ордер до ${WHEN(S.warrant)}, ${fmt(S.warrant)}</small></span><span class="c">${hf(w.h)}</span></button>`:''}
+ </section>`}
+function vCalls(){const pend=Object.entries(S.summons).sort((a,b)=>a[1]-b[1]);const inOff=S.loc==='otdel';
+ const left=t=>{const m=Math.round((t-S.t)*60);if(m<=0)return 'вот-вот';const h=Math.floor(m/60),mm=m%60;return 'через '+(h?h+' ч ':'')+(mm?mm+' мин':'')};
+ return `<section class="view"><h2>Допросы</h2>
+ <div class="card"><h3>Ждут в допросной ${S.arrived.length?`<span class="pill ok">${S.arrived.length}</span>`:''}</h3>
+ ${S.arrived.length?S.arrived.map(id=>{const m=S.smeta[id]||{};return `<button class="act ${m.det?'detd':m.done?'okd':'todo'} ${inOff?'':'dis'}" data-a="${inOff?'room':'noop'}" data-id="${id}"><span class="av">${por(id)}</span><span class="t">${P(id).fio}<small>${m.det?'подозреваемый, задержан до '+WHEN(m.det)+', '+fmt(m.det):(m.how||'вызван')+' · пришёл в '+fmt(m.arr!==undefined?m.arr:S.t)+' · ждёт до '+fmt(Math.min((m.arr!==undefined?m.arr:S.t)+WAIT,Math.floor(S.t/24)*24+22))}</small></span><span class="c">${m.det?'задержан':m.done?'допрошен ✓':'не допрошен'}<small>${inOff?(m.done?'ещё раз ›':'допрос ›'):'вы не в отделе'}</small></span></button>`}).join(''):'<button class="empty" data-a="howcall"><b>Никого нет</b><span>Вызванные ждут здесь 5 часов, но не позже 22:00</span><i>как вызвать ›</i></button>'}</div>
+ <div class="card"><h3>Ожидаются ${pend.length?`<span class="pill wait">${pend.length}</span>`:''}</h3>
+ ${pend.length?pend.map(([id,t])=>{const m=S.smeta[id]||{};return `<button class="srow" data-a="pend" data-id="${id}"><span class="av">${por(id)}</span><span class="t"><b>${P(id).fio}</b><small>${m.how||'вызван'}</small></span><span class="c"><b>${WHEN(t)}, ${fmt(t)}</b>${WHEN(t)==='сегодня'?`<small>${left(t)}</small>`:''}</span></button>`}).join(''):'<button class="empty" data-a="howcall"><b>Никто не вызван</b><span>Вы пока никого не вызывали на допрос</span><i>как вызвать ›</i></button>'}</div>
+ ${S.shist.length?`<div class="card"><h3>История</h3>${S.shist.map(h=>`<button class="srow hk ${h.kind||''}" data-a="hist" data-id="${h.id}"><span class="av">${por(h.id)}</span><span class="t"><b>${P(h.id).fio}</b><small>${h.how||''}</small></span><span class="c"><small>День ${h.day}</small><small>${h.res}</small><small class="lnk">протокол ›</small></span></button>`).join('')}</div>`:''}
+ </section>`}
+function vMail(){return `<section class="view"><h2>Почта и сводки</h2><div class="mail">${S.mail.map((m,i)=>`<button class="msg ${m.read?'':'unread'}" data-a="mail" data-i="${i}"><span>${WHEN(m.t)}, ${fmt(m.t)} · ${m.from}</span><b>${m.subj}</b></button>`).join('')}</div></section>`}
+
+/* ================= MODALS ================= */
+const strip=(id,name,job,auto)=>`<div class="tstrip${auto?' auto':''}"><span class="ava">${por(id)}</span><b>${name}</b><span>${job||''}</span></div>`;
+function mWrap(title,inner,head){const end=UI.modal==='end';return `<div class="modal" data-a="mclose"><div class="sheet" data-a="stop"><div class="top"><h2>${title}</h2>${end?'':'<button class="x" data-a="mclose" aria-label="Закрыть">×</button>'}${head||''}</div>${inner}${end?'':'<button class="ghost back" data-a="mclose">← Назад</button>'}</div></div>`}
+function mDoc(m){return mWrap('Документ',`${m.img?`<figure class="scene">${pic(m.img,'')}</figure>`:''}<div class="doc"><div style="font-size:12px;color:var(--ink2)">${DATE(Math.floor(m.t/24)+1)}, ${fmt(m.t)}<br>От: ${m.from}</div><h4 style="margin-top:12px">${m.subj.toUpperCase()}</h4>${m.body.split('\n').filter(Boolean).map(p=>`<p>${p}</p>`).join('')}</div>`,m.who?strip(m.who,m.from,m.role):'')}
+function mMailAway(){const n=S.mail.filter(m=>!m.read).length;return mWrap('Почта',`<div class="radiobox">${RADIO}<p>Почта доступна только в отделе.${n?' Вас ждут непрочитанные письма: '+n+'.':''} Вернуться в отдел? Дорога займёт 1 час.</p></div><button class="primary" data-a="gomail">Поехать в отдел · 1 ч</button>`)}
+function mBrief(){return `<div class="modal brief"><div class="sheet bsheet"><div class="bhead"><div class="face big">${por('gavrilov')}</div><div class="who"><span class="tk">ДЕЛО ${CS.no} · ${CS.title.toUpperCase()}</span><b>Майор Гаврилов</b><span>Начальник районного отдела</span></div></div><div class="bspeech">${CS.brief.map(x=>`<p>${x}</p>`).join('')}</div><button class="primary" data-a="accept">Принять дело</button></div></div>`}
+function mBase(){const B=S.base;let body='';
+ if(B.rec){const p=P(B.rec);const st=val(p.status);const lab=p.cmpLab&&S.lab[p.cmpLab];const canCmp=p.cmp&&lab&&lab.done&&!has(p.cmp);const busy=S.summons[B.rec]||S.arrived.includes(B.rec);const callable=talkable(B.rec)&&p.summon!==false;
+  body=`<div class="rec"><div><span>ФИО</span><span>${p.fio}</span></div><div><span>Дата рожд.</span><span>${p.born}</span></div><div><span>Адрес</span><span>${p.addr}</span></div><div><span>Работа</span><span>${p.job}</span></div><div><span>Судимости</span><span>${p.crim}</span></div><div><span>Транспорт</span><span>${p.car}</span></div><div><span>Отпечатки</span><span>${S.prints[B.rec]&&S.prints[B.rec].st!=='taken'?'ЕСТЬ в картотеке (сняты '+DATE(Math.floor(S.prints[B.rec].at/24)+1)+')':p.prints}</span></div>${st?`<div><span>Статус</span><span>${st}</span></div>`:''}${p.note?`<div><span>Примечание</span><span>${p.note}</span></div>`:''}</div>
+  <div class="crtacts">${p.loc&&CS.locs[p.loc]?`<button data-a="bpin" ${S.pins.includes(p.loc)?'disabled':''}>${S.pins.includes(p.loc)?'✓ адрес на карте':'> отметить адрес на карте'}</button>`:''}
+  ${!p.cmp&&talkable(B.rec)&&!S.prints[B.rec]&&/нет/.test(p.prints)?'<button disabled>✕ сверить отпечатки (нет в картотеке: снимите отпечатки, вызвав человека в отдел)</button>':''}
+  ${p.cmp?`<button data-a="bcmp" ${canCmp?'':'disabled'}>${has(p.cmp)?'✓ отпечатки сверены: не совпадают':(lab&&lab.done?'> сверить с отпечатками по делу':'> сверить отпечатки (ждём лабораторию)')}</button>`:''}
+  ${callable?(busy?`<button disabled>✓ ${S.summons[B.rec]!==undefined?'уже вызван: '+DUE(S.summons[B.rec])+', '+fmt(S.summons[B.rec]):'уже ждёт в допросной'}. Новый вызов нельзя</button>`:`<button data-a="letter">> отправить повестку (явка завтра в 10:00)</button>
+  <button data-a="call" ${S.phone?'':'disabled'}>${S.phone?'> позвонить и вызвать ('+callLbl()+')':'> позвонить (линия не работает до утра)'}</button>`):''}
+  <button data-a="bback">&lt; назад к поиску</button></div>`}
+ else{body=`<form data-a="bsearch" id="bform"><input id="bq" value="${B.q}" placeholder="фамилия полностью" autocomplete="off"><button type="submit">ПОИСК</button></form>
+  ${B.res?(B.res.length?`<div class="res">${B.res.map(id=>`<button data-a="brec" data-id="${id}">${P(id).fio}<small>${P(id).addr}</small></button>`).join('')}</div>`:'<div>Такой фамилии в базе нет. Проверьте написание<span class="blink">_</span></div>'):'<div style="color:var(--crtdim)">Поиск только по фамилии, полностью. Например: Сомов<span class="blink">_</span></div>'}`}
+ return mWrap('База данных',`<div class="crt"><div class="hd"><span>МВД · ЕДИНАЯ БАЗА v2.3</span><span>${fmt(S.t)}</span></div>${body}</div>`)}
+function newQ(id){const D=CS.dlg[id];if(!D)return 0;const sq=((S.qseen||{})[id])||[];if(!sq.length)return 0;const asked=S.asked[id]||{};return D.q.filter(q=>!sq.includes(q.id)&&!asked[q.id]&&!asked['r'+q.id]&&(!q.need||asked[q.need]||asked['r'+q.need])&&(!q.cond||q.cond())).length}
+function mTalk(){const d=S.dlg,p=P(d.who),room=d.mode==='room',D=CS.dlg[d.who]||{q:[]};const asked=S.asked[d.who]=S.asked[d.who]||{};let opts=[];
+ if(!d.done){
+  if(room&&CS.sample&&!S.prints[d.who])opts.push(['sample',CS.sample.l,'30 мин']);
+  const pr=(CS.press&&CS.press[d.who])||{};
+  if(room||D.pressDoor)for(const k in pr){const e=pr[k];if(!S.presented[d.who+':'+k]&&(e.cond?e.cond():has(k)))opts.push(['press:'+k,e.l,'15 мин'])}
+  const seenQ=(S.qseen=S.qseen||{})[d.who]||[],met=seenQ.length>0;d.shown=d.shown||[];
+  D.q.forEach(q=>{const key=(room?'r':'')+q.id;const done=asked[key]||(!(room&&q.ra)&&(asked[q.id]||asked['r'+q.id]));if(!done&&(!q.need||asked[q.need]||asked['r'+q.need])&&(!q.cond||q.cond())){const nw=met&&!seenQ.includes(q.id);if(!d.shown.includes(q.id))d.shown.push(q.id);opts.push(['q:'+q.id,(nw?'<b class="nq">★ новое</b> ':'')+q.q,'15 мин'])}});
+  if(room&&!(S.smeta[d.who]||{}).det&&talkable(d.who))opts.push(['detain','Задержать на 24 часа','']);
+  if(!room&&p.summon!==false&&!S.summons[d.who]&&!S.arrived.includes(d.who))opts.push(['summon','Вручить повестку (явка завтра в 10:00)','']);
+ }
+ opts.push(['bye',S.flags.late?(room?'Закончить допрос и ехать домой':'Попрощаться и ехать домой'):(room?'Закончить допрос':'Попрощаться'),'']);
+ return mWrap(room?'Допросная':CS.locs[S.loc].name,`${room?`<div class="roomhead">${pic('room2','Допросная')}<div class="rcard"><i class="clip"></i>${por(d.who)}</div><div class="rname"><b>${p.fio}</b><span>${p.job}</span></div></div>`:''}
+ <div class="log">${d.log.map(x=>(x.q?`<div class="q">${x.q}</div>`:'')+(x.a?`<div class="arow"><span class="ava">${por(d.who)}</span><div class="a">${x.a}</div></div>`:'')).join('')}</div>
+ ${S.flags.late?'<div class="radiobox"><p>Уже 22:00. Договорите, и после этого разговора поедете домой.</p></div>':''}<div class="opts">${opts.map(([k,t,c])=>`<button class="act" data-a="say" data-k="${k}"><span class="t">${t}</span><span class="c">${c}</span></button>`).join('')}</div>`,strip(d.who,p.fio,p.job,room))}
+function mLab(){return mWrap('Вещдоки и лаборатория',S.ev.length?S.ev.map(id=>{const it=CS.items[id],x=S.lab[id];return `<div class="card"><div class="item">${it.img?pic(it.img,it.n):BAG}</div><h3>${it.n}${it.lab?(x?(x.done?'<span class="pill ok">готово</span>':`<span class="pill wait due"><b>до ${fmt(x.due)}</b><small>${DUE(x.due)}</small></span>`):'<span class="pill">на складе</span>'):''}</h3><p class="muted" style="margin:0">${it.d}.${it.lab?' Экспертиза '+hf(it.lab)+'.':''}${it.note?' '+it.note+'.':''}</p>${it.lab&&!x?`<button class="primary" data-a="lab" data-id="${id}">Отправить в лабораторию · 30 мин</button>`:''}</div>`}).join(''):'<p class="muted" style="margin:0">Коробка пуста. Вещдоки появятся, когда вы их найдёте.</p>')}
+function mDoor(){const exp=Object.entries(S.summons);
+ return mWrap('Допросная',`${S.arrived.length?S.arrived.map(id=>{const dn=(S.smeta[id]||{}).done;return `<button class="act ${dn?'okd':'todo'}" data-a="room" data-id="${id}"><span class="av">${por(id)}</span><span class="t">${P(id).fio}<small>Ждёт в допросной</small></span><span class="c">${dn?'допрошен ✓':'не допрошен'}<small>${dn?'ещё раз ›':'допрос ›'}</small></span></button>`}).join(''):'<p class="muted" style="margin:0">Пусто. Стул, стол, лампа и графин с водой.</p>'}
+ ${exp.length?`<div class="card"><h3>Ожидаются</h3>${exp.map(([id,t])=>`<div>${P(id).fio} · ${WHEN(t)}, ${fmt(t)}</div>`).join('')}</div>`:''}
+ <p class="muted" style="margin:0">Вызвать человека на допрос можно тремя способами: вручить повестку у двери, отправить повестку через базу или позвонить с рабочего телефона следователя.</p>`)}
+function warrantReply(){const w=CS.warrant;if(S.warrant&&S.t<S.warrant)return 'Ордер у вас уже есть, Курейко, действует до '+WHEN(S.warrant)+', '+fmt(S.warrant)+'. Работайте.';advance(1.5);if(w.cond()){S.warrant=S.t+24;mail('Прокурор Ветрова','Ордер на обыск',w.ok+'\nОрдер действителен 24 часа: до '+DATE(Math.floor(S.warrant/24)+1)+', '+fmt(S.warrant)+'. После этого срока обыск по нему проводить нельзя.');return w.okSay+' Действует сутки, до '+WHEN(S.warrant)+', '+fmt(S.warrant)+'. Не тяни.'}return val(w.no)}
+function mPhone(){const city=S.phone;const ppl=S.found.filter(id=>talkable(id)&&P(id).summon!==false&&!S.summons[id]&&!S.arrived.includes(id));
+ const line=(k,n,d,av)=>`<button class="act" data-a="dial" data-k="${k}">${av?`<span class="av">${por(av)}</span>`:''}<span class="t">${n}<small>${d}</small></span><span class="c">☎</span></button>`;
+ if(UI.call)return mCall();
+ return mWrap('Телефон',`<p class="muted" style="margin:0">Выберите, кому звонить. Внутренние номера работают всегда.</p>
+ <div class="card"><h3>Внутренние</h3>${line('lab','Лаборатория, Лаптева','Статус экспертиз · доб. 12','lapteva')}${line('pros','Прокуратура, Ветрова','Запросить ордер на обыск · 1,5 ч','vetrova')}${line('duty','Дежурная часть','Кто ждёт в допросной','duty')}${line('boss','Майор Гаврилов','Совет начальника','gavrilov')}</div>
+ <div class="card"><h3>Городская линия ${city?'':'<span class="pill wait">с завтра</span>'}</h3>${city?(ppl.length?ppl.map(id=>line('call:'+id,P(id).fio,S.flags['ph_'+id+'_'+day()]?(fem(id)?'сегодня занята, отказалась':'сегодня занят, отказался')+' · вызовите повесткой':'Вызвать в отдел: '+callLbl(),id)).join(''):'<p class="muted" style="margin:0">Номера появятся, когда найдёте новых свидетелей или подозреваемых.</p>'):`<p class="muted" style="margin:0">Связисты чинят городскую линию. Обещали к утру.</p>${line('dead','Набрать номер','Городская линия')}`}</div>`)}
+const callWho=k=>k==='dead'?null:{lab:'lapteva',duty:'duty',pros:'vetrova',boss:'gavrilov'}[k]||(k.startsWith('call:')?k.slice(5):null);
+const callName=k=>({lab:'Лаборатория, Лаптева',pros:'Прокуратура, Ветрова',duty:'Дежурная часть',boss:'Майор Гаврилов',dead:'Городская линия'})[k]||P(callWho(k)).fio;
+const GREET={lapteva:'Лаборатория, Лаптева слушает.',vetrova:'Прокуратура, Ветрова.',duty:'Дежурная часть, слушаю.',gavrilov:'Гаврилов. Слушаю.',barmin:'<i>(жуёт)</i> Ну?',ryabov:'<i>(тихо)</i> Алло…'};
+function beep(){if(!UI.music)return;try{const A=window.__ac||(window.__ac=new (window.AudioContext||window.webkitAudioContext)());[0].forEach(d=>{const o=A.createOscillator(),g=A.createGain();o.frequency.value=425;o.connect(g);g.connect(A.destination);const t=A.currentTime+d;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.08,t+.03);g.gain.setValueAtTime(.08,t+.95);g.gain.linearRampToValueAtTime(0,t+1.05);o.start(t);o.stop(t+1.1)})}catch(e){}}
+function startCall(k){UI.call={k,st:'ring',greet:GREET[callWho(k)]||['Алло?','Да, слушаю.','У аппарата.'][Math.floor(Math.random()*3)]};render();beep();setTimeout(()=>{const c=UI.call;if(!c||c.k!==k||c.st!=='ring')return;if(k==='dead'){c.st='end';c.q='Алло?..';c.a='<i>В трубке тишина. Даже гудка нет. Связисты обещали починить к утру.</i>'}else c.st='pick';render()},1150)}
+function mCall(){const c=UI.call,who=callWho(c.k);const about=val(CS.callAbout)||('по делу '+CS.no);
+ const opts=c.k.startsWith('call:')?[['say','Вызываю вас в отдел для дачи показаний '+about+'. Кабинет 14.'],['wrong','Извините, ошиблись номером.']]:{lab:[['say','Что по моим вещдокам?']],pros:[['say','Мне нужен ордер на обыск.']],duty:[['say','Кто ко мне в допросную?']],boss:[['say','Товарищ майор, разрешите посоветоваться.']]}[c.k]||[];
+ return mWrap('Звонок',`<div class="callhd">${who?`<div class="face big">${por(who)}</div>`:'<div class="face big nophoto">☎</div>'}<b>${callName(c.k)}</b><span>${c.st==='ring'?'Набираем номер…':c.st==='pick'?'На линии':'Разговор окончен'}</span>${c.st==='ring'?'<div class="ringbar"><i></i></div>':''}</div>
+ <div class="log">${c.st!=='ring'&&c.k!=='dead'?`<div class="arow"><span class="ava">${por(who)}</span><div class="a">${c.greet}</div></div>`:''}${c.q?`<div class="q">${c.q}</div>`:''}${c.a?(who?`<div class="arow"><span class="ava">${por(who)}</span><div class="a">${c.a}</div></div>`:`<div class="a">${c.a}</div>`):''}</div>
+ <div class="opts">${c.st==='pick'?opts.map(([v,t])=>`<button class="act" data-a="csay" data-v="${v}"><span class="t">${t}</span></button>`).join(''):''}${c.st==='end'?'<button class="primary" data-a="hang">Положить трубку</button>':''}</div>`)}
+function dial(k){let q,a;
+ if(k==='lab'){q='Лаборатория? Что по моим вещдокам?';const st=S.ev.filter(id=>CS.items[id].lab).map(id=>{const x=S.lab[id],n=CS.items[id].n;return x?(x.done?n+': заключение отправили вам в почту':n+': будет к '+fmt(x.due)+', '+DUE(x.due)):n+': нам не поступал'});a=st.length?st.join('. ')+'.':'Пока от вас ничего не поступало.'}
+ else if(k==='pros'){q='Товарищ прокурор, мне нужен ордер на обыск.';a=warrantReply()}
+ else if(k==='dead'){q='Алло?..';a='<i>В трубке тишина. Даже гудка нет. Связисты обещали починить к утру.</i>'}
+ else if(k==='duty'){q='Дежурка, кто ко мне?';a=S.arrived.length?'В допросной ждут: '+S.arrived.map(short).join(', ')+'.':'Пока никого, товарищ следователь.'}
+ else if(k==='boss'){q='Товарищ майор, разрешите посоветоваться.';a='Слушай сюда, Курейко. '+CS.hint()}
+ else if(k.startsWith('call:')){const id=k.slice(5);const ps=phoneMood(id);advance(.25);q='Здравствуйте, '+P(id).fio.split(' ').slice(1).join(' ')+'. Следователь Курейко. Вызываю вас в отдел для дачи показаний '+(val(CS.callAbout)||'')+'. Кабинет 14.';if(ps&&ps.refuse){a=ps.refuse}else{const t=callT();summon(id,t,'вызван по телефону');if(ps&&ps.ghost)S.smeta[id].ghost=1;a=ps&&ps.ghost?'<i>(пауза)</i> Да… да, конечно. Буду к '+fmt(t)+'.':'Хорошо… Буду к '+fmt(t)+'.'}}
+ return {q,a}}
+function mHist(id){const p=P(id),list=(S.talks||[]).filter(x=>x.id===id);
+ return mWrap('Протокол бесед',`<div class="talk"><div class="face">${por(id)}</div><div class="who"><b>${p.fio}</b><span>${p.job}</span></div></div>
+ ${list.length?list.map(x=>`<div class="card"><h3>${DATE(Math.floor(x.t/24)+1)}, ${fmt(x.t)} · ${x.mode==='room'?'в допросной':(CS.locs[x.loc]||{}).short||'на месте'}</h3><div class="log">${x.log.map(y=>(y.q?`<div class="q">${y.q}</div>`:'')+(y.a?`<div class="arow"><span class="ava">${por(id)}</span><div class="a">${y.a}</div></div>`:'')).join('')}</div></div>`).join(''):'<p class="muted" style="margin:0">Бесед с этим человеком не было.</p>'}`)}
+function mAccuse(){const list=S.found.filter(id=>talkable(id));
+ return mWrap('Обвинительное заключение',`<div class="doc" style="font-size:13px"><p>Я, следователь Курейко, по делу ${CS.no} считаю виновными:</p></div>
+ ${list.length?list.map(id=>{const on=UI.sel.includes(id);return `<button class="act pick ${on?'on':''}" data-a="pick" data-id="${id}"><span class="av">${por(id)}</span><span class="t">${P(id).fio}<small>${P(id).job}</small></span><span class="c">${on?'☑ виновен':'☐'}</span></button>`}).join(''):'<p class="muted">Подозреваемых пока нет.</p>'}
+ <button class="primary" data-a="court" ${UI.sel.length?'':'disabled'}>Передать в суд${UI.sel.length?' ('+UI.sel.length+')':''}</button>
+ <p class="muted" style="margin:0">${CS.accuseNote||'Отметьте виновного. Решение суда окончательное.'}</p>`)}
+function mEnd(){const o=S.over,r=S.result||{};const ok=o==='win'||o==='partial';const nx=ok&&CS.next&&CASES[CS.next];
+ return mWrap('Приговор',`<div class="verdict ${o==='win'?'ok':o==='partial'?'part':''}">${o==='win'?'РАСКРЫТО':o==='partial'?'РАСКРЫТО ЧАСТИЧНО':'НЕ РАСКРЫТО'}</div>
+ <div class="doc">${(r.text||'Срок по делу истёк. Дело передали другому следователю, а вам объявили выговор.').split('\n').map(x=>`<p>${x}</p>`).join('')}</div>
+ <div class="stats"><div><b>${Math.min(day(),CS.days)}<small>/${CS.days}</small></b><span>дней потрачено</span></div><div><b>${S.clues.length}<small>/${Object.keys(CS.clues).length}</small></b><span>улик собрано</span></div></div>
+ ${nx?`<button class="primary" data-a="next">Следующее дело ${nx.no}: «${nx.title}»</button>`:''}
+ <button class="${nx?'ghost':'primary'}" data-a="restart">Начать это дело заново</button>${ok&&!nx?'<p class="muted" style="margin:0;text-align:center">Дело № 3 в разработке.</p>':''}`)}
+
+/* ================= REVEAL ================= */
+function revealHTML(c,btn){if(c&&c.det){const id=c.det;return `<div class="rv"><div class="rv-card night"><h2>Задержать ${short(id)}?</h2><p>Помните: никто не может быть лишён свободы иначе как по решению суда.</p><p>Но если есть веские основания, вы можете задержать подозреваемого на 24 часа до выяснения обстоятельств.</p><button class="primary" data-a="detgo" data-id="${id}">Задержать до ${WHEN(S.t+24)}, ${fmt(S.t+24)}</button><button class="ghost" data-a="rvok">Отмена</button></div></div>`}
+ if(c&&c.hq){const late=hour()+1>=22;return `<div class="rv"><div class="rv-card night"><h2>Вернуться в отдел?</h2><p>Дорога из «${CS.locs[S.loc].short}» в отдел займёт 1 час. Будете на месте в ${fmt(S.t+1)}.</p>${late?'<p><b>Вы приедете к концу смены: в 22:00 рабочий день закончится.</b></p>':''}<button class="primary" data-a="hqgo">Поехать в отдел · 1 ч</button><button class="ghost" data-a="rvok">Остаться здесь</button></div></div>`}
+ if(c&&c.leave){const h=S.t%24,rem=Math.max(0,22-h),hh=Math.floor(rem),mm=Math.round((rem-hh)*60),last=day()>=CS.days;
+ const pl=n=>n%10===1&&n%100!==11?'час':[2,3,4].includes(n%10)&&![12,13,14].includes(n%100)?'часа':'часов';
+ const rs=mm?`${hh} ч ${mm} мин`:`${hh} ${pl(hh)}`;
+ const mood=h<12?'Ещё только утро. Уйти сейчас, значит потерять почти целый день расследования.':h<18?'День в самом разгаре. Свидетели ждать не будут, а улики сами себя не проверят.':'Вы вымотаны, голова уже не варит. Может, и правда пора.';
+ const cost=last?'Это последний день срока по делу. Если уйдёте сейчас, срок истечёт и дело придётся сдавать с тем, что есть.':`Оставшиеся ${rs} сгорят, и вы проснётесь утром ${(()=>{const x=new Date(2026,CS.month,CS.d0+day());return x.getDate()+' '+['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'][x.getMonth()]})()}.`;
+ return `<div class="rv"><div class="rv-card night"><div class="rv-photo">${pic('tired','')}</div><h2>Закончить смену?</h2><p>${mood}</p><p><b>${cost}</b></p><button class="primary" data-a="rvok">Отставить, работаем</button><button class="ghost" data-a="gohome">${last?'Всё равно ехать домой':'Поехать домой до утра'}</button></div></div>`}
+ if(c&&c.night){const k=c.night;return `<div class="rv"><div class="rv-card night"><div class="rv-photo">${pic('tired','')}</div><h2>Пора домой</h2><p>Вы работали весь день и валитесь с ног. Голова уже не соображает, а завтра нужны свежие силы, чтобы продолжить расследование.</p>${k.left.length?`<p>В допросной так и не дождались: ${k.left.join(', ')}.</p>`:''}<button class="primary" data-a="rvok">Поехать домой</button></div></div>`}
+ if(c&&c.daycard){const k=c.daycard;return `<div class="rv"><div class="rv-card"><div class="rv-stamp">ДЕНЬ ${k.d} ИЗ ${CS.days} · ${DATE(k.d)}</div><h2>08:00. Вы снова в отделе</h2>${S.flags.pnote===k.d?'<p>Связисты починили городскую линию. Теперь людей можно вызывать звонком: придут через 2 часа.</p>':''}<button class="primary" data-a="rvok">OK</button></div></div>`}if(typeof c==='string'&&c.startsWith('exam:'))c={exam:c.slice(5)};
+ if(typeof c==='object'){const it=CS.items[c.exam],x=S.lab[c.exam]||{};return `<div class="rv"><div class="rv-card exam"><div class="rv-stamp">ЗАКЛЮЧЕНИЕ ЭКСПЕРТИЗЫ № ${x.no||1}</div><div class="rv-obj"><span>Объект исследования</span><b>${it.n}</b></div>${it.img?`<div class="rv-img">${pic(it.img,it.n)}</div>`:''}<ol class="rv-pts">${(it.pts||[it.mb]).map(q=>`<li>${q}</li>`).join('')}</ol><div class="rv-sign"><span class="ava">${por('lapteva')}</span><span>Эксперт-криминалист Лаптева Е. · ${DATE(Math.floor(x.due/24)+1)}, ${fmt(x.due)}</span></div><button class="primary" data-a="${btn}">${btn==='rvok'?'✓ Принять в дело':'Закрыть'}</button></div></div>`}const d=CS.clues[c];const im=d.img;const docStyle=!im&&d.k!=='wit';
+ const media=im==='fp'?`<div class="rv-photo">${pic(d.match?'fpmatch':'fpcmp','')}</div>`:docStyle?`<div class="rv-doc"><div class="rv-paper">${d.t}</div></div>`:im?`<div class="rv-img">${pic(im,d.n)}</div>`:'';
+ return `<div class="rv"><div class="rv-card"><div class="rv-stamp">${d.k==='lab'?'ЗАКЛЮЧЕНИЕ ЭКСПЕРТИЗЫ':d.k==='find'?'НОВАЯ УЛИКА':d.k==='wit'?'ПОКАЗАНИЯ':'ДАННЫЕ БАЗЫ'}</div>${media}<h2>${d.n||KN[d.k]}</h2>${docStyle?'':`<p>${d.t}</p>`}<button class="primary" data-a="${btn}">${btn==='rvok'?'✓ Принять в дело':'Закрыть'}</button></div></div>`}
+
+/* ================= RENDER ================= */
+function render(){const app=document.getElementById('app');deliver();
+ document.getElementById('title').hidden=!UI.title;
+ if(!S){app.innerHTML='';document.getElementById('nav').innerHTML='';return}
+ app.innerHTML=top()+{case:vCase,map:vMap,here:vHere,calls:vCalls,mail:vMail}[UI.tab]();
+ const unread=S.mail.filter(m=>!m.read).length;
+ document.getElementById('nav').innerHTML=''+'<div>'+NAV.map(([k,n,i])=>`<button class="${UI.tab===k?'on':''}" data-a="tab" data-id="${k}"><img class="ni" src="img/i_${k}.webp" alt="">${k==='here'?'<i class="youhere">вы здесь</i>':''}<span>${k==='here'?CS.locs[S.loc].short:n}</span>${k==='mail'&&unread?`<span class="badge">${unread}</span>`:''}${k==='calls'?(()=>{const u=UND().length,d=S.arrived.length-u,pe=Object.keys(S.summons).length;return u?`<span class="badge">${u}</span>`:d?`<span class="badge okb">${d}</span>`:pe?`<span class="badge wait">${pe}</span>`:''})():''}</button>`).join('')+'</div>';
+ const M=document.getElementById('modal');const m=UI.modal;
+ M.innerHTML=m==='mailaway'?mMailAway():m==='brief'?mBrief():m==='phone'?mPhone():m==='labm'?mLab():m==='door'?mDoor():m==='base'?mBase():m==='talk'?mTalk():m==='accuse'?mAccuse():m==='end'?mEnd():(m&&m.hist)?mHist(m.hist):(m&&m.doc!==undefined)?mDoc(S.mail[m.doc]):'';
+ if(m==='talk'){const s=M.querySelector('.sheet');if(s){if(S.dlg.log.length<=1)s.scrollTop=0;else{const qs=s.querySelectorAll('.log .q'),last=qs[qs.length-1];if(last)s.scrollTop+=last.getBoundingClientRect().top-s.getBoundingClientRect().top-80;else s.scrollTop=s.scrollHeight}}}
+ if(m==='talk'){const sh=M.querySelector('.sheet'),rh=sh&&sh.querySelector('.roomhead'),st=sh&&sh.querySelector('.tstrip.auto');if(rh&&st){const f=()=>st.classList.toggle('show',rh.getBoundingClientRect().bottom<sh.getBoundingClientRect().top+70);sh.addEventListener('scroll',f,{passive:true});f()}}
+ const R=document.getElementById('reveal');R.innerHTML=UI.reveal.length?revealHTML(UI.reveal[0],'rvok'):UI.view?revealHTML(UI.view,'rvclose'):'';
+ if(UI.tab==='case')setTimeout(()=>UI.newClues.clear(),1600);fitDesk();checkHint()}
+function fitDesk(){const o=document.querySelector('.office.deskv');if(!o)return;const bar=document.querySelector('.bar'),nav=document.getElementById('nav');if(!bar||!nav||getComputedStyle(o).display==='none')return;
+ const h=window.innerHeight-bar.getBoundingClientRect().bottom-nav.getBoundingClientRect().height-22;o.style.maxHeight=Math.max(260,h)+'px';o.style.width='auto';o.style.marginInline='auto';o.style.height=Math.max(260,h)+'px'}
+window.addEventListener('resize',()=>fitDesk());
+function setTab(t){if(t==='mail'&&S&&S.loc!=='otdel'){UI.modal='mailaway';render();return}UI.tab=t;render();window.scrollTo(0,0)}
+
+/* ================= ACTIONS ================= */
+function startCase(id){RQ.length=0;drawRadio();NQ.length=0;drawNote();CS=CASES[id];S=fresh(CS);Object.assign(UI,{tab:'here',modal:'brief',inside:false,reveal:[],view:null,sel:[],phoneMsg:null,newClues:new Set(),title:false});render();window.scrollTo(0,0)}
+function travel(a,b){if(a===b)return 0;if(a==='otdel'||b==='otdel')return 1;const A=CS.locs[a],B=CS.locs[b];if(A.far||B.far)return 1;return Math.hypot(A.x-B.x,A.y-B.y)<=60?.25:.5}
+const tlabel=h=>(h<=.25?'ехать · 15 мин':h<1?'ехать · 30 мин':'ехать · 1 ч');
+function anim(kind,txt,h,dur,cb){const el=document.getElementById('trav');const t0=S.t,tm=document.querySelector('.bar .time');let done=false,start=performance.now();
+ const lab=typeof txt==='function'?txt:()=>txt;el.innerHTML=`<div class="tv ${kind}"><div class="tvin"><b>${lab(0)}</b><div class="tvbar"><i></i></div><span class="tvt">${fmt(t0)}</span></div></div>`;
+ const bar=el.querySelector('.tvbar i'),tt=el.querySelector('.tvt'),bb=el.querySelector('.tvin b');
+ const fin=()=>{if(done)return;done=true;el.innerHTML='';cb()};el.querySelector('.tv').onclick=fin;
+ const step=n=>{if(done)return;const k=Math.min(1,(n-start)/dur);bar.style.width=(k*100)+'%';const v=fmt(t0+h*k);tt.textContent=v;bb.textContent=lab(k,t0+h*k);if(tm)tm.textContent=v;if(k<1)requestAnimationFrame(step);else setTimeout(fin,120)};requestAnimationFrame(step)}
+function go(id,now){if(S.loc===id){setTab('here');return}if(!now&&!S.over){const h=travel(S.loc,id);return anim('car','Едем: '+CS.locs[S.loc].short+' → '+CS.locs[id].short,h,h<=.25?450:700,()=>go(id,true))}advance(travel(S.loc,id));UI.inside=false;if(!S.over)S.loc=id;setTab('here')}
+function say(k){const d=S.dlg,who=d.who,asked=S.asked[who],room=d.mode==='room';
+ if(k==='bye'){setTimeout(flushPins,0);const qs=(S.qseen=S.qseen||{});qs[who]=[...new Set([...(qs[who]||[]),...(d.shown||[])])];if(room&&S.smeta[who])S.smeta[who].done=true;UI.modal=null;S.dlg=null;if(S.flags.late)rollover();render();return}
+ if(k==='detain'){UI.reveal.unshift({det:who});render();return}
+ if(k==='summon'){summon(who,(Math.floor(S.t/24)+1)*24+10,'повестка, вручена лично');d.log.push({q:'Вот повестка. Завтра в 10:00 явитесь в районный отдел, кабинет 14.',a:'<i>(берёт повестку)</i> Хорошо.'});toast('Повестка вручена');render();return}
+ if(k==='sample'){advance(.5);if(S.over)return render();const due=S.t+1;S.prints[who]={st:'taken',due,at:S.t};d.log.push({q:'Дайте руку. Снимем отпечатки.',a:'<i>(прикладывает пальцы к дактилокарте)</i>'});d.log.push({a:'<i>Отпечатки сняты и отправлены в лабораторию. Дактилокарта будет готова к '+fmt(due)+', результат придёт на почту.</i>'});render();return}
+ const [type,id]=k.split(':');
+ if(type==='q'){const q=CS.dlg[who].q.find(x=>x.id===id);asked[(room?'r':'')+id]=true;advance(.25);if(S.over)return render();
+  const a=room&&q.ra?q.ra:q.a;d.log.push({q:q.q,a});arr(room&&q.rclue?q.rclue:q.clue).forEach(addClue);arr(q.pin).forEach(pin);arr(q.found).forEach(found);render();return}
+ if(type==='press'){const e=CS.press[who][id];S.presented[who+':'+id]=true;advance(.25);if(S.over)return render();d.log.push({q:e.l.replace('Предъявить: ','Вот: '),a:e.a});arr(e.give).forEach(addClue);arr(e.pin).forEach(pin);arr(e.found).forEach(found);
+  const cf=CS.confess&&CS.confess[who];if(cf&&!has(cf.clue)&&cf.check(who)){d.log.push({a:cf.text});addClue(cf.clue);d.done=true}
+  if(CS.lawyer&&CS.lawyer[who]===id){S.flags['law_'+who]=1;d.done=true;d.log.push({a:'<i>Скрещивает руки на груди и смотрит в стену. Дальше разговора не будет.</i>'})}render();return}}
+function court(){const r=CS.charge(UI.sel.slice());UI.sel=[];
+ if(r.res==='return'){S.t=(Math.floor(S.t/24)+1)*24+8;S.loc='otdel';S.arrived=[];events();mail('Районный суд','Дело возвращено',r.text);toast('Суд вернул дело на доследование');UI.modal=null;if(day()>CS.days){S.over='timeout';UI.modal='end'}render();return}
+ S.over=r.res;S.result=r;UI.modal='end';render()}
+function startMusic(on){const a=document.getElementById('bgm');UI.music=on;if(!a)return;if(on){a.volume=.45;a.play().catch(()=>{UI.music=false;render()})}else a.pause()}
+
+document.addEventListener('click',e=>{const el=e.target.closest('[data-a]');if(!el)return;const a=el.dataset.a,id=el.dataset.id;
+ if(a==='stop')return;
+ if(a==='start'){startMusic(true);startCase(+id);return}
+ if(!S)return;
+ if(a==='mclose'){if(e.target!==el&&!el.classList.contains('x')&&!el.classList.contains('back'))return;if(UI.modal==='end'||UI.modal==='brief')return;UI.call=null;if(UI.modal==='talk'){setTimeout(flushPins,0);if(S.dlg){const qs=(S.qseen=S.qseen||{});qs[S.dlg.who]=[...new Set([...(qs[S.dlg.who]||[]),...(S.dlg.shown||[])])]}if(S.dlg&&S.dlg.mode==='room'&&S.smeta[S.dlg.who])S.smeta[S.dlg.who].done=true;S.dlg=null}UI.modal=null;if(S.flags.late)rollover();render();return}
+ if(S.over&&!['restart','next','tab','mail','hintoff','rvok','rok','nok','hoff','hint','gohome','detgo','hang','rvclose','view','mus','mclose'].includes(a)){UI.modal='end';render();return}
+ switch(a){
+ case 'tab':setTab(id);break;
+ case 'hintoff':UI.hintOff=true;render();break;
+ case 'accept':UI.modal=null;mail('Майор Гаврилов, начальник отдела','Приказ: дело '+CS.no,CS.brief.join('\n'));S.mail[0].read=true;S.mail[0].ap=true;render();break;
+ case 'rvok':UI.reveal.shift();render();break;
+ case 'hist':UI.modal={hist:id};render();break;
+ case 'pend':{const t=S.summons[id];if(t!==undefined){const mm=Math.max(0,Math.round((t-S.t)*60)),h=Math.floor(mm/60),r=mm%60;toast(short(id)+': ожидается '+DUE(t)+' в '+fmt(t)+(DUE(t)!=='сегодня'?'':mm?', через '+(h?h+' ч':'')+(h&&r?' ':'')+(r?r+' мин':''):', вот-вот'))}break}
+ case 'detgo':{UI.reveal.shift();const ok=CS.detain&&CS.detain[id]&&CS.detain[id]();if(!ok){note('Прокурор Ветрова по телефону: «Курейко, на каком основании? Подозрения не доказательства. Задержание не санкционирую». Нужны улики против этого человека.');render();break}const m=S.smeta[id]=S.smeta[id]||{};m.det=S.t+24;m.done=true;if(S.dlg)S.dlg.log.push({a:'<i>'+(fem(id)?'Задержана':'Задержан')+' до '+WHEN(S.t+24)+', '+fmt(S.t+24)+'. Конвой уводит в камеру.</i>'});toast(short(id)+': задержан(а) на 24 часа');render();break}
+ case 'hqask':UI.reveal.unshift({hq:1});render();break;
+ case 'hqgo':UI.reveal.shift();go('otdel');break;
+ case 'howcall':note('<b>Как вызвать человека на допрос</b><br><br>1. Найдите его: в показаниях, в базе (компьютер в кабинете) или на месте.<br>2. Вызовите одним из способов:<br>· повестка лично, у его двери: явка завтра в 10:00<br>· повестка через базу: явка завтра в 10:00<br>· звонок с рабочего телефона: придёт через 2 часа<br><br>Когда человек придёт, дежурный сообщит вам. Ждёт он 5 часов, не позже 22:00.');break;
+ case 'nok':NQ.shift();drawNote();render();break;
+ case 'hoff':NQ.shift();UI.hintOff=true;drawNote();render();break;
+ case 'hint':UI.hintOff=false;S.flags.lastHint=null;render();break;
+ case 'rok':RQ.shift();drawRadio();break;
+ case 'rvclose':UI.view=null;render();break;
+ case 'view':UI.view=id;render();break;
+ case 'mus':startMusic(!UI.music);render();break;
+ case 'pin':case 'go':go(id);break;
+ case 'inside':UI.inside=!UI.inside;render();break;
+ case 'spot':{const sc=curScene(),h=sc.hot[+el.dataset.i];if(h.clue&&!has(h.clue)){advance(h.t||.5);if(S.over)return render();addClue(h.clue);arr(h.also).forEach(addClue);if(h.toast)toast(h.toast)}else if(h.text)note(h.text,+el.dataset.i);else toast('Уже осмотрено.');render();break}
+ case 'lact':{const i=+el.dataset.i,ac=CS.locs[S.loc].actions[i];if(S.done[S.loc+i]){if(ac.go)setTab(ac.go);return}advance(ac.t);if(S.over)return render();S.done[S.loc+i]=true;ac.run();render();break}
+ case 'lab':if(S.lab[id])return;advance(.5);S.lab[id]={due:S.t+CS.items[id].lab,done:false};toast('Отправлено. Результат к '+fmt(S.lab[id].due));render();break;
+ case 'labbox':UI.modal='labm';render();break;
+ case 'door':UI.modal=null;setTab('calls');break;
+ case 'phone':UI.phoneMsg=null;UI.call=null;UI.modal='phone';render();break;
+ case 'dial':startCall(el.dataset.k);break;
+ case 'csay':{const c=UI.call;if(!c)break;if(el.dataset.v==='wrong'){c.q='Извините, ошиблись номером.';c.a='<i>(гудки)</i>';c.st='end';render();break}const r=dial(c.k);c.q=r.q;c.a=r.a;c.st='end';render();break}
+ case 'hang':UI.call=null;render();break;
+ case 'base':UI.modal='base';render();setTimeout(()=>{const i=document.getElementById('bq');if(i&&!S.base.rec)i.focus()},50);break;
+ case 'brec':S.base.rec=id;found(id);CS.onRec&&CS.onRec(id);render();break;
+ case 'bback':S.base.rec=null;render();break;
+ case 'bpin':pin(P(S.base.rec).loc);render();break;
+ case 'bcmp':{const c=P(S.base.rec).cmp;if(!has(c)){addClue(c,true);UI.reveal.push(c)}render();break}
+ case 'letter':summon(S.base.rec,(Math.floor(S.t/24)+1)*24+10,'повестка через горотдел');toast('Повестка отправлена. Явка завтра в 10:00');render();break;
+ case 'call':{const id=S.base.rec;UI.modal='phone';UI.call=null;startCall('call:'+id);break}
+ case 'knock':{const D=CS.dlg[id];S.dlg={who:id,mode:'door',log:[{a:D?D.greet:'Здравствуйте.'}]};(S.talks=S.talks||[]).push({id,mode:'door',t:S.t,loc:S.loc,log:S.dlg.log});found(id);UI.modal='talk';render();break}
+ case 'room':if(S.smeta[id])S.smeta[id].talked=true;S.dlg={who:id,mode:'room',done:!!S.flags['law_'+id],log:[{a:'<i>'+(S.flags['law_'+id]?short(id)+' молчит и требует адвоката. ':'')+((S.smeta[id]||{}).det?'Конвой приводит '+short(id)+' из камеры.':short(id)+' садится напротив.')+'</i>'}]};(S.talks=S.talks||[]).push({id,mode:'room',t:S.t,loc:'otdel',log:S.dlg.log});UI.modal='talk';render();break;
+ case 'say':say(el.dataset.k);break;
+ case 'search':{const w=CS.warrant;advance(w.h);if(S.over)return render();S.searched=true;addClue(w.clue);toast(w.toast);render();break}
+ case 'wait':anim('wait','Ждём…',1,550,()=>{advance(1);render()});break;
+ case 'gomail':UI.modal=null;go('otdel');if(!S.over)setTab('mail');break;
+ case 'endday':UI.reveal.unshift({leave:1});render();break;
+ case 'gohome':{UI.reveal.shift();render();const h=22-hour(),full=h+10;anim('night',(k,t)=>{const x=t%24;return x<22&&x>=8&&k<.5?'Едем домой…':x>=22||x<5?'Ночь…':'Утро'},full,1200,()=>{advance(h);UI.reveal=UI.reveal.filter(r=>!(r.night&&!r.night.left.length));render()});break}
+ case 'mail':{const m=S.mail[+el.dataset.i];const ex=m.exam&&!m.ap;readMail(m);UI.modal=ex?null:{doc:+el.dataset.i};render();break}
+ case 'accuse':UI.sel=[];UI.modal='accuse';render();break;
+ case 'pick':UI.sel=UI.sel.includes(id)?UI.sel.filter(x=>x!==id):UI.sel.concat(id);render();break;
+ case 'court':if(UI.sel.length)court();break;
+ case 'restart':startCase(CS.id);break;
+ case 'next':startCase(CS.next);break;
+ case 'lamp':UI.lampOff=!UI.lampOff;render();break;
+ case 'tea':toast(['Чай давно остыл.','Подстаканник ещё с советских времён.','Сахар кончился.'][Math.floor(Math.random()*3)]);break;
+ case 'clock':toast('На часах '+fmt(S.t)+'. Смена до 22:00.');break;
+ case 'window':toast(S.t%24>=18?'За окном темно. Где-то лает собака.':['Моросит. Голые ветки качаются.','Серое небо. Ни одной машины.','Ворона на ветке смотрит прямо на вас.'][Math.floor(Math.random()*3)]);break;
+ }});
+document.addEventListener('submit',e=>{if(e.target.id!=='bform')return;e.preventDefault();const raw=document.getElementById('bq').value,q=raw.trim().toLowerCase();S.base.q=raw;
+ if(q.length<2){S.base.res=null;render();return}
+ if(!e.detail_done){const box=document.querySelector('#bform');const pr=document.createElement('div');pr.className='bprog';pr.innerHTML='<span>ПОИСК ПО БАЗЕ…</span><div><i></i></div><b>0%</b>';const old=document.querySelector('.crt .res, .crt #bform ~ div');if(old)old.remove();box.after(pr);const t0=performance.now(),D=800;
+  const st=n=>{const k=Math.min(1,(n-t0)/D);pr.querySelector('i').style.width=(k*100)+'%';pr.querySelector('b').textContent=Math.round(k*100)+'%';if(k<1)requestAnimationFrame(st);else{const ev=new Event('submit',{cancelable:true,bubbles:true});ev.detail_done=1;document.getElementById('bform').dispatchEvent(ev)}};requestAnimationFrame(st);return}
+ const nz=x=>x.toLowerCase().replace(/ё/g,'е').trim();S.base.res=Object.keys(CS.people).filter(id=>nz(CS.people[id].fio.split(' ')[0])===nz(q));
+ CS.onQuery&&CS.onQuery(q,S.base.res);render();setTimeout(()=>{const i=document.getElementById('bq');if(i)i.focus()},30)});
+
+window.__game={CASES,get S(){return S},startCase,has:c=>has(c)};
+render();
+})();
+
+</script>
+
+</body></html>
